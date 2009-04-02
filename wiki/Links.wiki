@@ -1,0 +1,3 @@
+#summary Полезные ссылки.
+
+Книжка - http://www.netlib.narod.ru/library/book0052/toc.htm
