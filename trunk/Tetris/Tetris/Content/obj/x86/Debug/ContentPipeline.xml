@@ -7,7 +7,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>E:\some\Tetris\Tetris\bin\x86\Debug\Content\SpaceBackground.xnb</Output>
+      <Output>E:\some\SVN3LINES\Tetris\Tetris\bin\x86\Debug\Content\SpaceBackground.xnb</Output>
       <Time>2006-10-30T00:50:56+03:00</Time>
     </Item>
     <Item>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>E:\some\Tetris\Tetris\bin\x86\Debug\Content\BackgroundSmallBox.xnb</Output>
-      <Time>2006-11-06T01:10:36+03:00</Time>
+      <Output>E:\some\SVN3LINES\Tetris\Tetris\bin\x86\Debug\Content\BackgroundSmallBox.xnb</Output>
+      <Time>2009-04-02T22:19:18.03125+04:00</Time>
     </Item>
     <Item>
       <Source>GameFont.png</Source>
@@ -25,7 +25,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>E:\some\Tetris\Tetris\bin\x86\Debug\Content\GameFont.xnb</Output>
+      <Output>E:\some\SVN3LINES\Tetris\Tetris\bin\x86\Debug\Content\GameFont.xnb</Output>
       <Time>2006-11-05T09:28:28+03:00</Time>
     </Item>
     <Item>
@@ -34,8 +34,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>E:\some\Tetris\Tetris\bin\x86\Debug\Content\BackgroundBigBox.xnb</Output>
-      <Time>2009-03-03T23:42:05.203125+03:00</Time>
+      <Output>E:\some\SVN3LINES\Tetris\Tetris\bin\x86\Debug\Content\BackgroundBigBox.xnb</Output>
+      <Time>2009-04-02T22:10:16.46875+04:00</Time>
     </Item>
     <Item>
       <Source>BlackBlock.png</Source>
@@ -43,7 +43,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>E:\some\Tetris\Tetris\bin\x86\Debug\Content\BlackBlock.xnb</Output>
+      <Output>E:\some\SVN3LINES\Tetris\Tetris\bin\x86\Debug\Content\BlackBlock.xnb</Output>
       <Time>2009-04-02T00:56:41.328125+04:00</Time>
     </Item>
     <Item>
@@ -52,7 +52,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>E:\some\Tetris\Tetris\bin\x86\Debug\Content\BlueBlock.xnb</Output>
+      <Output>E:\some\SVN3LINES\Tetris\Tetris\bin\x86\Debug\Content\BlueBlock.xnb</Output>
       <Time>2009-04-02T00:48:54.21875+04:00</Time>
     </Item>
     <Item>
@@ -61,7 +61,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>E:\some\Tetris\Tetris\bin\x86\Debug\Content\GreenBlock.xnb</Output>
+      <Output>E:\some\SVN3LINES\Tetris\Tetris\bin\x86\Debug\Content\GreenBlock.xnb</Output>
       <Time>2009-04-02T00:39:49.96875+04:00</Time>
     </Item>
     <Item>
@@ -70,7 +70,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>E:\some\Tetris\Tetris\bin\x86\Debug\Content\RedBlock.xnb</Output>
+      <Output>E:\some\SVN3LINES\Tetris\Tetris\bin\x86\Debug\Content\RedBlock.xnb</Output>
       <Time>2009-04-02T01:01:49.546875+04:00</Time>
     </Item>
     <Item>
@@ -79,7 +79,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>E:\some\Tetris\Tetris\bin\x86\Debug\Content\SomeBlock.xnb</Output>
+      <Output>E:\some\SVN3LINES\Tetris\Tetris\bin\x86\Debug\Content\SomeBlock.xnb</Output>
       <Time>2009-04-02T01:09:26.46875+04:00</Time>
     </Item>
     <Item>
@@ -88,17 +88,26 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>E:\some\Tetris\Tetris\bin\x86\Debug\Content\YellowBlock.xnb</Output>
+      <Output>E:\some\SVN3LINES\Tetris\Tetris\bin\x86\Debug\Content\YellowBlock.xnb</Output>
       <Time>2009-04-02T01:04:26.5625+04:00</Time>
+    </Item>
+    <Item>
+      <Source>skybackground.PNG</Source>
+      <Name>skybackground</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>E:\some\SVN3LINES\Tetris\Tetris\bin\x86\Debug\Content\skybackground.xnb</Output>
+      <Time>2009-04-02T21:52:34.828125+04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
       <BuildConfiguration>Debug</BuildConfiguration>
-      <RootDirectory>E:\some\Tetris\Tetris\Content\</RootDirectory>
-      <LoggerRootDirectory>E:\some\Tetris\Tetris\</LoggerRootDirectory>
-      <IntermediateDirectory>E:\some\Tetris\Tetris\Content\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>E:\some\Tetris\Tetris\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>E:\some\SVN3LINES\Tetris\Tetris\Content\</RootDirectory>
+      <LoggerRootDirectory>E:\some\SVN3LINES\Tetris\Tetris\</LoggerRootDirectory>
+      <IntermediateDirectory>E:\some\SVN3LINES\Tetris\Tetris\Content\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>E:\some\SVN3LINES\Tetris\Tetris\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
