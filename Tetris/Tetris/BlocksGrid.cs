@@ -107,7 +107,7 @@ namespace XnaTetris
 		{
 			foreach (Block block in Grid)
 			{
-				if (block.PointInBlock(new Point(point.X * 1024 / BaseGame.Width, point.Y * 768 / BaseGame.Height)))
+				if (block.PointInBlock(Serv.CorrectPositionWithGameScale(point)))
 					{
 						int count = finder.ClickedBlocksCount();
 						if (count == 0)

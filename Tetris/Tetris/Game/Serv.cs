@@ -34,5 +34,17 @@ namespace XnaTetris.Game
 			long sec = (time/1000) % 60;
 			return String.Format("Time:  {0}:{1:D2}", min, sec);
 		}
+
+		public static bool PointInRectangle(Point point, Rectangle rect)
+		{
+			bool result;
+			rect.Contains(ref point, out result);
+			return result;
+		}
+
+		public static Point CorrectPositionWithGameScale(Point point)
+		{
+			return new Point(point.X*1024/BaseGame.Width, point.Y*768/BaseGame.Height);
+		}
 	}
 }
