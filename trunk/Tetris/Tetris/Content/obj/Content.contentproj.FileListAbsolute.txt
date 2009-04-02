@@ -1,0 +1,6 @@
+C:\Documents and Settings\Serge\Мои документы\Visual Studio 2005\Projects\Tetris\Tetris\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Serge\Мои документы\Visual Studio 2005\Projects\Tetris\Tetris\Content\obj\x86\Debug\TetrisSound.xml
+F:\Books\English\Tetris\Tetris\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+F:\Books\English\Tetris\Tetris\Content\obj\x86\Debug\TetrisSound.xml
+E:\some\Tetris\Tetris\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\some\Tetris\Tetris\Content\obj\x86\Debug\TetrisSound.xml
