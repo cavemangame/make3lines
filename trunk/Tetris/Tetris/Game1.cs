@@ -19,6 +19,12 @@ namespace XnaTetris
 	/// </summary>
 	public class LinesGame : BaseGame
 	{
+		#region Constants
+
+		private readonly Rectangle rectPauseButton = new Rectangle(55, 600, 200, 50);
+		private readonly Rectangle rectExitButton = new Rectangle(55, 670, 200, 50);
+
+		#endregion
 		#region Variables
 
 		private readonly BlocksGrid blocksGrid;
@@ -28,8 +34,10 @@ namespace XnaTetris
 		private Serv.GameState gameState;
 		// graphics
 		SpriteBatch spriteBatch;
-		Texture2D backgroundTexture, backgroundSmallBoxTexture, backgroundBigBoxTexture;
-		SpriteHelper  background, backgroundSmallBox, backgroundBigBox;
+		Texture2D backgroundTexture, backgroundSmallBoxTexture, backgroundBigBoxTexture, 
+			buttonPauseTexture, buttonExitTexture;
+		SpriteHelper background, backgroundSmallBox, backgroundBigBox, buttonPause, buttonExit;
+
 
 		/// <summary>
 		///  Timer and Level variables
@@ -96,11 +104,16 @@ namespace XnaTetris
 				backgroundTexture = content.Load<Texture2D>("skybackground");
 				backgroundSmallBoxTexture = content.Load<Texture2D>("BackgroundSmallBox");
 				backgroundBigBoxTexture = content.Load<Texture2D>("BackgroundBigBox");
+				buttonPauseTexture = content.Load<Texture2D>("PauseButton");
+				buttonExitTexture = content.Load<Texture2D>("ExitButton");
 
 				// Create all sprites
 				background = new SpriteHelper(backgroundTexture, null);
 				backgroundSmallBox = new SpriteHelper(backgroundSmallBoxTexture, null);
 				backgroundBigBox = new SpriteHelper(backgroundBigBoxTexture, null);
+				buttonPause = new SpriteHelper(buttonPauseTexture, null);
+				buttonExit = new SpriteHelper(buttonExitTexture, null);
+
 			} // if
 			base.LoadGraphicsContent(loadAllContent);
 		} // LoadGraphicsContent(loadAllContent)
@@ -121,18 +134,32 @@ namespace XnaTetris
 			elapsedGameMs += frameMs;
 
 			if (Input.KeyboardSpaceJustPressed)
-				if (GameState == Serv.GameState.GameStateRunning)
-					GameState = Serv.GameState.GameStatePause;
-				else if (GameState == Serv.GameState.GameStatePause)
-					GameState = Serv.GameState.GameStateRunning;
+				SetPauseUnpause();
 
 			if (GameState == Serv.GameState.GameStateRunning)
 				timer -= frameMs;
 
+			CheckForClickButtons(gameTime);
+
 			CheckForLoose();
 
 			base.Update(gameTime);
-		} // Update(gameTime)
+		}// Update(gameTime)
+
+		private void CheckForClickButtons(GameTime gameTime)
+		{
+			if (Input.MouseLeftButtonJustPressed)
+			{
+				if (Serv.PointInRectangle(Serv.CorrectPositionWithGameScale(Input.MousePos), rectPauseButton))
+				{
+					SetPauseUnpause();
+				}
+				else if (Serv.PointInRectangle(Serv.CorrectPositionWithGameScale(Input.MousePos), rectExitButton))
+				{
+					ExitGame();
+				}
+			}
+		} //CheckForClickButtons(gameTime)
 
 		#endregion
 
@@ -144,6 +171,9 @@ namespace XnaTetris
 			// Draw background boxes for all the components
 			backgroundBigBox.Render(new Rectangle(300, 25, 720, 720));
 			backgroundSmallBox.Render(new Rectangle(25, 25, 260, 720));
+
+			buttonPause.Render(rectPauseButton);
+			buttonExit.Render(rectExitButton);
 
 			if (GameState == Serv.GameState.GameStateRunning || GameState == Serv.GameState.GameStatePause)
 				blocksGrid.Draw(gameTime);
@@ -164,13 +194,36 @@ namespace XnaTetris
 			if (timer <= 0)
 			{
 				if (score <= currentLevel.maxScore)
-					Exit();
+					ExitGame();
 				else
 				{
 					GameState = Serv.GameState.GameStateLevelEnd;
 					StartNextLevel();
 				}
 			}
+		}
+
+		private void ExitGame()
+		{
+			Exit();
+		}
+
+		private void SetPauseUnpause()
+		{
+			if (GameState == Serv.GameState.GameStateRunning)
+				PauseGame();
+			else if (GameState == Serv.GameState.GameStatePause)
+				RunGame();
+		}
+
+		private void PauseGame()
+		{
+			GameState = Serv.GameState.GameStatePause;
+		}
+
+		private void RunGame()
+		{
+			GameState = Serv.GameState.GameStateRunning;
 		}
 
 		private void StartNextLevel()

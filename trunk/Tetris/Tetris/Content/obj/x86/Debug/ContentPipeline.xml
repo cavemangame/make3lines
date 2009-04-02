@@ -100,6 +100,24 @@
       <Output>E:\some\SVN3LINES\Tetris\Tetris\bin\x86\Debug\Content\skybackground.xnb</Output>
       <Time>2009-04-02T21:52:34.828125+04:00</Time>
     </Item>
+    <Item>
+      <Source>ExitButton.png</Source>
+      <Name>ExitButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>E:\some\SVN3LINES\Tetris\Tetris\bin\x86\Debug\Content\ExitButton.xnb</Output>
+      <Time>2009-04-02T23:27:28.109375+04:00</Time>
+    </Item>
+    <Item>
+      <Source>PauseButton.png</Source>
+      <Name>PauseButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>E:\some\SVN3LINES\Tetris\Tetris\bin\x86\Debug\Content\PauseButton.xnb</Output>
+      <Time>2009-04-02T23:24:16.75+04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
