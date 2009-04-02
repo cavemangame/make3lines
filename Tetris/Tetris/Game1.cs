@@ -62,11 +62,15 @@ namespace XnaTetris
 
 		#endregion
 
+		#region Constructor
+
 		public LinesGame()
 		{
 			blocksGrid = new BlocksGrid(this, new Rectangle(310, 35, 700, 700));
 			this.Components.Add(blocksGrid);
 		}
+
+		#endregion
 
 		#region Init and Load methods
 
@@ -89,7 +93,7 @@ namespace XnaTetris
 			{
 				// Load all our content
 				content.RootDirectory = "Content";
-				backgroundTexture = content.Load<Texture2D>("SpaceBackground");
+				backgroundTexture = content.Load<Texture2D>("skybackground");
 				backgroundSmallBoxTexture = content.Load<Texture2D>("BackgroundSmallBox");
 				backgroundBigBoxTexture = content.Load<Texture2D>("BackgroundBigBox");
 
@@ -144,9 +148,10 @@ namespace XnaTetris
 			if (GameState == Serv.GameState.GameStateRunning || GameState == Serv.GameState.GameStatePause)
 				blocksGrid.Draw(gameTime);
 
-			TextureFont.WriteText(10, 10, String.Format("Score: {0}", score));
-			TextureFont.WriteText(40, 50, currentLevel.LevelString);
-			TextureFont.WriteText(40, 90, Serv.GetTimeString(timer));
+			TextureFont.WriteText(40, 50, String.Format("Score: {0}", score));
+			TextureFont.WriteText(40, 90, String.Format("Remain: {0}", currentLevel.maxScore - score));
+			TextureFont.WriteText(40, 140, currentLevel.LevelString);
+			TextureFont.WriteText(40, 180, Serv.GetTimeString(timer));
 
 		  if (GameState == Serv.GameState.GameStatePause)
 				TextureFont.WriteText(610, 370, "PAUSE", Color.AliceBlue);

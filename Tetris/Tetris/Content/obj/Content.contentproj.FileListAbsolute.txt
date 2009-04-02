@@ -4,3 +4,5 @@ F:\Books\English\Tetris\Tetris\Content\obj\x86\Debug\ResolveAssemblyReference.ca
 F:\Books\English\Tetris\Tetris\Content\obj\x86\Debug\TetrisSound.xml
 E:\some\Tetris\Tetris\Content\obj\x86\Debug\ResolveAssemblyReference.cache
 E:\some\Tetris\Tetris\Content\obj\x86\Debug\TetrisSound.xml
+E:\some\SVN3LINES\Tetris\Tetris\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\some\SVN3LINES\Tetris\Tetris\Content\obj\x86\Debug\TetrisSound.xml
