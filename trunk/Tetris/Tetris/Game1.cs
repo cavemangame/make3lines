@@ -11,6 +11,7 @@ using XnaTetris.Graphics;
 using XnaTetris.Game;
 using XnaTetris.Sounds;
 using XnaTetris.Algorithms;
+using XnaTetris.Interface;
 
 namespace XnaTetris
 {
@@ -25,6 +26,7 @@ namespace XnaTetris
 		private readonly Rectangle rectExitButton = new Rectangle(55, 670, 200, 50);
 
 		#endregion
+
 		#region Variables
 
 		private readonly BlocksGrid blocksGrid;
@@ -45,6 +47,11 @@ namespace XnaTetris
 		public long timer;
 		private Level currentLevel;
 		private int curLevelNumber = 0;
+
+		/// <summary>
+		/// Interface
+		/// </summary>
+		private Button btnPause, btnExit;
 
 		#endregion
 
@@ -114,6 +121,13 @@ namespace XnaTetris
 				buttonPause = new SpriteHelper(buttonPauseTexture, null);
 				buttonExit = new SpriteHelper(buttonExitTexture, null);
 
+				// Create interface elements
+				btnPause = new Button(this, rectPauseButton, buttonPause);
+				btnPause.ButtonAction += new EventHandler(btnPause_ButtonAction);
+				btnExit = new Button(this, rectExitButton, buttonExit);
+				btnExit.ButtonAction += new EventHandler(btnExit_ButtonAction);
+				this.Components.Add(btnPause);
+				this.Components.Add(btnExit);
 			} // if
 			base.LoadGraphicsContent(loadAllContent);
 		} // LoadGraphicsContent(loadAllContent)
@@ -139,29 +153,14 @@ namespace XnaTetris
 			if (GameState == Serv.GameState.GameStateRunning)
 				timer -= frameMs;
 
-			CheckForClickButtons(gameTime);
-
 			CheckForLoose();
 
 			base.Update(gameTime);
 		}// Update(gameTime)
 
-		private void CheckForClickButtons(GameTime gameTime)
-		{
-			if (Input.MouseLeftButtonJustPressed)
-			{
-				if (Serv.PointInRectangle(Serv.CorrectPositionWithGameScale(Input.MousePos), rectPauseButton))
-				{
-					SetPauseUnpause();
-				}
-				else if (Serv.PointInRectangle(Serv.CorrectPositionWithGameScale(Input.MousePos), rectExitButton))
-				{
-					ExitGame();
-				}
-			}
-		} //CheckForClickButtons(gameTime)
-
 		#endregion
+
+		#region Draw
 
 		protected override void Draw(GameTime gameTime)
 		{
@@ -172,11 +171,11 @@ namespace XnaTetris
 			backgroundBigBox.Render(new Rectangle(300, 25, 720, 720));
 			backgroundSmallBox.Render(new Rectangle(25, 25, 260, 720));
 
-			buttonPause.Render(rectPauseButton);
-			buttonExit.Render(rectExitButton);
-
 			if (GameState == Serv.GameState.GameStateRunning || GameState == Serv.GameState.GameStatePause)
 				blocksGrid.Draw(gameTime);
+
+			btnPause.Draw(gameTime);
+			btnExit.Draw(gameTime);
 
 			TextureFont.WriteText(40, 50, String.Format("Score: {0}", score));
 			TextureFont.WriteText(40, 90, String.Format("Remain: {0}", currentLevel.maxScore - score));
@@ -188,6 +187,8 @@ namespace XnaTetris
 
 			base.Draw(gameTime);
 		}
+
+		#endregion
 
 		private void CheckForLoose()
 		{
@@ -234,6 +235,20 @@ namespace XnaTetris
 			GameState = Serv.GameState.GameStateRunning;
 			timer = currentLevel.time;
 		}
+
+		#region Interface Events
+
+		void btnExit_ButtonAction(object sender, EventArgs e)
+		{
+			Exit();
+		}
+
+		void btnPause_ButtonAction(object sender, EventArgs e)
+		{
+			SetPauseUnpause();
+		}
+
+		#endregion
 
 		#region Start game
 		static bool isUnitTest = true;
