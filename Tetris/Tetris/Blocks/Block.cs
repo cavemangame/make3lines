@@ -15,8 +15,6 @@ namespace XnaTetris.Blocks
 
     private bool isMoving;
 
-    private float depth;
-
     public event EventHandler EndMove;
     public GameTime blockGameTime;
 
@@ -75,44 +73,31 @@ namespace XnaTetris.Blocks
       }
     }
 
-    #region virtual methods
-
-    public virtual void SetBlockSprite()
-    {
-
-    }
-
-    public virtual int GetScore(int N)
-    {
-      return (N - 3) * 5 + N * 5;
-    }
-
-    public virtual bool PointInBlock(Point point)
+    public bool PointInBlock(Point point)
     {
       bool result;
       BlockRectangle.Contains(ref point, out result);
       return result;
     }
 
-    public virtual void ClickToBlock(GameTime gameTime)
+    public void ClickToBlock(GameTime gameTime)
     {
       IsClicked = !IsClicked;
     }
 
-    public virtual void MakeMove(GameTime gameTime, Rectangle newRect, float setDepth)
+    public void MakeMove(GameTime gameTime, Rectangle newRectangle)
     {
       isMoving = true;
-      blockAnimator = new BlockAnimator(BlockRectangle, newRect, gameTime);
-      depth = setDepth;
+      blockAnimator = new BlockAnimator(BlockRectangle, newRectangle, gameTime);
     }
 
-    public virtual void MakeMove(GameTime gameTime, Rectangle newRect, int setx, int sety, float setDepth)
+    public void MakeMove(GameTime gameTime, Rectangle newRect, int setx, int sety)
     {
       X = setx;
       Y = sety;
-      MakeMove(gameTime, newRect, setDepth);
+      MakeMove(gameTime, newRect);
     }
 
-    #endregion
+    public abstract int GetScore(int N);
   }
 }
