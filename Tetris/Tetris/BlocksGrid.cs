@@ -24,7 +24,12 @@ namespace XnaTetris
     private readonly Block[,] grid = new Block[GridWidth, GridHeight];
     private readonly FindLines finder;
     private int _x1, _y1, _x2, _y2; //используются, чтобы отметить свапающиеся блоки
-    
+
+    /// <summary>
+    /// how much blocks are moving now
+    /// </summary>
+    private int activeBlocks;
+
     /// <summary>
     /// true if current movement is undo after unsuccessful movement
     /// </summary>
@@ -110,6 +115,11 @@ namespace XnaTetris
 
     private void UpdateClickedBlock(Point point, GameTime gameTime)
     {
+      if (activeBlocks != 0)
+      {
+        return;
+      }
+
       foreach (Block block in Grid)
       {
         if (block.PointInBlock(Serv.CorrectPositionWithGameScale(point)))
@@ -189,6 +199,7 @@ namespace XnaTetris
     {
       Grid[x, y] = (BlockFactory.GetBlockFactory(game).GetNewBlock(BlockFactory.GetRandomBlockType(),
         finder.GetRectangle(x, y), x, y));
+      Grid[x, y].StartMove += BlocksGrid_StartMove;
       Grid[x, y].EndMove += BlocksGrid_EndMove;
     }
 
@@ -197,7 +208,18 @@ namespace XnaTetris
       Grid[x, y] = (BlockFactory.GetBlockFactory(game).GetNewBlock(
         RandomBlockHelper.GenerateNewBlockType(oldType, luck),
         finder.GetRectangle(x, y), x, y));
+      Grid[x, y].StartMove += BlocksGrid_StartMove;
       Grid[x, y].EndMove += BlocksGrid_EndMove;
+    }
+
+    void BlocksGrid_StartMove(object sender, EventArgs e)
+    {
+      if (!(sender is Block))
+      {
+        return;
+      }
+
+      activeBlocks += 1;
     }
 
     // если просто закончили движение - сдвигаем блок, если свапались - то вызываем EndSwappingBlocks,
@@ -223,6 +245,8 @@ namespace XnaTetris
         temp.BlockRectangle = finder.GetRectangle(temp.X, temp.Y);
         Grid[temp.X, temp.Y] = temp;
       }
+
+      activeBlocks -= 1;
     }
 
     public void EnableComponents(bool isEnable)

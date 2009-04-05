@@ -15,6 +15,7 @@ namespace XnaTetris.Blocks
 
     private bool isMoving;
 
+    public event EventHandler StartMove;
     public event EventHandler EndMove;
     public GameTime blockGameTime;
 
@@ -89,6 +90,7 @@ namespace XnaTetris.Blocks
     {
       isMoving = true;
       blockAnimator = new BlockAnimator(BlockRectangle, newRectangle, gameTime);
+      StartMove(this, EventArgs.Empty);
     }
 
     public void MakeMove(GameTime gameTime, Rectangle newRect, int setx, int sety)
