@@ -28,14 +28,8 @@ namespace XnaTetris
       buttonPauseTexture, buttonExitTexture;
     SpriteHelper background, backgroundSmallBox, backgroundBigBox, buttonPause, buttonExit;
 
-
-    /// <summary>
-    ///  Timer and Level variables
-    /// </summary>
-    public long timer;
     private Level currentLevel;
     private int curLevelNumber;
-
     private int elapsedGameMs;
 
     /// <summary>
@@ -47,6 +41,7 @@ namespace XnaTetris
 
     #region Properties
 
+    public long Timer { get; set; }
     public int Score { get; set; }
     internal bool IsMoving { get; set; }
     public Serv.GameState GameState { get; set; }
@@ -139,7 +134,7 @@ namespace XnaTetris
         SetPauseUnpause();
 
       if (GameState == Serv.GameState.GameStateRunning)
-        timer -= frameMs;
+        Timer -= frameMs;
       if (GameState == Serv.GameState.GameStateRunning)
         CheckForLoose();
 
@@ -176,7 +171,7 @@ namespace XnaTetris
         TextureFont.WriteText(40, 90, String.Format("Remain: {0}", 
           Math.Max(currentLevel.maxScore - Score, 0)));
         TextureFont.WriteText(40, 140, currentLevel.LevelString);
-        TextureFont.WriteText(40, 180, Serv.GetTimeString(timer));
+        TextureFont.WriteText(40, 180, Serv.GetTimeString(Timer));
 
         if (GameState == Serv.GameState.GameStatePause)
           TextureFont.WriteText(610, 370, "PAUSE", Color.AliceBlue);
@@ -189,7 +184,7 @@ namespace XnaTetris
 
     private void CheckForLoose()
     {
-      if (timer <= 0)
+      if (Timer <= 0)
       {
         if (Score <= currentLevel.maxScore)
           ExitToMenu();
@@ -204,7 +199,7 @@ namespace XnaTetris
     private void ExitToMenu()
     {
       Score = 0;
-      timer = 0;
+      Timer = 0;
       curLevelNumber = 0;
       menu.EnableComponents(true);
       blocksGrid.EnableComponents(false);
@@ -235,7 +230,7 @@ namespace XnaTetris
       currentLevel = LevelGenerator.GetLevel(curLevelNumber);
       blocksGrid.Restart();
       GameState = Serv.GameState.GameStateRunning;
-      timer = currentLevel.time;
+      Timer = currentLevel.time;
     }
 
     #region Interface Events

@@ -129,13 +129,16 @@ namespace XnaTetris.Algorithms
 
     #region Destroy Blocks
 
-    public void FindAndDestroyLines(GameTime gameTime)
+    public bool FindAndDestroyLines(GameTime gameTime)
     {
       bool result = FindNLines(5) | FindNLines(4) | FindNLines(3);
 
       RemoveLines(gameTime);
       if (result)
+      {
         FindAndDestroyLines(gameTime);
+      }
+      return result;
     }
 
     private void RemoveLines(GameTime gameTime)
@@ -170,7 +173,7 @@ namespace XnaTetris.Algorithms
         for (int j = jj - 1; j >= 0; j--)
         {
           bGrid.Grid[i, j + 1] = bGrid.Grid[i, j];
-          bGrid.Grid[i, j].MakeMove(gameTime, GetRectangle(i, j + 1), i, j + 1, 0);
+          bGrid.Grid[i, j].MakeMove(gameTime, GetRectangle(i, j + 1), i, j + 1);
         }
       }
       // наверху сразу генерим новый
