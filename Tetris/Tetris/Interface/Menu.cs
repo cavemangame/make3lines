@@ -86,12 +86,9 @@ namespace XnaTetris.Interface
 			base.Update(gameTime);
 		}
 
-    public void EnableButtons(bool isEnable)
+    public void EnableComponents(bool isEnable)
     {
-      btnStart.Enabled = 
-      btnExit.Enabled = 
-      btnHiScore.Enabled = 
-      btnHelp.Enabled = 
+      Enabled = btnStart.Enabled = btnExit.Enabled = btnHiScore.Enabled = btnHelp.Enabled = 
       btnAuthors.Enabled = isEnable;
     }
 

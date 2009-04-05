@@ -199,6 +199,13 @@ namespace XnaTetris
       }
     }
 
+    public void EnableComponents(bool isEnable)
+    {
+      Enabled = isEnable;
+      for (int x = 0; x < GridWidth; x++)
+        for (int y = 0; y < GridHeight; y++)
+          Grid[x, y].Enabled = isEnable;
+    }
     #endregion
   }
 }
