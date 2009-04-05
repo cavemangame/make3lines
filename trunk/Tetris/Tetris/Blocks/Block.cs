@@ -1,170 +1,118 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using XnaTetris.Game;
-using XnaTetris.Sounds;
-using XnaTetris.Graphics;
 using XnaTetris.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace XnaTetris.Blocks
 {
-	class Block : DrawableGameComponent
-	{
-		#region константы
+  abstract class Block : DrawableGameComponent
+  {
+    #region Переменные
 
-		#endregion
+    private readonly SpriteHelper block;
+    private BlockAnimator blockAnimator;
 
-		#region Переменные
+    private bool isMoving;
 
-		readonly LinesGame game;
-		private Rectangle blockRect;
-		private SpriteHelper block;
-		private BlockAnimator blockAnimator;
+    private float depth;
 
-		private Serv.MoveDirection currentDir;
+    public event EventHandler EndMove;
+    public GameTime blockGameTime;
 
-		private bool isClicked;
-		private bool isDestroyed;
-		private bool isMoving;
+    #endregion
 
-		private float depth;
+    #region Конструктор
 
-		private int xpos;
-		private int ypos;
+    public Block(LinesGame setGame, Rectangle setBlockRect, SpriteHelper setBlock, int x, int y)
+      : base(setGame)
+    {
+      BlockRectangle = setBlockRect;
+      block = setBlock;
+      X = x;
+      Y = y;
+    }
 
-		public event EventHandler EndMove;
-		public GameTime blockGameTime;
+    #endregion
 
-		#endregion
+    #region Свойства
+    public abstract BlockFactory.BlockType Type { get; }
 
-		#region Конструктор
+    public bool IsClicked { get; set; }
+    public Rectangle BlockRectangle { get; set; }
+    public bool IsDestroyed { get; set; }
+    public Serv.MoveDirection CurrentDir { get; set; }
+    public int X { get; set; }
+    public int Y { get; set; }
 
-		public Block(LinesGame setGame, Rectangle setBlockRect, SpriteHelper setBlock, int x, int y)
-			: base(setGame)
-		{
-			game = setGame;
-			blockRect = setBlockRect;
-			block = setBlock;
-			xpos = x;
-			ypos = y;
-		}
+    #endregion
 
-		#endregion
+    public override void Draw(GameTime gameTime)
+    {
+      Color color = IsClicked ? Color.LightGray : Color.White;
 
-		#region Свойства
-		public virtual BlockFactory.BlockType Type
-		{
-			get { return BlockFactory.BlockType.Black;}
-		}
+      block.Render(BlockRectangle, color);
 
-		public bool IsClicked
-		{
-			get { return isClicked; }
-			set { isClicked = value; }
-		}
+      base.Draw(gameTime);
+    }
 
-		public Rectangle BlockRectangle
-		{
-			get { return blockRect; }
-			set { blockRect = value; }
-		}
+    public override void Update(GameTime gameTime)
+    {
+      base.Update(gameTime);
+      blockGameTime = gameTime;
 
-		public bool IsDestroyed
-		{
-			get { return isDestroyed; }
-			set { isDestroyed = value; }
-		}
+      if (isMoving)
+      {
+        if (blockAnimator.IsMoveEnded(gameTime))
+        {
+          isMoving = false;
+          EndMove(this, EventArgs.Empty);
+        }
+        else
+        {
+          BlockRectangle = blockAnimator.CurrentRectangle(gameTime);
+        }
+      }
+    }
 
-		public Serv.MoveDirection CurrentDir
-		{
-			get { return currentDir; }
-			set { currentDir = value; }
-		}
+    #region virtual methods
 
-		public int X
-		{
-			get { return xpos; }
-			set { xpos = value; }
-		}
+    public virtual void SetBlockSprite()
+    {
 
-		public int Y
-		{
-			get { return ypos; }
-			set { ypos = value; }
-		}
+    }
 
-		#endregion
+    public virtual int GetScore(int N)
+    {
+      return (N - 3) * 5 + N * 5;
+    }
 
-		public override void Draw(GameTime gameTime)
-		{
-			if (!IsClicked)
-				block.Render(BlockRectangle);
-			else 
-				block.Render(BlockRectangle, Color.LightGray);
+    public virtual bool PointInBlock(Point point)
+    {
+      bool result;
+      BlockRectangle.Contains(ref point, out result);
+      return result;
+    }
 
-			base.Draw(gameTime);
-		}
+    public virtual void ClickToBlock(GameTime gameTime)
+    {
+      IsClicked = !IsClicked;
+    }
 
-		public override void Update(GameTime gameTime)
-		{
-			base.Update(gameTime);
-			this.blockGameTime = gameTime;
+    public virtual void MakeMove(GameTime gameTime, Rectangle newRect, float setDepth)
+    {
+      isMoving = true;
+      blockAnimator = new BlockAnimator(BlockRectangle, newRect, gameTime);
+      depth = setDepth;
+    }
 
-			if (isMoving)
-			{
-				if (blockAnimator.IsMoveEnded(gameTime))
-				{
-					isMoving = false;
-					EndMove(this, EventArgs.Empty);
-				}
-				else
-				{
-					blockRect = blockAnimator.CurrentRectangle(gameTime);
-				}
-			}
-		}
+    public virtual void MakeMove(GameTime gameTime, Rectangle newRect, int setx, int sety, float setDepth)
+    {
+      X = setx;
+      Y = sety;
+      MakeMove(gameTime, newRect, setDepth);
+    }
 
-		#region virtual methods
-
-		public virtual void SetBlockSprite()
-		{
-			
-		}
-
-		public virtual int GetScore(int N)
-		{
-			return (N - 3)*5 + N*5;
-		}
-
-		public virtual bool PointInBlock(Point point)
-		{
-			bool result;
-			BlockRectangle.Contains(ref point, out result);
-			return result;
-		}
-
-		public virtual void ClickToBlock(GameTime gameTime)
-		{
-			IsClicked = !IsClicked;
-		}
-		
-		public virtual void MakeMove(GameTime gameTime, Rectangle newRect, float setDepth)
-		{
-			isMoving = true;
-			blockAnimator = new BlockAnimator(blockRect, newRect, gameTime);
-			depth = setDepth;
-		}
-
-		public virtual void MakeMove(GameTime gameTime, Rectangle newRect, int setx, int sety, float setDepth)
-		{
-			xpos = setx;
-			ypos = sety;
-			MakeMove(gameTime, newRect, setDepth);
-		}
-
-		#endregion
-	}
+    #endregion
+  }
 }
