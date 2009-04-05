@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using XnaTetris.Helpers;
 using XnaTetris.Game;
@@ -19,11 +16,10 @@ namespace XnaTetris.Interface
 	{
 		#region Variables
 
-		private Rectangle rect;
+		private readonly Rectangle rect;
 
-		private SpriteHelper generalSprite;
-		private SpriteHelper hilightSptite;
-		private SpriteHelper pressedSprite;
+		private readonly SpriteHelper generalSprite;
+		private readonly SpriteHelper hilightSptite;
 
 		private ButtonState currentState;
 
@@ -33,12 +29,19 @@ namespace XnaTetris.Interface
 
 		#region Constructor
 
-		public Button(LinesGame setGame, Rectangle setRect, SpriteHelper setGeneralSprite)
-			 : base(setGame)
+		public Button(Microsoft.Xna.Framework.Game setGame, Rectangle setRect, SpriteHelper setGeneralSprite)
+      : this(setGame, setRect, setGeneralSprite, setGeneralSprite)
 		{
-			rect = setRect;
-			generalSprite = hilightSptite = pressedSprite = setGeneralSprite;
 		}
+
+    public Button(Microsoft.Xna.Framework.Game setGame, Rectangle setRect,
+      SpriteHelper setGeneralSprite, SpriteHelper setHilightedSprite)
+      : base(setGame)
+    {
+      rect = setRect;
+      generalSprite = setGeneralSprite;
+      hilightSptite = setHilightedSprite;
+    }
 
 		#endregion
 
@@ -56,11 +59,6 @@ namespace XnaTetris.Interface
 				case ButtonState.ButtonHilight:
 					{
 						hilightSptite.Render(rect);
-						break;
-					}
-				case ButtonState.ButtonPressed:
-					{
-						pressedSprite.Render(rect);
 						break;
 					}
 				default:
@@ -81,16 +79,26 @@ namespace XnaTetris.Interface
 				if (Serv.PointInRectangle(Serv.CorrectPositionWithGameScale(Input.MousePos), rect))
 					HandleMouseClick();
 			}
-			else if (Serv.PointInRectangle(Serv.CorrectPositionWithGameScale(Input.MousePos), rect))
-				HandleMouseOver();
+			else 
+      {
+        HandleMouseOver(Serv.PointInRectangle(Serv.CorrectPositionWithGameScale(Input.MousePos), rect));
+      }
 
 			base.Update(gameTime);
 		}
 
-		private void HandleMouseOver()
+		private void HandleMouseOver(bool isOver)
 		{
-			if (currentState != ButtonState.ButtonHilight)
-				currentState = ButtonState.ButtonHilight;
+      if (isOver)
+      {
+        if (currentState != ButtonState.ButtonHilight)
+          currentState = ButtonState.ButtonHilight;
+      }
+      else
+      {
+        if (currentState != ButtonState.ButtonGeneral)
+          currentState = ButtonState.ButtonGeneral;
+      }
 		}
 
 		private void HandleMouseClick()
