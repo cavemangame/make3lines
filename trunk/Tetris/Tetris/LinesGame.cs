@@ -206,8 +206,8 @@ namespace XnaTetris
       Score = 0;
       timer = 0;
       curLevelNumber = 0;
-      menu.Enabled = true;
-      menu.EnableButtons(true);
+      menu.EnableComponents(true);
+      blocksGrid.EnableComponents(false);
       GameState = Serv.GameState.GameStateMenu;
     }
 
@@ -268,8 +268,8 @@ namespace XnaTetris
     {
       GameState = Serv.GameState.GameStateRunning;
       Score = 0;
-      menu.Enabled = false;
-      menu.EnableButtons(false);
+      menu.EnableComponents(false);
+      blocksGrid.EnableComponents(true);
       StartNextLevel();
     }
   }
