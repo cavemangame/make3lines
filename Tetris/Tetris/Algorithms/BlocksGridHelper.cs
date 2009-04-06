@@ -88,7 +88,7 @@ namespace XnaTetris.Algorithms
     /// Finds lines and mark lines' blocks as Destroyed
     /// </summary>
     /// <returns>true if any line was found</returns>
-    private bool FindNLines()
+    private bool FindLines()
     {
       bool result = false;
 
@@ -142,7 +142,7 @@ namespace XnaTetris.Algorithms
     #region Destroy Blocks
     public bool FindAndDestroyLines(GameTime gameTime)
     {
-      bool result = FindNLines();
+      bool result = FindLines();
 
       if (result)
       {
@@ -188,9 +188,13 @@ namespace XnaTetris.Algorithms
 
         for (int y = destroyedBlocksCount - 1; y >= 0; -- y)
         {
-           blocksGrid.AddNewRandomBlock(x, y);
-//           blocksGrid.AddNewRandomBlock(x, y, blocksGrid.Grid[i, jj].Type, 2); // TODO: add luck?
+          // TODO: add luck?
+          Block block = blocksGrid.GetNewRandomBlock(x, y - destroyedBlocksCount);
+
+          blocksGrid.Grid[x, y] = block;
+          block.MakeMove(gameTime, GetRectangle(x, y), x, y);
         }
+
       }
     }
     #endregion

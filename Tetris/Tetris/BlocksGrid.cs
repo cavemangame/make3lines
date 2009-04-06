@@ -75,9 +75,9 @@ namespace XnaTetris
           // repeat until the board is in stable state
           while (true)
           {
-            AddNewRandomBlock(x, y);
+            Block curBlock = GetNewRandomBlock(x, y);
 
-            Block curBlock = Grid[x, y];
+            Grid[x, y] = curBlock;
 
             // TODO: use blocksGridHelper
             if ((x < 2 || !curBlock.Type.Equals(Grid[x - 1, y].Type) || !curBlock.Type.Equals(Grid[x - 2, y].Type)) &&
@@ -190,21 +190,27 @@ namespace XnaTetris
       }
     }
 
-    public void AddNewRandomBlock(int x, int y)
+    public Block GetNewRandomBlock(int x, int y)
     {
-      Grid[x, y] = (BlockFactory.GetBlockFactory(LinesGame).GetNewBlock(BlockFactory.GetRandomBlockType(),
-                                                                        blocksGridHelper.GetRectangle(x, y), x, y));
-      Grid[x, y].StartMove += BlocksGrid_StartMove;
-      Grid[x, y].EndMove += BlocksGrid_EndMove;
+      Block block = (BlockFactory.GetBlockFactory(LinesGame).GetNewBlock(
+        BlockFactory.GetRandomBlockType(), blocksGridHelper.GetRectangle(x, y), x, y));
+
+      block.StartMove += BlocksGrid_StartMove;
+      block.EndMove += BlocksGrid_EndMove;
+
+      return block;
     }
 
-    public void AddNewRandomBlock(int x, int y, BlockFactory.BlockType oldType, int luck)
+    public Block GetNewRandomBlock(int x, int y, BlockFactory.BlockType oldType, int luck)
     {
-      Grid[x, y] = (BlockFactory.GetBlockFactory(LinesGame).GetNewBlock(
+      Block block = (BlockFactory.GetBlockFactory(LinesGame).GetNewBlock(
         RandomBlockHelper.GenerateNewBlockType(oldType, luck),
         blocksGridHelper.GetRectangle(x, y), x, y));
-      Grid[x, y].StartMove += BlocksGrid_StartMove;
-      Grid[x, y].EndMove += BlocksGrid_EndMove;
+      
+      block.StartMove += BlocksGrid_StartMove;
+      block.EndMove += BlocksGrid_EndMove;
+
+      return block;
     }
 
     void BlocksGrid_StartMove(object sender, EventArgs e)
