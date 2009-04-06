@@ -2,7 +2,6 @@ using System;
 using Microsoft.Xna.Framework;
 using XnaTetris.Game;
 using XnaTetris.Helpers;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace XnaTetris.Blocks
 {
@@ -45,7 +44,7 @@ namespace XnaTetris.Blocks
 
     #region Свойства
     public abstract BlockFactory.BlockType Type { get; }
-
+    public LinesGame LinesGame { get { return Game as LinesGame; } }
     public bool IsClicked { get; set; }
     public Rectangle BlockRectangle { get; set; }
     public bool IsDestroyed { get; set; }
@@ -57,10 +56,15 @@ namespace XnaTetris.Blocks
 
     public override void Draw(GameTime gameTime)
     {
-      if (PointInBlock(Serv.CorrectPositionWithGameScale(Input.MousePos)) && (Game as LinesGame).IsBoardInStableState())
+      if (PointInBlock(Serv.CorrectPositionWithGameScale(Input.MousePos)) &&
+          LinesGame.IsBoardInStableState())
+      {
         hiblock.Render(BlockRectangle);
+      }
       else
+      {
         block.Render(BlockRectangle);
+      }
 
       if (IsClicked)
         ContentSpace.selectionBlock.Render(BlockRectangle);
@@ -106,6 +110,25 @@ namespace XnaTetris.Blocks
       blockAnimator = new BlockAnimator(BlockRectangle, destRectangle, gameTime, movePathLength * BlockAnimator.DEFAULT_MOVE_TIME);
       StartMove(this, EventArgs.Empty);
     }
+
+//    private bool IsInsideBoard()
+//    {
+//      return BlockRectangle.Y >= 35;
+//    }
+
+//    private void RenderVisiblePart()
+//    {
+//      if (BlockRectangle.Y + BlockRectangle.Height <= 35)
+//      {
+//        return;
+//      }
+
+//      Rectangle gfxRect = new Rectangle(block.gfxRect.X, block.gfxRect.Y + 35 - BlockRectangle.Y,
+//                                        block.gfxRect.Width, BlockRectangle.Height - 35 + BlockRectangle.Y);
+//      Rectangle rect =  new Rectangle(BlockRectangle.X, 35, BlockRectangle.Width, BlockRectangle.Height - 35 + BlockRectangle.Y);
+
+//      block.Render(rect, Color.White, gfxRect);
+//    }
 
     public abstract int GetScore(int N);
   }
