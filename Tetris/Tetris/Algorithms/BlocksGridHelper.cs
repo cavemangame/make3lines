@@ -186,7 +186,10 @@ namespace XnaTetris.Algorithms
           blocksGrid.Grid[x, y].MakeMove(gameTime, GetRectangle(x, y + destroyedBlocksCount), x, y + destroyedBlocksCount);
         }
 
-//          blocksGrid.AddNewRandomBlock(i, 0); // TODO: add luck?
+        for (int y = destroyedBlocksCount - 1; y >= 0; -- y)
+        {
+           blocksGrid.AddNewRandomBlock(x, y); // TODO: add luck?
+        }
       }
     }
 
