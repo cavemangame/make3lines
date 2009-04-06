@@ -26,6 +26,8 @@ namespace XnaTetris.Game
     /// Font for rendering text
     /// </summary>
     TextureFont font;
+
+    private TextHelper textHelper;
     #endregion
 
     #region Properties
@@ -61,7 +63,7 @@ namespace XnaTetris.Game
     protected override void LoadContent()
     {
       font = new TextureFont(graphics.GraphicsDevice, content);
-
+      textHelper = new TextHelper(graphics.GraphicsDevice);
       base.LoadContent();
     } // LoadContent
 
@@ -97,7 +99,7 @@ namespace XnaTetris.Game
       // Draw all sprites and fonts
       SpriteHelper.DrawSprites(Width, Height);
       font.WriteAll();
-
+      textHelper.WriteAll();
       base.Draw(gameTime);
     } // Draw(gameTime)
     #endregion
