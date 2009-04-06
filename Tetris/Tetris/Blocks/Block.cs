@@ -23,7 +23,7 @@ namespace XnaTetris.Blocks
 
     #region Конструктор
 
-    public Block(LinesGame setGame, Rectangle setBlockRect, SpriteHelper setBlock, int x, int y)
+    protected Block(Microsoft.Xna.Framework.Game setGame, Rectangle setBlockRect, SpriteHelper setBlock, int x, int y)
       : base(setGame)
     {
       BlockRectangle = setBlockRect;
@@ -62,14 +62,11 @@ namespace XnaTetris.Blocks
 
       if (isMoving)
       {
+        BlockRectangle = blockAnimator.CurrentRectangle(gameTime);
         if (blockAnimator.IsMoveEnded(gameTime))
         {
           isMoving = false;
           EndMove(this, EventArgs.Empty);
-        }
-        else
-        {
-          BlockRectangle = blockAnimator.CurrentRectangle(gameTime);
         }
       }
     }
@@ -86,18 +83,15 @@ namespace XnaTetris.Blocks
       IsClicked = !IsClicked;
     }
 
-    public void MakeMove(GameTime gameTime, Rectangle newRectangle)
+    public void MakeMove(GameTime gameTime, Rectangle destRectangle, int destX, int destY)
     {
-      isMoving = true;
-      blockAnimator = new BlockAnimator(BlockRectangle, newRectangle, gameTime);
-      StartMove(this, EventArgs.Empty);
-    }
+      int movePathLength = Math.Max(Math.Abs(X - destX), Math.Abs(Y - destY));
 
-    public void MakeMove(GameTime gameTime, Rectangle newRect, int setx, int sety)
-    {
-      X = setx;
-      Y = sety;
-      MakeMove(gameTime, newRect);
+      X = destX;
+      Y = destY;
+      isMoving = true;
+      blockAnimator = new BlockAnimator(BlockRectangle, destRectangle, gameTime, movePathLength * BlockAnimator.DEFAULT_MOVE_TIME);
+      StartMove(this, EventArgs.Empty);
     }
 
     public abstract int GetScore(int N);

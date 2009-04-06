@@ -8,27 +8,29 @@ namespace XnaTetris.Blocks
   /// </summary>
   class BlockAnimator
   {
+    public const int DEFAULT_MOVE_TIME = 500;
+
     #region Переменные
 
-    private readonly int moveTime = 500;
-    private Rectangle oldRect;
-    private readonly Rectangle newRect;
+    private readonly int moveTime;
+    private readonly Rectangle srcRect;
+    private readonly Rectangle destRect;
     private readonly TimeSpan startTime;
 
     #endregion
 
     #region Конструкторы
 
-    public BlockAnimator(Rectangle setOldRect, Rectangle setNewRect, GameTime gameTime)
+    public BlockAnimator(Rectangle srcRect, Rectangle destRect, GameTime gameTime)
+      : this(srcRect, destRect, gameTime, DEFAULT_MOVE_TIME)
     {
-      oldRect = setOldRect;
-      newRect = setNewRect;
-      startTime = gameTime.TotalRealTime;
     }
 
-    public BlockAnimator(Rectangle setOldRect, Rectangle setNewRect, GameTime gameTime, int setMoveTime)
-      : this(setOldRect, setNewRect, gameTime)
+    public BlockAnimator(Rectangle srcRect, Rectangle destRect, GameTime gameTime, int setMoveTime)
     {
+      this.srcRect = srcRect;
+      this.destRect = destRect;
+      startTime = gameTime.TotalRealTime;
       moveTime = setMoveTime;
     }
 
@@ -38,26 +40,31 @@ namespace XnaTetris.Blocks
 
     public Rectangle CurrentRectangle(GameTime gameTime)
     {
-      int pastPartTime = (gameTime.TotalRealTime - startTime).Milliseconds;
+      long currentMovingTime = GetCurrentMovingTime(gameTime);
 
-      if (pastPartTime >= moveTime)
+      if (currentMovingTime >= moveTime)
       {
-        return newRect;
+        return destRect;
       }
 
-      float percentMove = (float)pastPartTime / moveTime;
+      float percentMove = (float)currentMovingTime / moveTime;
 
-      return new Rectangle((int)((newRect.X - oldRect.X) * percentMove) + oldRect.X,
-        (int)((newRect.Y - oldRect.Y) * percentMove) + oldRect.Y,
-        (int)((newRect.Width - oldRect.Width) * percentMove) + oldRect.Width,
-        (int)((newRect.Height - oldRect.Height) * percentMove) + oldRect.Height);
+      return new Rectangle((int)((destRect.X - srcRect.X) * percentMove) + srcRect.X,
+        (int)((destRect.Y - srcRect.Y) * percentMove) + srcRect.Y,
+        (int)((destRect.Width - srcRect.Width) * percentMove) + srcRect.Width,
+        (int)((destRect.Height - srcRect.Height) * percentMove) + srcRect.Height);
     }
 
     public bool IsMoveEnded(GameTime gameTime)
     {
-      return ((gameTime.TotalRealTime - startTime).Milliseconds >= moveTime);
+      return GetCurrentMovingTime(gameTime) >= moveTime;
     }
 
     #endregion
+
+    private long GetCurrentMovingTime(GameTime gameTime)
+    {
+      return (gameTime.TotalRealTime - startTime).Ticks/TimeSpan.TicksPerMillisecond;
+    }
   }
 }

@@ -43,7 +43,6 @@ namespace XnaTetris
 
     public long Timer { get; set; }
     public int Score { get; set; }
-    internal bool IsMoving { get; set; }
     public Serv.GameState GameState { get; set; }
 
     #endregion
