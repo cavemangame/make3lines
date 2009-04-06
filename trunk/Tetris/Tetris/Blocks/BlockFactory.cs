@@ -7,7 +7,6 @@ namespace XnaTetris.Blocks
 {
   class BlockFactory
   {
-    private Texture2D greenTexture, redTexture, blueTexture, yellowTexture, blackTexture, someTexture;
     private SpriteHelper greenBlock, redBlock, blueBlock, yellowBlock, blackBlock, someBlock;
     private readonly LinesGame game;
 
@@ -35,21 +34,13 @@ namespace XnaTetris.Blocks
       {
         game.Content.RootDirectory = "Content";
 
-        // Load block textures
-        greenTexture = game.Content.Load<Texture2D>("GreenBlock");
-        redTexture = game.Content.Load<Texture2D>("RedBlock");
-        blueTexture = game.Content.Load<Texture2D>("BlueBlock");
-        yellowTexture = game.Content.Load<Texture2D>("YellowBlock");
-        blackTexture = game.Content.Load<Texture2D>("BlackBlock");
-        someTexture = game.Content.Load<Texture2D>("SomeBlock");
-
         // Create block sprites
-        greenBlock = new SpriteHelper(greenTexture, null);
-        redBlock = new SpriteHelper(redTexture, null);
-        blueBlock = new SpriteHelper(blueTexture, null);
-        yellowBlock = new SpriteHelper(yellowTexture, null);
-        blackBlock = new SpriteHelper(blackTexture, null);
-        someBlock = new SpriteHelper(someTexture, null);
+        greenBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksGeneral"), new Rectangle(0, 0, 64, 64));
+        redBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksGeneral"), new Rectangle(64, 0, 64, 64));
+        blueBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksGeneral"), new Rectangle(64*2, 0, 64, 64));
+        yellowBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksGeneral"), new Rectangle(64*3, 0, 64, 64));
+        blackBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksGeneral"), new Rectangle(64*4, 0, 64, 64));
+        someBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksGeneral"), new Rectangle(64*5, 0, 64, 64));
       }
     }
 
