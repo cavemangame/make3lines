@@ -11,6 +11,7 @@ namespace XnaTetris.Blocks
     #region Переменные
 
     private readonly SpriteHelper block;
+    private readonly SpriteHelper hiblock;
     private BlockAnimator blockAnimator;
 
     private bool isMoving;
@@ -23,13 +24,21 @@ namespace XnaTetris.Blocks
 
     #region Конструктор
 
-    protected Block(Microsoft.Xna.Framework.Game setGame, Rectangle setBlockRect, SpriteHelper setBlock, int x, int y)
+    protected Block(Microsoft.Xna.Framework.Game setGame, Rectangle setBlockRect, SpriteHelper setBlock, 
+      SpriteHelper setHiBlock, int x, int y)
       : base(setGame)
     {
       BlockRectangle = setBlockRect;
       block = setBlock;
+      hiblock = setHiBlock;
       X = x;
       Y = y;
+    }
+
+    protected Block(Microsoft.Xna.Framework.Game setGame, Rectangle setBlockRect, SpriteHelper setBlock, 
+       int x, int y)
+      : this(setGame, setBlockRect, setBlock, setBlock, x, y)
+    {
     }
 
     #endregion
@@ -48,9 +57,11 @@ namespace XnaTetris.Blocks
 
     public override void Draw(GameTime gameTime)
     {
-     // Color color = IsClicked ? Color.LightGray : Color.White;
+      if (PointInBlock(Serv.CorrectPositionWithGameScale(Input.MousePos)))
+        hiblock.Render(BlockRectangle);
+      else
+        block.Render(BlockRectangle);
 
-      block.Render(BlockRectangle);
       if (IsClicked)
         ContentSpace.selectionBlock.Render(BlockRectangle);
 

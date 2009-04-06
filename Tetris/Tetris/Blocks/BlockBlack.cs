@@ -8,8 +8,8 @@ namespace XnaTetris.Blocks
 {
 	class BlockBlack : Block
 	{
-		public BlockBlack(LinesGame setGame, Rectangle setBlockRect, SpriteHelper setBlock, int x, int y)
-			: base(setGame, setBlockRect, setBlock, x, y)
+		public BlockBlack(LinesGame setGame, Rectangle setBlockRect, SpriteHelper setBlock, SpriteHelper setHiBlock, int x, int y)
+			: base(setGame, setBlockRect, setBlock, setHiBlock, x, y)
 		{
 		}
 

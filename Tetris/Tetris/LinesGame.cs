@@ -144,6 +144,10 @@ namespace XnaTetris
         TextureFont.WriteText(40, 140, currentLevel.LevelString);
         TextureFont.WriteText(40, 180, Serv.GetTimeString(Timer));
 
+        Point p = Serv.CorrectPositionWithGameScale(Input.MousePos);
+        TextureFont.WriteText(40, 220, String.Format("Pos: {0}, {1}", p.X, p.Y));
+
+
         if (GameState == Serv.GameState.GameStatePause)
           TextureFont.WriteText(610, 370, "PAUSE", Color.AliceBlue);
       }

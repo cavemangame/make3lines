@@ -1,7 +1,9 @@
 #region Using directive
 
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Sounds;
 using XnaTetris.Graphics;
 using XnaTetris.Helpers;
@@ -41,16 +43,19 @@ namespace XnaTetris.Game
     {
       graphics = new GraphicsDeviceManager(this);
       content = new ContentManager(Services);
+
     } // BaseGame
 
     protected override void Initialize()
     {
       // Remember resolution
+
       Width = graphics.GraphicsDevice.Viewport.Width;
       Height = graphics.GraphicsDevice.Viewport.Height;
 
       base.Initialize();
     } // Initialize()
+
 
 
     protected override void LoadContent()
