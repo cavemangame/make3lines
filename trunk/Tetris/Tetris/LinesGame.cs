@@ -28,7 +28,6 @@ namespace XnaTetris
 
     private Level currentLevel;
     private int curLevelNumber;
-    private int elapsedGameMs;
 
     /// <summary>
     /// Interface
@@ -95,23 +94,29 @@ namespace XnaTetris
     #endregion
 
     #region Update
-
     protected override void Update(GameTime gameTime)
     {
-      int frameMs = (int)gameTime.ElapsedGameTime.TotalMilliseconds;
-      elapsedGameMs += frameMs;
+      if (IsBoardInStableState())
+      {
+        int frameMs = (int)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-      if (Input.KeyboardSpaceJustPressed)
-        SetPauseUnpause();
+        if (Input.KeyboardSpaceJustPressed)
+        {
+          SetPauseUnpause();
+        }
 
-      if (GameState == Serv.GameState.GameStateRunning)
-        Timer -= frameMs;
-      if (GameState == Serv.GameState.GameStateRunning)
-        CheckForLoose();
+        if (GameState == Serv.GameState.GameStateRunning)
+        {
+          Timer -= frameMs;
+        }
+        if (GameState == Serv.GameState.GameStateRunning)
+        {
+          CheckForLoose();
+        }
+      }
 
       base.Update(gameTime);
-    }// Update(gameTime)
-
+    }
     #endregion
 
     #region Draw
@@ -241,6 +246,15 @@ namespace XnaTetris
       menu.EnableComponents(false);
       blocksGrid.EnableComponents(true);
       StartNextLevel();
+    }
+
+    /// <summary>
+    /// Determines if there are moving blocks on the board or not
+    /// </summary>
+    /// <returns>true if there are no moving blocks</returns>
+    public bool IsBoardInStableState()
+    {
+      return blocksGrid.ActiveBlocks == 0;
     }
   }
 }

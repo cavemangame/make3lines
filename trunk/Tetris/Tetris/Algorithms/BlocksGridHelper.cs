@@ -188,48 +188,10 @@ namespace XnaTetris.Algorithms
 
         for (int y = destroyedBlocksCount - 1; y >= 0; -- y)
         {
-           blocksGrid.AddNewRandomBlock(x, y); // TODO: add luck?
+           blocksGrid.AddNewRandomBlock(x, y);
+//           blocksGrid.AddNewRandomBlock(x, y, blocksGrid.Grid[i, jj].Type, 2); // TODO: add luck?
         }
       }
-    }
-
-    private void RemoveLines1(GameTime gameTime)
-    {
-      for (int j = BlocksGrid.GRID_HEIGHT - 1; j >= 0; j--)
-        RemoveHorizLine(gameTime, j);
-    }
-
-    private void RemoveHorizLine(GameTime gameTime, int j)
-    {
-      // подчищаем удаленные блоки с одновременным спуском столбцов, до тех пор, пока на линии останутся только
-      // неудаленные
-      bool flag = false;
-      for (int i = 0; i < BlocksGrid.GRID_WIDTH; i++)
-      {
-        if (blocksGrid.Grid[i, j].IsDestroyed)
-        {
-          DownBlockColumn(gameTime, i, j);
-          flag = true;
-        }
-      }
-      if (flag) RemoveHorizLine(gameTime, j);
-    }
-
-    private void DownBlockColumn(GameTime gameTime, int i, int jj)
-    {
-      if (jj > 0)
-      {
-        blocksGrid.Grid[i, jj].X = blocksGrid.Grid[i, jj].Y = -1;
-        blocksGrid.Grid[i, jj].BlockRectangle = Serv.EmptyRect;
-
-        for (int j = jj - 1; j >= 0; j--)
-        {
-          blocksGrid.Grid[i, j + 1] = blocksGrid.Grid[i, j];
-          blocksGrid.Grid[i, j].MakeMove(gameTime, GetRectangle(i, j + 1), i, j + 1);
-        }
-      }
-      // наверху сразу генерим новый
-      blocksGrid.AddNewRandomBlock(i, 0, blocksGrid.Grid[i, jj].Type, 2);
     }
     #endregion
 

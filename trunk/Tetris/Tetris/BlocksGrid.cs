@@ -15,13 +15,8 @@ namespace XnaTetris
     #endregion
 
     #region Variables
-    private readonly BlocksGridHelper finder;
-    private int _x1, _y1, _x2, _y2;
-
-    /// <summary>
-    /// how much blocks are moving now
-    /// </summary>
-    private int activeBlocks;
+    private readonly BlocksGridHelper blocksGridHelper;
+    private int lastSwapX1, lastSwapY1, lastSwapX2, lastSwapY2;
 
     /// <summary>
     /// true if current movement is swap (user action)
@@ -40,6 +35,12 @@ namespace XnaTetris
     public int BlockWidth { get; private set; }
     public int BlockHeight { get; private set; }
     public LinesGame LinesGame { get { return Game as LinesGame; }}
+
+    /// <summary>
+    /// how much blocks are moving now
+    /// </summary>
+    public int ActiveBlocks { get; private set; }
+
     #endregion
 
     #region Constructor
@@ -51,7 +52,7 @@ namespace XnaTetris
       BlockWidth = this.GridRectangle.Width / GRID_WIDTH;
       BlockHeight = this.GridRectangle.Height / GRID_HEIGHT;
       Grid = new Block[GRID_WIDTH, GRID_HEIGHT];
-      finder = new BlocksGridHelper(this);
+      blocksGridHelper = new BlocksGridHelper(this);
     }
     #endregion
 
@@ -78,7 +79,7 @@ namespace XnaTetris
 
             Block curBlock = Grid[x, y];
 
-            // TODO: use finder
+            // TODO: use blocksGridHelper
             if ((x < 2 || !curBlock.Type.Equals(Grid[x - 1, y].Type) || !curBlock.Type.Equals(Grid[x - 2, y].Type)) &&
                 (y < 2 || !curBlock.Type.Equals(Grid[x, y - 1].Type) || !curBlock.Type.Equals(Grid[x, y - 2].Type)))
             {
@@ -106,7 +107,7 @@ namespace XnaTetris
     private void UpdateClickedBlock(Point point, GameTime gameTime)
     {
       // don't allow to do anything until the board is in stable state
-      if (activeBlocks != 0)
+      if (ActiveBlocks != 0)
       {
         return;
       }
@@ -115,7 +116,7 @@ namespace XnaTetris
       {
         if (block.PointInBlock(Serv.CorrectPositionWithGameScale(point)))
         {
-          int count = finder.ClickedBlocksCount();
+          int count = blocksGridHelper.ClickedBlocksCount();
 
           if (count == 0)
           {
@@ -125,15 +126,15 @@ namespace XnaTetris
           {
             int xN, yN;
 
-            if (finder.NeighbourClickedBlock(block.X, block.Y, out xN, out yN))
+            if (blocksGridHelper.NeighbourClickedBlock(block.X, block.Y, out xN, out yN))
             {
               isSwap = true;
               block.ClickToBlock(gameTime);
-              _x1 = block.X;
-              _x2 = xN;
-              _y1 = block.Y;
-              _y2 = yN;
-              SwapBlocks(_x1, _y1, _x2, _y2, gameTime);
+              lastSwapX1 = block.X;
+              lastSwapX2 = xN;
+              lastSwapY1 = block.Y;
+              lastSwapY2 = yN;
+              SwapBlocks(lastSwapX1, lastSwapY1, lastSwapX2, lastSwapY2, gameTime);
             }
             else
             {
@@ -166,8 +167,8 @@ namespace XnaTetris
     #region functions
     private void SwapBlocks(int x1, int y1, int x2, int y2, GameTime gameTime)
     {
-      Grid[x1, y1].MakeMove(gameTime, finder.GetRectangle(x2, y2), x2, y2);
-      Grid[x2, y2].MakeMove(gameTime, finder.GetRectangle(x1, y1), x1, y1);
+      Grid[x1, y1].MakeMove(gameTime, blocksGridHelper.GetRectangle(x2, y2), x2, y2);
+      Grid[x2, y2].MakeMove(gameTime, blocksGridHelper.GetRectangle(x1, y1), x1, y1);
 
       Block temp = Grid[x1, y1];
 
@@ -192,7 +193,7 @@ namespace XnaTetris
     public void AddNewRandomBlock(int x, int y)
     {
       Grid[x, y] = (BlockFactory.GetBlockFactory(LinesGame).GetNewBlock(BlockFactory.GetRandomBlockType(),
-                                                                        finder.GetRectangle(x, y), x, y));
+                                                                        blocksGridHelper.GetRectangle(x, y), x, y));
       Grid[x, y].StartMove += BlocksGrid_StartMove;
       Grid[x, y].EndMove += BlocksGrid_EndMove;
     }
@@ -201,7 +202,7 @@ namespace XnaTetris
     {
       Grid[x, y] = (BlockFactory.GetBlockFactory(LinesGame).GetNewBlock(
         RandomBlockHelper.GenerateNewBlockType(oldType, luck),
-        finder.GetRectangle(x, y), x, y));
+        blocksGridHelper.GetRectangle(x, y), x, y));
       Grid[x, y].StartMove += BlocksGrid_StartMove;
       Grid[x, y].EndMove += BlocksGrid_EndMove;
     }
@@ -213,7 +214,7 @@ namespace XnaTetris
         return;
       }
 
-      activeBlocks += 1;
+      ActiveBlocks += 1;
     }
 
     void BlocksGrid_EndMove(object sender, EventArgs e)
@@ -223,8 +224,8 @@ namespace XnaTetris
         return;
       }
 
-      activeBlocks -= 1;
-      if (activeBlocks != 0)
+      ActiveBlocks -= 1;
+      if (ActiveBlocks != 0)
       {
         return;
       }
@@ -237,14 +238,14 @@ namespace XnaTetris
 
       Block block = sender as Block;
       GameTime gameTime = block.blockGameTime;
-      bool successfulMovement = finder.FindAndDestroyLines(gameTime);
+      bool successfulMovement = blocksGridHelper.FindAndDestroyLines(gameTime);
 
       if (isSwap && !successfulMovement)
       {
         // undo the movement
         isUndo = true;
         LinesGame.Timer -= 5000;
-        SwapBlocks(_x1, _y1, _x2, _y2, gameTime);
+        SwapBlocks(lastSwapX1, lastSwapY1, lastSwapX2, lastSwapY2, gameTime);
       }
       isSwap = false;
     }
