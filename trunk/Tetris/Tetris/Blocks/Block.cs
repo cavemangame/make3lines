@@ -48,9 +48,11 @@ namespace XnaTetris.Blocks
 
     public override void Draw(GameTime gameTime)
     {
-      Color color = IsClicked ? Color.LightGray : Color.White;
+     // Color color = IsClicked ? Color.LightGray : Color.White;
 
-      block.Render(BlockRectangle, color);
+      block.Render(BlockRectangle);
+      if (IsClicked)
+        ContentSpace.selectionBlock.Render(BlockRectangle);
 
       base.Draw(gameTime);
     }
