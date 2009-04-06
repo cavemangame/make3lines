@@ -80,7 +80,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithms\FindLines.cs" />
+    <Compile Include="Algorithms\BlocksGridHelper.cs" />
     <Compile Include="Algorithms\Level.cs" />
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="BlocksGrid.cs" />
