@@ -107,6 +107,7 @@
     <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="Helpers\SpriteHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Helpers\TextHelper.cs" />
     <Compile Include="Helpers\TextureFont.cs" />
     <Compile Include="Helpers\Vector3Helper.cs" />
     <Compile Include="Helpers\WindowsHelper.cs" />

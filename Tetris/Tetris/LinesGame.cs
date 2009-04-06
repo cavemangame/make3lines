@@ -41,6 +41,7 @@ namespace XnaTetris
     public long Timer { get; set; }
     public int Score { get; set; }
     public Serv.GameState GameState { get; set; }
+    public SpriteFont NormalFont { get; set; }
 
     #endregion
 
@@ -79,6 +80,8 @@ namespace XnaTetris
       backgroundBigBox = new SpriteHelper(content.Load<Texture2D>("BackgroundBigBox"), null);
       buttonPause = new SpriteHelper(content.Load<Texture2D>("PauseButton"), null);
       buttonExit = new SpriteHelper(content.Load<Texture2D>("ExitButton"), null);
+
+      NormalFont = content.Load<SpriteFont>("normalfont");
 
       // Create interface elements
       btnPause = new Button(this, rectPauseButton, buttonPause);
@@ -149,9 +152,7 @@ namespace XnaTetris
         TextureFont.WriteText(40, 140, currentLevel.LevelString);
         TextureFont.WriteText(40, 180, Serv.GetTimeString(Timer));
 
-        Point p = Serv.CorrectPositionWithGameScale(Input.MousePos);
-        TextureFont.WriteText(40, 220, String.Format("Pos: {0}, {1}", p.X, p.Y));
-
+        TextHelper.DrawText(NormalFont, "FACK OFF", 40, 220);
 
         if (GameState == Serv.GameState.GameStatePause)
           TextureFont.WriteText(610, 370, "PAUSE", Color.AliceBlue);
