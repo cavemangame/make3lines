@@ -41,6 +41,7 @@ namespace XnaTetris.Blocks
         ContentSpace.yellowBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksGeneral"), new Rectangle(64 * 3, 0, 64, 64));
         ContentSpace.blackBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksGeneral"), new Rectangle(64 * 4, 0, 64, 64));
         ContentSpace.someBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksGeneral"), new Rectangle(64 * 5, 0, 64, 64));
+        ContentSpace.selectionBlock = new SpriteHelper(game.Content.Load<Texture2D>("Selection"), null);
       }
     }
 
