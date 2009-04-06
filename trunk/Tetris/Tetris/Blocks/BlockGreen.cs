@@ -8,8 +8,8 @@ namespace XnaTetris.Blocks
 {
 	class BlockGreen : Block
 	{
-		public BlockGreen(LinesGame setGame, Rectangle setBlockRect, SpriteHelper setBlock, int x, int y)
-			: base(setGame, setBlockRect, setBlock, x, y)
+		public BlockGreen(LinesGame setGame, Rectangle setBlockRect, SpriteHelper setBlock, SpriteHelper setHiBlock, int x, int y)
+			: base(setGame, setBlockRect, setBlock, setHiBlock, x, y)
 		{
 		}
 
