@@ -24,8 +24,6 @@ namespace XnaTetris
     private Menu menu;
 
     // graphics
-    Texture2D backgroundTexture, backgroundSmallBoxTexture, backgroundBigBoxTexture,
-      buttonPauseTexture, buttonExitTexture;
     SpriteHelper background, backgroundSmallBox, backgroundBigBox, buttonPause, buttonExit;
 
     private Level currentLevel;
@@ -71,43 +69,17 @@ namespace XnaTetris
     {
       // Load all our content
       content.RootDirectory = "Content";
-      backgroundTexture = content.Load<Texture2D>("skybackground");
-      backgroundSmallBoxTexture = content.Load<Texture2D>("BackgroundSmallBox");
-      backgroundBigBoxTexture = content.Load<Texture2D>("BackgroundBigBox");
-      buttonPauseTexture = content.Load<Texture2D>("PauseButton");
-      buttonExitTexture = content.Load<Texture2D>("ExitButton");
 
-      // Load menu content
-      ContentSpace.menuButtonStart = new SpriteHelper(content.Load<Texture2D>("MenuButtonStart"),
-        new Rectangle(0, 0, 200, 50));
-      ContentSpace.menuHiButtonStart = new SpriteHelper(content.Load<Texture2D>("MenuButtonStart"),
-        new Rectangle(200, 0, 200, 50));
-      ContentSpace.menuButtonExit = new SpriteHelper(content.Load<Texture2D>("MenuButtonExit"), 
-        new Rectangle(0, 0, 200, 50));
-      ContentSpace.menuHiButtonExit = new SpriteHelper(content.Load<Texture2D>("MenuButtonExit"),
-        new Rectangle(200, 0, 200, 50));
-      ContentSpace.menuButtonHelp = new SpriteHelper(content.Load<Texture2D>("MenuButtonHelp"), 
-        new Rectangle(0, 0, 200, 50));
-      ContentSpace.menuHiButtonHelp = new SpriteHelper(content.Load<Texture2D>("MenuButtonHelp"),
-        new Rectangle(200, 0, 200, 50));
-      ContentSpace.menuButtonHiScore = new SpriteHelper(content.Load<Texture2D>("MenuButtonHiScore"),
-        new Rectangle(0, 0, 200, 50));
-      ContentSpace.menuHiButtonHiScore = new SpriteHelper(content.Load<Texture2D>("MenuButtonHiScore"),
-        new Rectangle(200, 0, 200, 50));
-      ContentSpace.menuButtonAuthors = new SpriteHelper(content.Load<Texture2D>("MenuButtonAuthors"),
-        new Rectangle(0, 0, 200, 50));
-      ContentSpace.menuHiButtonAuthors = new SpriteHelper(content.Load<Texture2D>("MenuButtonAuthors"),
-        new Rectangle(200, 0, 200, 50));
       menu = new Menu(this, new Rectangle(0, 0, 1024, 768),
         new SpriteHelper(content.Load<Texture2D>("MenuBackground"), null));
       Components.Add(menu);
 
       // Create all sprites
-      background = new SpriteHelper(backgroundTexture, null);
-      backgroundSmallBox = new SpriteHelper(backgroundSmallBoxTexture, null);
-      backgroundBigBox = new SpriteHelper(backgroundBigBoxTexture, null);
-      buttonPause = new SpriteHelper(buttonPauseTexture, null);
-      buttonExit = new SpriteHelper(buttonExitTexture, null);
+      background = new SpriteHelper(content.Load<Texture2D>("skybackground"), null);
+      backgroundSmallBox = new SpriteHelper(content.Load<Texture2D>("BackgroundSmallBox"), null);
+      backgroundBigBox = new SpriteHelper(content.Load<Texture2D>("BackgroundBigBox"), null);
+      buttonPause = new SpriteHelper(content.Load<Texture2D>("PauseButton"), null);
+      buttonExit = new SpriteHelper(content.Load<Texture2D>("ExitButton"), null);
 
       // Create interface elements
       btnPause = new Button(this, rectPauseButton, buttonPause);

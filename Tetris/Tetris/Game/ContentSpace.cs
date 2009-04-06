@@ -14,6 +14,7 @@ namespace XnaTetris.Game
     public static SpriteHelper menuHiButtonStart, menuHiButtonExit, menuHiButtonHelp, menuHiButtonHiScore,
       menuHiButtonAuthors;
 
+    public static SpriteHelper greenBlock, redBlock, blueBlock, yellowBlock, blackBlock, someBlock;
 
     private ContentSpace()
     {
