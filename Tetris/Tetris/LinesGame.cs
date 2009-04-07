@@ -157,7 +157,7 @@ namespace XnaTetris
         TextureFont.WriteText(40, 140, currentLevel.LevelString);
         TextureFont.WriteText(40, 180, Serv.GetTimeString(Timer));
 
-        TextHelper.DrawText(NormalFont, "FACK OFF", 40, 220);
+        TextHelper.DrawText(NormalFont, "FACK OFF", 40, 220, Color.SteelBlue, 0.76f);
 
         if (GameState == Serv.GameState.GameStatePause)
           TextureFont.WriteText(610, 370, "PAUSE", Color.AliceBlue);
