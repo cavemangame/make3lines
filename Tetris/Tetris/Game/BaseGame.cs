@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Sounds;
-using XnaTetris.Graphics;
 using XnaTetris.Helpers;
 
 #endregion

@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Helpers;
-using XnaTetris.Graphics;
 using XnaTetris.Game;
 using XnaTetris.Algorithms;
 using XnaTetris.Interface;
