@@ -116,11 +116,13 @@ namespace XnaTetris.Blocks
 
     private void RenderVisiblePart()
     {
-      if (BlockRectangle.Y + BlockRectangle.Height <= 35)
+      int minY = LinesGame.GRID_RECTANGLE_Y_COORDINATE;
+
+      if (BlockRectangle.Y + BlockRectangle.Height <= minY)
       {
         return;
       }
-      if (BlockRectangle.Y >= 35)
+      if (BlockRectangle.Y >= minY)
       {
         if (LinesGame.IsRemoveProcess && IsDestroyed)
         {
@@ -137,10 +139,10 @@ namespace XnaTetris.Blocks
       }
 
       float c = (float)block.GfxRect.Height / BlockRectangle.Height;
-      Rectangle gfxRect = new Rectangle(block.GfxRect.X, (int)((block.GfxRect.Y + 35 - BlockRectangle.Y) * c),
-                                        block.GfxRect.Width, (int)((BlockRectangle.Height - 35 + BlockRectangle.Y) * c));
-      Rectangle visibleRect =  new Rectangle(BlockRectangle.X, 35,
-                                      BlockRectangle.Width, BlockRectangle.Height - 35 + BlockRectangle.Y);
+      Rectangle gfxRect = new Rectangle(block.GfxRect.X, (int)((block.GfxRect.Y + minY - BlockRectangle.Y) * c),
+                                        block.GfxRect.Width, (int)((BlockRectangle.Height - minY + BlockRectangle.Y) * c));
+      Rectangle visibleRect = new Rectangle(BlockRectangle.X, minY,
+                                      BlockRectangle.Width, BlockRectangle.Height - minY + BlockRectangle.Y);
 
       block.Render(visibleRect, Color.White, gfxRect);
     }
