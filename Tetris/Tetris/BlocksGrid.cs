@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Blocks;
 using XnaTetris.Game;
 using XnaTetris.Helpers;
 using XnaTetris.Algorithms;
+using XnaTetris.Interface;
 
 namespace XnaTetris
 {
@@ -27,6 +30,12 @@ namespace XnaTetris
     /// true if current movement is undo after unsuccessful movement
     /// </summary>
     private bool isUndo;
+
+    /// <summary>
+    /// List of PopupText that currently showing over grid
+    /// </summary>
+    private List<PopupText> popupTexts = new List<PopupText>();
+
     #endregion
 
     #region Properties
@@ -107,6 +116,11 @@ namespace XnaTetris
       {
         block.Update(gameTime);
       }
+
+     /* foreach (PopupText popupText in popupTexts)
+      {
+        popupText.Update(gameTime);
+      }*/
     }
 
     private void UpdateClickedBlock(Point point, GameTime gameTime)
@@ -166,6 +180,11 @@ namespace XnaTetris
         {
           Grid[x, y].Draw(gameTime);
         }
+
+      foreach (PopupText popupText in popupTexts)
+      {
+        popupText.Draw(gameTime);
+      }
     }
     #endregion
 
@@ -287,6 +306,26 @@ namespace XnaTetris
       for (int x = 0; x < GRID_WIDTH; x++)
         for (int y = 0; y < GRID_HEIGHT; y++)
           Grid[x, y].Enabled = isEnable;
+    }
+
+    public void AddDestroyPopupText(long elapsedTime, Vector2 pos, string text)
+    {
+      Vector2 measure = LinesGame.NormalFont.MeasureString(text);
+      Vector2 corrPos = new Vector2(pos.X-measure.X/2, pos.Y-measure.Y/2);
+      PopupText popup = new PopupText(Game, elapsedTime, text, 3000, corrPos, new Vector2(corrPos.X, corrPos.Y - 30), 
+        LinesGame.NormalFont, 1.2f, 0.8f, Color.White, 255, 0);
+      popup.EndDrawing += popup_EndDrawing;
+      Game.Components.Add(popup);
+      popupTexts.Add(popup);
+    }
+
+    void popup_EndDrawing(object sender, EventArgs e)
+    {
+      if ((sender is PopupText) && popupTexts.Contains(sender as PopupText))
+      {
+        popupTexts.Remove(sender as PopupText);
+        Game.Components.Remove(sender as PopupText);
+      }
     }
     #endregion
   }

@@ -35,8 +35,6 @@ namespace XnaTetris
     /// </summary>
     private Button btnPause, btnExit;
 
-    private PopupText testPopupText;
-
     #endregion
 
     #region Properties
@@ -44,6 +42,7 @@ namespace XnaTetris
     public int Score { get; set; }
     public Serv.GameState GameState { get; set; }
     public SpriteFont NormalFont { get; set; }
+    public long ElapsedGameMs { get; set; }
 
     /// <summary>
     /// true if the game has just found lines
@@ -89,10 +88,6 @@ namespace XnaTetris
 
       NormalFont = content.Load<SpriteFont>("normalfont");
 
-      testPopupText = new PopupText(this, new GameTime(), "10", 5000, new Vector2(500, 100), new Vector2(500, 65), NormalFont,
-        2f, 1f, Color.White, 255, 0);
-      Components.Add(testPopupText);
-
       // Create interface elements
       btnPause = new Button(this, rectPauseButton, buttonPause);
       btnPause.ButtonAction += btnPause_ButtonAction;
@@ -136,6 +131,9 @@ namespace XnaTetris
 
     protected override void Draw(GameTime gameTime)
     {
+      int frameMs = (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+			ElapsedGameMs += frameMs;
+
       if (GameState == Serv.GameState.GameStateMenu)
       {
         menu.Draw(gameTime);
@@ -162,8 +160,7 @@ namespace XnaTetris
         TextureFont.WriteText(40, 140, currentLevel.LevelString);
         TextureFont.WriteText(40, 180, Serv.GetTimeString(Timer));
 
-        testPopupText.Draw(gameTime);
-        //TextHelper.DrawText(NormalFont, "FACK OFF", 40, 220, Color.SteelBlue, 0.76f);
+        TextHelper.DrawText(NormalFont, String.Format("Pos {0},{1}", Input.MousePos.X, Input.MousePos.Y), 40, 220, Color.SteelBlue, 0.76f);
 
         if (GameState == Serv.GameState.GameStatePause)
           TextureFont.WriteText(610, 370, "PAUSE", Color.AliceBlue);
@@ -278,5 +275,15 @@ namespace XnaTetris
       IsRemoveProcess = false;
       blocksGrid.RemoveLines(gameTime);
     }
+
+    /// <summary>
+    /// It's time to show lines
+    /// </summary>
+    /// <param name="gameTime"></param>
+   /* public void RemoveVisualizationWasFinished(GameTime gameTime)
+    {
+      IsRemoveProcess = false;
+      blocksGrid.RemoveLines(gameTime);
+    }*/
   }
 }
