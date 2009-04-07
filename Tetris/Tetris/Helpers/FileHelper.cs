@@ -1,145 +1,110 @@
-﻿// Project: XnaTetris, File: FileHelper.cs
-// Namespace: XnaTetris.Helpers, Class: FileHelper
-// Path: C:\code\XnaTetris\Helpers, Author: Abi
-// Code lines: 137, Size of file: 4,13 KB
-// Creation date: 15.10.2006 09:08
-// Last modified: 22.10.2006 18:03
-// Generated with Commenter by abi.exDream.com
-
 #region Using directives
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Storage;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Threading;
 #endregion
 
 namespace XnaTetris.Helpers
 {
-	/// <summary>
-	/// File helper class to get text lines, number of text lines, etc.
-	/// Update: Now also supports the XNA Storage classes :)
-	/// </summary>
-	public class FileHelper
-	{
-		#region LoadGameContentFile
-		/// <summary>
-		/// Load game content file, returns null if file was not found.
-		/// </summary>
-		/// <param name="relativeFilename">Relative filename</param>
-		/// <returns>File stream</returns>
-		public static FileStream LoadGameContentFile(string relativeFilename)
-		{
-			string fullPath = Path.Combine(
-				StorageContainer.TitleLocation, relativeFilename);
-			if (File.Exists(fullPath) == false)
-				return null;
-			else
-				return File.Open(fullPath,
-					FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-		} // LoadGameContentFile(relativeFilename)
-		#endregion
+  /// <summary>
+  /// File helper class to get text lines, number of text lines, etc.
+  /// </summary>
+  public class FileHelper
+  {
+    #region LoadGameContentFile
+    /// <summary>
+    /// Load game content file, returns null if file was not found.
+    /// </summary>
+    /// <param name="relativeFilename">Relative filename</param>
+    /// <returns>File stream</returns>
+    public static FileStream LoadGameContentFile(string relativeFilename)
+    {
+      string fullPath = Path.Combine(
+        StorageContainer.TitleLocation, relativeFilename);
 
-		#region OpenOrCreateFileForCurrentPlayer
-		/// <summary>
-		/// XNA user device, asks for the saving location on the Xbox360,
-		/// theirfore remember this device for the time we run the game.
-		/// </summary>
-		static StorageDevice xnaUserDevice = null;
-
-		/// <summary>
-		/// Xna user device
-		/// </summary>
-		/// <returns>Storage device</returns>
-		public static StorageDevice XnaUserDevice
-		{
-			get
-			{
-				// Create if not created yet.
-				/*if (xnaUserDevice == null)
-					xnaUserDevice =
-						StorageDevice.ShowStorageDeviceGuide(PlayerIndex.One);*/
-				return xnaUserDevice;
-			} // get
-		} // XnaUserDevice
-
-		/// <summary>
-		/// Open or create file for current player. Basically just creates a
-		/// FileStream using the specified FileMode flag, but on the Xbox360
-		/// we have to ask the user first where he wants to.
-		/// Basically used for the GameSettings and the Log class.
-		/// </summary>
-		/// <param name="filename">Filename</param>
-		/// <param name="mode">Mode</param>
-		/// <param name="access">Access</param>
-		/// <returns>File stream</returns>
-		public static FileStream OpenFileForCurrentPlayer(
-			string filename, FileMode mode, FileAccess access)
-		{
-			// Open a storage container
-			StorageContainer container = XnaUserDevice.OpenContainer("XnaTetris");
-
-			// Add the container path to our filename
-			string fullFilename = Path.Combine(container.Path, filename);
-
-			// Opens or creates the requested file
-			return new FileStream(
-				fullFilename, mode, access, FileShare.ReadWrite);
-		} // OpenFileForCurrentPlayer(filename, mode, access)
+      if (!File.Exists(fullPath))
+      {
+        return null;
+      }
+      return File.Open(fullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+    }
     #endregion
 
-		#region Get text lines
-		/// <summary>
-		/// Returns the number of text lines we got in a file.
-		/// </summary>
-		static public string[] GetLines(string filename)
-		{
-			try
-			{
-				StreamReader reader = new StreamReader(
-					new FileStream(filename, FileMode.Open, FileAccess.Read),
-					System.Text.Encoding.UTF8);
-				// Generic version
-				List<string> lines = new List<string>();
-				do
-				{
-					lines.Add(reader.ReadLine());
-				} while (reader.Peek() > -1);
-				reader.Close();
-				return lines.ToArray();
-			} // try
-			catch
-			{
-				// Failed to read, just return null!
-				return null;
-			} // catch
-		} // GetLines(filename)
-		#endregion
+    #region OpenOrCreateFileForCurrentPlayer
+    /// <summary>
+    /// XNA user device, asks for the saving location on the Xbox360,
+    /// theirfore remember this device for the time we run the game.
+    /// </summary>
+    private const StorageDevice xnaUserDevice = null;
 
-		#region Create text file
-		/// <summary>
-		/// Create text file
-		/// </summary>
-		/// <param name="filename">Filename</param>
-		/// <param name="textForFile">Text for file</param>
-		/// <exception cref="IOException">
-		/// Will be thrown if file already exists.
-		/// </exception>
-		public static void CreateTextFile(
-			string filename, string textForFile,
-			Encoding fileEncoding)
-		{
-			StreamWriter textWriter = new StreamWriter(
-				new FileStream(filename, FileMode.Create, FileAccess.Write),
-				fileEncoding);//System.Text.Encoding.UTF8);
+    public static StorageDevice XnaUserDevice
+    {
+      get
+      {
+        return xnaUserDevice;
+      }
+    }
 
-			string[] textLines = StringHelper.SplitMultilineText(textForFile);
-			foreach (string line in textLines)
-				textWriter.WriteLine(line);
-			textWriter.Close();
-		} // CreateTextFile(filename, textForFile)
-		#endregion
-	}	// class FileHelper
-} // namespace XnaTetris.Helpers
+    /// <summary>
+    /// Open or create file for current player. Basically just creates a
+    /// FileStream using the specified FileMode flag, but on the Xbox360
+    /// we have to ask the user first where he wants to.
+    /// Basically used for the GameSettings and the Log class.
+    /// </summary>
+    /// <param name="filename">Filename</param>
+    /// <param name="mode">Mode</param>
+    /// <param name="access">Access</param>
+    /// <returns>File stream</returns>
+    public static FileStream OpenFileForCurrentPlayer(string filename, FileMode mode, FileAccess access)
+    {
+      StorageContainer container = XnaUserDevice.OpenContainer("XnaTetris");
+      string fullFilename = Path.Combine(container.Path, filename);
+
+      return new FileStream(fullFilename, mode, access, FileShare.ReadWrite);
+    }
+    #endregion
+
+    #region Get text lines
+    /// <summary>
+    /// Returns the number of text lines we got in a file.
+    /// </summary>
+    static public string[] GetLines(string filename)
+    {
+      try
+      {
+        StreamReader reader = new StreamReader(
+          new FileStream(filename, FileMode.Open, FileAccess.Read), Encoding.UTF8);
+        List<string> lines = new List<string>();
+        
+        do
+        {
+          lines.Add(reader.ReadLine());
+        } while (reader.Peek() > -1);
+        reader.Close();
+        return lines.ToArray();
+      }
+      catch
+      {
+        // Failed to read, just return null
+        return null;
+      }
+    }
+    #endregion
+
+    #region Create text file
+    public static void CreateTextFile(string filename, string textForFile, Encoding fileEncoding)
+    {
+      StreamWriter textWriter = new StreamWriter(
+        new FileStream(filename, FileMode.Create, FileAccess.Write), fileEncoding);
+      string[] textLines = StringHelper.SplitMultilineText(textForFile);
+
+      foreach (string line in textLines)
+      {
+        textWriter.WriteLine(line);
+      }
+      textWriter.Close();
+    }
+    #endregion
+  }
+}
