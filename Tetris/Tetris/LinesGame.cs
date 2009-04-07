@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using XnaTetris.Blocks;
 using XnaTetris.Helpers;
 using XnaTetris.Graphics;
 using XnaTetris.Game;
@@ -13,10 +12,12 @@ namespace XnaTetris
   public class LinesGame : BaseGame
   {
     #region Constants
-
+    public const int GRID_RECTANGLE_X_COORDINATE = 310;
+    public const int GRID_RECTANGLE_Y_COORDINATE = 35;
+    public const int GRID_RECTANGLE_HEIGHT = 700;
+    public const int GRID_RECTANGLE_WIDTH = 700;
     private readonly Rectangle rectPauseButton = new Rectangle(55, 600, 200, 50);
     private readonly Rectangle rectExitButton = new Rectangle(55, 670, 200, 50);
-
     #endregion
 
     #region Variables
@@ -53,7 +54,8 @@ namespace XnaTetris
 
     public LinesGame()
     {
-      blocksGrid = new BlocksGrid(this, new Rectangle(310, 35, 700, 700));
+      blocksGrid = new BlocksGrid(this, new Rectangle(GRID_RECTANGLE_X_COORDINATE, GRID_RECTANGLE_Y_COORDINATE,
+                                                      GRID_RECTANGLE_WIDTH, GRID_RECTANGLE_HEIGHT));
       Components.Add(blocksGrid);
     }
 
@@ -239,8 +241,8 @@ namespace XnaTetris
       using (LinesGame game = new LinesGame())
       {
         game.Run();
-      } // using
-    } // StartGame()
+      }
+    }
 
     #endregion
 
