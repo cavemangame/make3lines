@@ -110,7 +110,7 @@ namespace XnaTetris.Blocks
       X = destX;
       Y = destY;
       isMoving = true;
-      blockAnimator = new BlockAnimator(BlockRectangle, destRectangle, gameTime, movePathLength * BlockAnimator.DEFAULT_MOVE_TIME);
+      blockAnimator = new BlockAnimator(BlockRectangle, destRectangle, gameTime, movePathLength > 1);
       StartMove(this, EventArgs.Empty);
     }
 
