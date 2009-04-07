@@ -6,7 +6,7 @@ using XnaTetris.Helpers;
 
 namespace XnaTetris.Blocks
 {
-  class BlockFactory
+  public class BlockFactory
   {
     private readonly LinesGame game;
 

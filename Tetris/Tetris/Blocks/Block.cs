@@ -6,7 +6,7 @@ using XnaTetris.Helpers;
 
 namespace XnaTetris.Blocks
 {
-  abstract class Block : DrawableGameComponent
+  public abstract class Block : DrawableGameComponent
   {
     #region Переменные
 
@@ -122,6 +122,16 @@ namespace XnaTetris.Blocks
       }
       if (BlockRectangle.Y >= 35)
       {
+        if (LinesGame.IsRemoveProcess && IsDestroyed)
+        {
+          if (BlockRectangle.Width - 2 <= 0)
+          {
+            LinesGame.RemoveVisualizationWasFinished(blockGameTime);
+            return;
+          }
+          BlockRectangle = new Rectangle(BlockRectangle.X + 1, BlockRectangle.Y + 1,
+                                         BlockRectangle.Width - 2, BlockRectangle.Height - 2);
+        }
         block.Render(BlockRectangle);
         return;
       }
