@@ -35,6 +35,8 @@ namespace XnaTetris
     /// </summary>
     private Button btnPause, btnExit;
 
+    private PopupText testPopupText;
+
     #endregion
 
     #region Properties
@@ -66,7 +68,6 @@ namespace XnaTetris
     {
       IsMouseVisible = true;
       GameState = Serv.GameState.GameStateMenu;
-
       base.Initialize();
     }
 
@@ -87,6 +88,10 @@ namespace XnaTetris
       buttonExit = new SpriteHelper(content.Load<Texture2D>("ExitButton"), null);
 
       NormalFont = content.Load<SpriteFont>("normalfont");
+
+      testPopupText = new PopupText(this, new GameTime(), "10", 5000, new Vector2(500, 100), new Vector2(500, 65), NormalFont,
+        2f, 1f, Color.White, 255, 0);
+      Components.Add(testPopupText);
 
       // Create interface elements
       btnPause = new Button(this, rectPauseButton, buttonPause);
@@ -157,7 +162,8 @@ namespace XnaTetris
         TextureFont.WriteText(40, 140, currentLevel.LevelString);
         TextureFont.WriteText(40, 180, Serv.GetTimeString(Timer));
 
-        TextHelper.DrawText(NormalFont, "FACK OFF", 40, 220, Color.SteelBlue, 0.76f);
+        testPopupText.Draw(gameTime);
+        //TextHelper.DrawText(NormalFont, "FACK OFF", 40, 220, Color.SteelBlue, 0.76f);
 
         if (GameState == Serv.GameState.GameStatePause)
           TextureFont.WriteText(610, 370, "PAUSE", Color.AliceBlue);
