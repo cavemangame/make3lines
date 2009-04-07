@@ -46,5 +46,10 @@ namespace XnaTetris.Game
 		{
 			return new Point(point.X*1024/BaseGame.Width, point.Y*768/BaseGame.Height);
 		}
+
+    public static Point InvertCorrectPositionWithGameScale(Point point)
+    {
+      return new Point(point.X * BaseGame.Width / 1024, point.Y * BaseGame.Height / 768);
+    }
 	}
 }

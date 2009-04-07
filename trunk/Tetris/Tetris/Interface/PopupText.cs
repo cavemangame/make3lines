@@ -33,22 +33,24 @@ namespace XnaTetris.Interface
 
     private SpriteBatch spriteBatch;
 
-
+    // вспомогательные переменные
     private Vector2 currentPos;
     private float currentScale;
     private int currentOpacity;
-    private readonly TimeSpan startTime;
+    private readonly long startTime;
+    public event EventHandler EndDrawing;
+
 
     #endregion
 
     #region Constructor
 
-    public PopupText(Microsoft.Xna.Framework.Game setGame, GameTime setStartTime, string setText, long setPopupTime, Vector2 setBeginPos, Vector2 setEndPos,
+    public PopupText(Microsoft.Xna.Framework.Game setGame, long setStartTime, string setText, long setPopupTime, Vector2 setBeginPos, Vector2 setEndPos,
       SpriteFont setFont, float setBeginScale, float setEndScale, Color setColor,
       int setBeginOpacity, int setEndOpacity)
       :base(setGame)
     {
-      startTime = setStartTime.TotalRealTime;
+      startTime = setStartTime;
       text = setText;
       popupTime = setPopupTime;
       currentPos = beginPos = setBeginPos;
@@ -62,7 +64,7 @@ namespace XnaTetris.Interface
       spriteBatch = new SpriteBatch(Game.GraphicsDevice);
     }
 
-    public PopupText(Microsoft.Xna.Framework.Game setGame, GameTime setStartTime, string setText, long setPopupTime, Vector2 setBeginPos,
+    public PopupText(Microsoft.Xna.Framework.Game setGame, long setStartTime, string setText, long setPopupTime, Vector2 setBeginPos,
       SpriteFont setFont, Color setColor)
       : this(setGame, setStartTime, setText, setPopupTime, setBeginPos, setBeginPos, setFont, 1f, 1f, setColor, 255, 0)
     {
@@ -75,7 +77,7 @@ namespace XnaTetris.Interface
 
     public override void Draw(GameTime gameTime)
     {
-      if (!IsMoveEnded(gameTime))
+      if (!IsPopupEnded(gameTime))
       {
         spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
 
@@ -100,10 +102,13 @@ namespace XnaTetris.Interface
 
     public override void Update(GameTime gameTime)
     {
-      if (IsMoveEnded(gameTime))
+      if (IsPopupEnded(gameTime))
+      {
+        EndDrawing(this, EventArgs.Empty);
         return;
+      }
 
-      float percentMove = (float)GetCurrentMovingTime(gameTime) / popupTime;
+      float percentMove = (float)GetCurrentPopupTime(gameTime) / popupTime;
 
       currentPos = new Vector2((int) ((endPos.X - beginPos.X)*percentMove) + beginPos.X,
                                (int) ((endPos.Y - beginPos.Y)*percentMove) + beginPos.Y);
@@ -114,14 +119,14 @@ namespace XnaTetris.Interface
       base.Update(gameTime);
     }
 
-    public bool IsMoveEnded(GameTime gameTime)
+    public bool IsPopupEnded(GameTime gameTime)
     {
-      return GetCurrentMovingTime(gameTime) >= popupTime;
+      return GetCurrentPopupTime(gameTime) >= popupTime;
     }
 
-    private long GetCurrentMovingTime(GameTime gameTime)
+    private long GetCurrentPopupTime(GameTime gameTime)
     {
-      return (gameTime.TotalRealTime - startTime).Ticks / TimeSpan.TicksPerMillisecond;
+      return ((long) gameTime.TotalRealTime.TotalMilliseconds - startTime);
     }
 
     #endregion

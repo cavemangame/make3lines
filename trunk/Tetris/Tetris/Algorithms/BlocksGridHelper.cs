@@ -132,6 +132,7 @@ namespace XnaTetris.Algorithms
         {
           Block block = blocksGrid.Grid[x, y];
           int blocksForScoreCount = 0;
+          bool isHorizontalLine = false;
 
           // can this block be rightmost?
           if (x == BlocksGrid.GRID_WIDTH - 1 || !block.Type.Equals(blocksGrid.Grid[x + 1, y].Type))
@@ -146,6 +147,7 @@ namespace XnaTetris.Algorithms
               {
                 blocksGrid.Grid[x - i, y].IsDestroyed = true;
               }
+              isHorizontalLine = true;
             }
           }
 
@@ -166,6 +168,26 @@ namespace XnaTetris.Algorithms
           }
 
           blocksGrid.LinesGame.Score += blocksGrid.Grid[x, y].GetScore(blocksForScoreCount);
+          if (blocksForScoreCount > 0)
+          {
+            int xx, yy;
+            if (isHorizontalLine)
+            {
+              xx = (GetRectangle(x, y).Right - GetRectangle(x - blocksForScoreCount + 1, y).Left)/2
+                + GetRectangle(x - blocksForScoreCount + 1, y).Left;
+              yy = GetRectangle(x, y).Center.Y;
+            }
+            else
+            {
+              xx = GetRectangle(x, y).Center.X;
+              yy = (GetRectangle(x, y).Bottom - GetRectangle(x, y - blocksForScoreCount + 1).Top) / 2
+                + GetRectangle(x, y - blocksForScoreCount + 1).Top;
+            }
+            Point p = Serv.InvertCorrectPositionWithGameScale(new Point(xx, yy));
+            blocksGrid.AddDestroyPopupText(blocksGrid.LinesGame.ElapsedGameMs,
+                                           new Vector2(p.X, p.Y),
+                                           blocksGrid.Grid[x, y].GetScore(blocksForScoreCount).ToString());
+          }
         }
       }
       return result;
