@@ -78,14 +78,20 @@ namespace XnaTetris
 
             Grid[x, y] = curBlock;
 
-            // TODO: use blocksGridHelper
-            if ((x < 2 || !curBlock.Type.Equals(Grid[x - 1, y].Type) || !curBlock.Type.Equals(Grid[x - 2, y].Type)) &&
-                (y < 2 || !curBlock.Type.Equals(Grid[x, y - 1].Type) || !curBlock.Type.Equals(Grid[x, y - 2].Type)))
+            if (blocksGridHelper.SameTypeUpBlocksCount(x, y) < 2 &&
+                blocksGridHelper.SameTypeLeftBlocksCount(x, y) < 2)
             {
               break;
             }
           }
         }
+      }
+
+      int dummy1, dummy2, dummy3, dummy4;
+
+      if (!blocksGridHelper.FindBestMovement(out dummy1, out dummy2, out dummy3, out dummy4))
+      {
+        Restart();
       }
     }
     #endregion
@@ -235,6 +241,8 @@ namespace XnaTetris
         return;
       }
 
+      // the board is in a stable state here
+
       if (isUndo)
       {
         isUndo = false;
@@ -255,6 +263,15 @@ namespace XnaTetris
         isUndo = true;
         LinesGame.Timer -= 5000;
         SwapBlocks(lastSwapX1, lastSwapY1, lastSwapX2, lastSwapY2, gameTime);
+      }
+      else
+      {
+        int dummy1, dummy2, dummy3, dummy4;
+
+        if (!blocksGridHelper.FindBestMovement(out dummy1, out dummy2, out dummy3, out dummy4))
+        {
+          // restart
+        }
       }
       isSwap = false;
     }
