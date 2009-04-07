@@ -88,7 +88,7 @@ namespace XnaTetris.Algorithms
     /// Finds lines and mark lines' blocks as Destroyed
     /// </summary>
     /// <returns>true if any line was found</returns>
-    private bool FindLines()
+    public bool FindLines()
     {
       bool result = false;
 
@@ -140,18 +140,7 @@ namespace XnaTetris.Algorithms
     #endregion
 
     #region Destroy Blocks
-    public bool FindAndDestroyLines(GameTime gameTime)
-    {
-      bool result = FindLines();
-
-      if (result)
-      {
-        RemoveLines(gameTime);
-      }
-      return result;
-    }
-
-    private void RemoveLines(GameTime gameTime)
+    public void RemoveLines(GameTime gameTime)
     {
       for (int x = 0; x < BlocksGrid.GRID_WIDTH; ++ x)
       {

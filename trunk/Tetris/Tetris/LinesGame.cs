@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using XnaTetris.Blocks;
 using XnaTetris.Helpers;
 using XnaTetris.Graphics;
 using XnaTetris.Game;
@@ -37,12 +38,15 @@ namespace XnaTetris
     #endregion
 
     #region Properties
-
     public long Timer { get; set; }
     public int Score { get; set; }
     public Serv.GameState GameState { get; set; }
     public SpriteFont NormalFont { get; set; }
 
+    /// <summary>
+    /// true if the game has just found lines
+    /// </summary>
+    public bool IsRemoveProcess { get; set; }
     #endregion
 
     #region Constructor
@@ -255,7 +259,17 @@ namespace XnaTetris
     /// <returns>true if there are no moving blocks</returns>
     public bool IsBoardInStableState()
     {
-      return blocksGrid.ActiveBlocks == 0;
+      return blocksGrid.ActiveBlocks == 0 && !IsRemoveProcess;
+    }
+
+    /// <summary>
+    /// It's time to remove lines
+    /// </summary>
+    /// <param name="gameTime"></param>
+    public void RemoveVisualizationWasFinished(GameTime gameTime)
+    {
+      IsRemoveProcess = false;
+      blocksGrid.RemoveLines(gameTime);
     }
   }
 }

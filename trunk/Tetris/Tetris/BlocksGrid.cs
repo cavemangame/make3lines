@@ -40,7 +40,6 @@ namespace XnaTetris
     /// how much blocks are moving now
     /// </summary>
     public int ActiveBlocks { get; private set; }
-
     #endregion
 
     #region Constructor
@@ -107,7 +106,7 @@ namespace XnaTetris
     private void UpdateClickedBlock(Point point, GameTime gameTime)
     {
       // don't allow to do anything until the board is in stable state
-      if (ActiveBlocks != 0)
+      if (!LinesGame.IsBoardInStableState())
       {
         return;
       }
@@ -213,7 +212,7 @@ namespace XnaTetris
       return block;
     }
 
-    void BlocksGrid_StartMove(object sender, EventArgs e)
+    private void BlocksGrid_StartMove(object sender, EventArgs e)
     {
       if (!(sender is Block))
       {
@@ -223,7 +222,7 @@ namespace XnaTetris
       ActiveBlocks += 1;
     }
 
-    void BlocksGrid_EndMove(object sender, EventArgs e)
+    private void BlocksGrid_EndMove(object sender, EventArgs e)
     {
       if (!(sender is Block))
       {
@@ -244,9 +243,13 @@ namespace XnaTetris
 
       Block block = sender as Block;
       GameTime gameTime = block.blockGameTime;
-      bool successfulMovement = blocksGridHelper.FindAndDestroyLines(gameTime);
+      bool successfulMovement = blocksGridHelper.FindLines();
 
-      if (isSwap && !successfulMovement)
+      if (successfulMovement)
+      {
+        LinesGame.IsRemoveProcess = true;
+      }
+      else if (isSwap)
       {
         // undo the movement
         isUndo = true;
@@ -254,6 +257,11 @@ namespace XnaTetris
         SwapBlocks(lastSwapX1, lastSwapY1, lastSwapX2, lastSwapY2, gameTime);
       }
       isSwap = false;
+    }
+
+    public void RemoveLines(GameTime gameTime)
+    {
+      blocksGridHelper.RemoveLines(gameTime);
     }
 
     public void EnableComponents(bool isEnable)
