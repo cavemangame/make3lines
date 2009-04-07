@@ -140,16 +140,17 @@ namespace XnaTetris.Algorithms
     #endregion
 
     #region Destroy Blocks
+    /// <summary>
+    /// Remove blocks marked as Destroyed with FindLines()
+    /// </summary>
+    /// <param name="gameTime"></param>
     public void RemoveLines(GameTime gameTime)
     {
       for (int x = 0; x < BlocksGrid.GRID_WIDTH; ++ x)
       {
-        int bottommestDestroyedY = BlocksGrid.GRID_HEIGHT - 1;
+        int bottommestDestroyedY = BlocksGrid.GRID_HEIGHT;
 
-        while (bottommestDestroyedY >= 0 && !blocksGrid.Grid[x, bottommestDestroyedY].IsDestroyed)
-        {
-          -- bottommestDestroyedY;
-        }
+        while (-- bottommestDestroyedY >= 0 && !blocksGrid.Grid[x, bottommestDestroyedY].IsDestroyed) {}
         if (bottommestDestroyedY == -1)
         {
           continue;
@@ -157,22 +158,23 @@ namespace XnaTetris.Algorithms
 
         int destroyedBlocksCount = 0;
 
-        while (bottommestDestroyedY - destroyedBlocksCount >= 0 &&
-               blocksGrid.Grid[x, bottommestDestroyedY - destroyedBlocksCount].IsDestroyed)
+        for (int y = bottommestDestroyedY; y >= 0; -- y)
         {
-          Block deletedBlock = blocksGrid.Grid[x, bottommestDestroyedY - destroyedBlocksCount];
+          Block block = blocksGrid.Grid[x, y];
 
-          deletedBlock.X = -1;
-          deletedBlock.Y = -1;
-          deletedBlock.BlockRectangle = Serv.EmptyRect;
-
-          ++ destroyedBlocksCount;
-        }
-
-        for (int y = bottommestDestroyedY - destroyedBlocksCount; y >= 0; -- y)
-        {
-          blocksGrid.Grid[x, y + destroyedBlocksCount] = blocksGrid.Grid[x, y];
-          blocksGrid.Grid[x, y].MakeMove(gameTime, GetRectangle(x, y + destroyedBlocksCount), x, y + destroyedBlocksCount);
+          if (block.IsDestroyed)
+          {
+            block.X = -1;
+            block.Y = -1;
+            block.BlockRectangle = Serv.EmptyRect;
+            ++ destroyedBlocksCount;
+          }
+          else
+          {
+            blocksGrid.Grid[x, bottommestDestroyedY] = blocksGrid.Grid[x, y];
+            blocksGrid.Grid[x, y].MakeMove(gameTime, GetRectangle(x, bottommestDestroyedY), x, bottommestDestroyedY);
+            -- bottommestDestroyedY;
+          }
         }
 
         for (int y = destroyedBlocksCount - 1; y >= 0; -- y)
