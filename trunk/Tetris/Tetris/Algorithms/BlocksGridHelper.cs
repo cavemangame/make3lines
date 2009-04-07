@@ -18,7 +18,7 @@ namespace XnaTetris.Algorithms
     #endregion
 
     #region Finder functions
-    private int SameTypeLeftBlocksCount(int x, int y)
+    public int SameTypeLeftBlocksCount(int x, int y)
     {
       Block block = blocksGrid.Grid[x, y];
       int xIndex = x - 1;
@@ -32,7 +32,7 @@ namespace XnaTetris.Algorithms
       return result;
     }
 
-    private int SameTypeUpBlocksCount(int x, int y)
+    public int SameTypeUpBlocksCount(int x, int y)
     {
       Block block = blocksGrid.Grid[x, y];
       int yIndex = y - 1;
@@ -45,6 +45,39 @@ namespace XnaTetris.Algorithms
       }
       return result;
     }
+
+//    private int BlocksFormingLinesCount(int x, int y)
+//    {
+//      Block block = blocksGrid.Grid[x, y];
+//      int rightmostX = x;
+//      int bottommestY = y;
+//      int sameTypeBlocksCount;
+//      int result = 0;
+//
+//      while (rightmostX + 1 < BlocksGrid.GRID_WIDTH &&
+//             block.Type.Equals(blocksGrid.Grid[rightmostX + 1, y].Type))
+//      {
+//        ++ rightmostX;
+//      }
+//      sameTypeBlocksCount = SameTypeLeftBlocksCount(rightmostX, y);
+//      if (sameTypeBlocksCount >= 2)
+//      {
+//        result = sameTypeBlocksCount;
+//      }
+//
+//      while (bottommestY + 1 < BlocksGrid.GRID_HEIGHT &&
+//             block.Type.Equals(blocksGrid.Grid[x, bottommestY + 1].Type))
+//      {
+//        ++ bottommestY;
+//      }
+//      sameTypeBlocksCount = SameTypeUpBlocksCount(x, bottommestY);
+//      if (sameTypeBlocksCount >= 2)
+//      {
+//        result += sameTypeBlocksCount;
+//      }
+//
+//      return result == 0 ? 0 : result + 1;
+//    }
 
     /// <summary>
     /// Tries to find any clicked block near current block
@@ -136,6 +169,59 @@ namespace XnaTetris.Algorithms
         }
       }
       return result;
+    }
+
+    public bool FindBestMovement(out int x1, out int y1, out int x2, out int y2)
+    {
+//      for (int y = 0; y < BlocksGrid.GRID_HEIGHT; ++ y)
+//      {
+//        for (int x = 0; x < BlocksGrid.GRID_WIDTH; ++ x)
+//        {
+//          // swap with left block
+//          if (x != 0)
+//          {
+//            Block temp = blocksGrid.Grid[x, y];
+//
+//            blocksGrid.Grid[x, y] = blocksGrid.Grid[x - 1, y];
+//            blocksGrid.Grid[x - 1, y] = temp;
+//
+//            int rightmostX, bottommestY;
+//            int sameTypeBlocksCount;
+//            Block leftBlock = blocksGrid.Grid[x - 1, y];
+//
+//            rightmostX = x - 1;
+//            while (rightmostX + 1 < BlocksGrid.GRID_WIDTH &&
+//                   leftBlock.Type.Equals(blocksGrid.Grid[rightmostX + 1, y].Type))
+//            {
+//              ++ rightmostX;
+//            }
+//            sameTypeBlocksCount = SameTypeLeftBlocksCount(rightmostX, y);
+//            if (sameTypeBlocksCount >= 2)
+//            {
+//              // good
+//            }
+//            bottommestY = y;
+//            while (bottommestY + 1 < BlocksGrid.GRID_HEIGHT &&
+//                   leftBlock.Type.Equals(blocksGrid.Grid[x - 1, bottommestY + 1].Type))
+//            {
+//              ++ bottommestY;
+//            }
+//            sameTypeBlocksCount = SameTypeUpBlocksCount(x - 1, bottommestY);
+//            if (sameTypeBlocksCount >= 2)
+//            {
+//              // good
+//            }
+//
+//            Block rightBlock = blocksGrid.Grid[x, y];
+//
+//            blocksGrid.Grid[x - 1, y] = blocksGrid.Grid[x, y];
+//            blocksGrid.Grid[x, y] = temp;
+//          }
+//        }
+//      }
+
+      x1 = x2 = y1 = y2 = -1;
+      return true;
     }
     #endregion
 
