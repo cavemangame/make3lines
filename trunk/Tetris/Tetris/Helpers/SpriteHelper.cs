@@ -42,14 +42,14 @@ namespace XnaTetris.Helpers
     /// Graphic rectangle used for this sprite inside the texture.
     /// Can be null to use the whole texture.
     /// </summary>
-    Rectangle gfxRect;
+    public Rectangle GfxRect { get; private set; }
     #endregion
 
     #region Constructor
     public SpriteHelper(Texture2D setTexture, Rectangle? setGfxRect)
     {
       texture = setTexture;
-      gfxRect = setGfxRect == null ? new Rectangle(0, 0, texture.Width, texture.Height) : setGfxRect.Value;
+      GfxRect = setGfxRect == null ? new Rectangle(0, 0, texture.Width, texture.Height) : setGfxRect.Value;
     } // SpriteHelper(setTexture, setGfxRect)
     #endregion
 
@@ -68,9 +68,14 @@ namespace XnaTetris.Helpers
     #endregion
 
     #region RenderSprite
+    public void Render(Rectangle rect, Color color, Rectangle _gfxRect)
+    {
+      sprites.Add(new SpriteToRender(texture, rect, _gfxRect, color));
+    }
+
     public void Render(Rectangle rect, Color color)
     {
-      sprites.Add(new SpriteToRender(texture, rect, gfxRect, color));
+      Render(rect, color, GfxRect);
     } // Render(texture, rect, sourceRect, color)
 
     public void Render(Rectangle rect)
@@ -80,12 +85,12 @@ namespace XnaTetris.Helpers
 
     public void Render(int x, int y, Color color)
     {
-      Render(new Rectangle(x, y, gfxRect.Width, gfxRect.Height), color);
+      Render(new Rectangle(x, y, GfxRect.Width, GfxRect.Height), color);
     } // Render(texture, rect, sourceRect)
 
     public void Render(int x, int y)
     {
-      Render(new Rectangle(x, y, gfxRect.Width, gfxRect.Height));
+      Render(new Rectangle(x, y, GfxRect.Width, GfxRect.Height));
     } // Render(texture, rect, sourceRect)
 
     public void Render()
@@ -96,10 +101,10 @@ namespace XnaTetris.Helpers
     public void RenderCentered(float x, float y, float scale)
     {
       Render(new Rectangle(
-        (int)(x * 1024 - scale * gfxRect.Width / 2),
-        (int)(y * 768 - scale * gfxRect.Height / 2),
-        (int)(scale * gfxRect.Width),
-        (int)(scale * gfxRect.Height)));
+        (int)(x * 1024 - scale * GfxRect.Width / 2),
+        (int)(y * 768 - scale * GfxRect.Height / 2),
+        (int)(scale * GfxRect.Width),
+        (int)(scale * GfxRect.Height)));
     } // RenderCentered(x, y)
 
     public void RenderCentered(float x, float y)

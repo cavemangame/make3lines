@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Game;
 using XnaTetris.Helpers;
 
@@ -63,11 +64,13 @@ namespace XnaTetris.Blocks
       }
       else
       {
-        block.Render(BlockRectangle);
+        RenderVisiblePart();
       }
 
       if (IsClicked)
+      {
         ContentSpace.selectionBlock.Render(BlockRectangle);
+      }
 
       base.Draw(gameTime);
     }
@@ -111,24 +114,26 @@ namespace XnaTetris.Blocks
       StartMove(this, EventArgs.Empty);
     }
 
-//    private bool IsInsideBoard()
-//    {
-//      return BlockRectangle.Y >= 35;
-//    }
+    private void RenderVisiblePart()
+    {
+      if (BlockRectangle.Y + BlockRectangle.Height <= 35)
+      {
+        return;
+      }
+      if (BlockRectangle.Y >= 35)
+      {
+        block.Render(BlockRectangle);
+        return;
+      }
 
-//    private void RenderVisiblePart()
-//    {
-//      if (BlockRectangle.Y + BlockRectangle.Height <= 35)
-//      {
-//        return;
-//      }
+      float c = (float)block.GfxRect.Height / BlockRectangle.Height;
+      Rectangle gfxRect = new Rectangle(block.GfxRect.X, (int)((block.GfxRect.Y + 35 - BlockRectangle.Y) * c),
+                                        block.GfxRect.Width, (int)((BlockRectangle.Height - 35 + BlockRectangle.Y) * c));
+      Rectangle visibleRect =  new Rectangle(BlockRectangle.X, 35,
+                                      BlockRectangle.Width, BlockRectangle.Height - 35 + BlockRectangle.Y);
 
-//      Rectangle gfxRect = new Rectangle(block.gfxRect.X, block.gfxRect.Y + 35 - BlockRectangle.Y,
-//                                        block.gfxRect.Width, BlockRectangle.Height - 35 + BlockRectangle.Y);
-//      Rectangle rect =  new Rectangle(BlockRectangle.X, 35, BlockRectangle.Width, BlockRectangle.Height - 35 + BlockRectangle.Y);
-
-//      block.Render(rect, Color.White, gfxRect);
-//    }
+      block.Render(visibleRect, Color.White, gfxRect);
+    }
 
     public abstract int GetScore(int N);
   }
