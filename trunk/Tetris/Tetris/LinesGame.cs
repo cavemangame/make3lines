@@ -48,6 +48,7 @@ namespace XnaTetris
     /// true if the game has just found lines
     /// </summary>
     public bool IsRemoveProcess { get; set; }
+    public bool IsRestartProcess { get; set; }
     #endregion
 
     #region Constructor
@@ -271,8 +272,16 @@ namespace XnaTetris
     /// <param name="gameTime"></param>
     public void RemoveVisualizationWasFinished(GameTime gameTime)
     {
-      IsRemoveProcess = false;
-      blocksGrid.RemoveLines(gameTime);
+      if (IsRemoveProcess)
+      {
+        IsRemoveProcess = false;
+        blocksGrid.RemoveLines(gameTime);
+      }
+      if (IsRestartProcess)
+      {
+        IsRestartProcess = false;
+        blocksGrid.ReadyToRestart();
+      }
     }
 
     /// <summary>
