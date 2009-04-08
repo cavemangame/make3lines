@@ -44,6 +44,7 @@ namespace XnaTetris.Game
     {
       graphics = new GraphicsDeviceManager(this);
       content = new ContentManager(Services);
+      Content.RootDirectory = "Content";
 
     } // BaseGame
 

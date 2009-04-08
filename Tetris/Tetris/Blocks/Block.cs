@@ -104,20 +104,20 @@ namespace XnaTetris.Blocks
       IsClicked = !IsClicked;
     }
 
-    public void MakeMove(GameTime gameTime, Rectangle destRectangle, int destX, int destY)
+    public void MakeMove(Rectangle destRectangle, int destX, int destY)
     {
       int movePathLength = Math.Max(Math.Abs(X - destX), Math.Abs(Y - destY));
 
       X = destX;
       Y = destY;
       isMoving = true;
-      blockAnimator = new BlockAnimator(BlockRectangle, destRectangle, gameTime, movePathLength > 1);
+      blockAnimator = new BlockAnimator(BlockRectangle, destRectangle, LinesGame.ElapsedGameMs, movePathLength > 1);
       StartMove(this, EventArgs.Empty);
     }
 
     private void RenderVisiblePart()
     {
-      int minY = LinesGame.GRID_RECTANGLE_Y_COORDINATE;
+      const int minY = LinesGame.GRID_RECTANGLE_Y_COORDINATE;
 
       if (BlockRectangle.Y + BlockRectangle.Height <= minY)
       {

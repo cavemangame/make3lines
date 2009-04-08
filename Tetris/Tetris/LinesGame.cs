@@ -15,6 +15,8 @@ namespace XnaTetris
     public const int GRID_RECTANGLE_Y_COORDINATE = 35;
     public const int GRID_RECTANGLE_HEIGHT = 700;
     public const int GRID_RECTANGLE_WIDTH = 700;
+    public const int PENALTY_FOR_WRONG_SWAP = 5000;
+    public const int PENALTY_FOR_RESTART = 5000;
     private readonly Rectangle rectPauseButton = new Rectangle(55, 600, 200, 50);
     private readonly Rectangle rectExitButton = new Rectangle(55, 670, 200, 50);
     #endregion
@@ -40,9 +42,9 @@ namespace XnaTetris
     #region Properties
     public long Timer { get; set; }
     public int Score { get; set; }
-    public Serv.GameState GameState { get; set; }
-    public SpriteFont NormalFont { get; set; }
-    public double ElapsedGameMs { get; set; }
+    public Serv.GameState GameState { get; private set; }
+    public SpriteFont NormalFont { get; private set; }
+    public double ElapsedGameMs { get; private set; }
 
     /// <summary>
     /// true if the game has just found lines
@@ -57,7 +59,6 @@ namespace XnaTetris
     {
       blocksGrid = new BlocksGrid(this, new Rectangle(GRID_RECTANGLE_X_COORDINATE, GRID_RECTANGLE_Y_COORDINATE,
                                                       GRID_RECTANGLE_WIDTH, GRID_RECTANGLE_HEIGHT));
-      Components.Add(blocksGrid);
     }
 
     #endregion
@@ -98,7 +99,7 @@ namespace XnaTetris
       Components.Add(btnExit);
 
       base.LoadContent();
-    } // LoadGraphicsContent(loadAllContent)
+    }
 
     #endregion
 
@@ -191,7 +192,7 @@ namespace XnaTetris
       Timer = 0;
       curLevelNumber = 0;
       menu.EnableComponents(true);
-      blocksGrid.EnableComponents(false);
+      Components.Remove(blocksGrid);
       GameState = Serv.GameState.GameStateMenu;
     }
 
@@ -217,7 +218,6 @@ namespace XnaTetris
     {
       curLevelNumber++;
       currentLevel = LevelGenerator.GetLevel(curLevelNumber);
-      blocksGrid.Restart();
       GameState = Serv.GameState.GameStateRunning;
       Timer = currentLevel.time;
     }
@@ -253,7 +253,7 @@ namespace XnaTetris
       GameState = Serv.GameState.GameStateRunning;
       Score = 0;
       menu.EnableComponents(false);
-      blocksGrid.EnableComponents(true);
+      Components.Add(blocksGrid);
       StartNextLevel();
     }
 
@@ -263,11 +263,11 @@ namespace XnaTetris
     /// <returns>true if there are no moving blocks</returns>
     public bool IsBoardInStableState()
     {
-      return blocksGrid.ActiveBlocks == 0 && !IsRemoveProcess;
+      return blocksGrid.ActiveBlocks == 0 && !IsRemoveProcess && !IsRestartProcess;
     }
 
     /// <summary>
-    /// It's time to remove lines
+    /// It's time to remove them all
     /// </summary>
     /// <param name="gameTime"></param>
     public void RemoveVisualizationWasFinished(GameTime gameTime)
@@ -283,15 +283,5 @@ namespace XnaTetris
         blocksGrid.ReadyToRestart();
       }
     }
-
-    /// <summary>
-    /// It's time to show lines
-    /// </summary>
-    /// <param name="gameTime"></param>
-   /* public void RemoveVisualizationWasFinished(GameTime gameTime)
-    {
-      IsRemoveProcess = false;
-      blocksGrid.RemoveLines(gameTime);
-    }*/
   }
 }

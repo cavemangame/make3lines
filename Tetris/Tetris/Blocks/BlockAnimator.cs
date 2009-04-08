@@ -13,28 +13,28 @@ namespace XnaTetris.Blocks
     private readonly Rectangle srcRect;
     private readonly Rectangle destRect;
     private readonly int totalDistance;
-    private readonly TimeSpan startTime;
+    private readonly double startTime;
     private int speed;
     private readonly bool isAcceleration;
 
     #endregion
 
     #region Конструкторы
-    public BlockAnimator(Rectangle srcRect, Rectangle destRect, GameTime gameTime)
-      : this(srcRect, destRect, gameTime, DEFAULT_SPEED) {}
+    public BlockAnimator(Rectangle srcRect, Rectangle destRect, double startTime)
+      : this(srcRect, destRect, startTime, DEFAULT_SPEED) { }
 
-    public BlockAnimator(Rectangle srcRect, Rectangle destRect, GameTime gameTime, int speed)
-      : this(srcRect, destRect, gameTime, speed, false) { }
+    public BlockAnimator(Rectangle srcRect, Rectangle destRect, double startTime, int speed)
+      : this(srcRect, destRect, startTime, speed, false) { }
 
-    public BlockAnimator(Rectangle srcRect, Rectangle destRect, GameTime gameTime, bool isAcceleration)
-      : this(srcRect, destRect, gameTime, DEFAULT_SPEED, isAcceleration) { }
+    public BlockAnimator(Rectangle srcRect, Rectangle destRect, double startTime, bool isAcceleration)
+      : this(srcRect, destRect, startTime, DEFAULT_SPEED, isAcceleration) { }
 
-    public BlockAnimator(Rectangle srcRect, Rectangle destRect, GameTime gameTime, int speed, bool isAcceleration)
+    public BlockAnimator(Rectangle srcRect, Rectangle destRect, double startTime, int speed, bool isAcceleration)
     {
       this.srcRect = srcRect;
       this.destRect = destRect;
       totalDistance = Math.Abs((destRect.X - srcRect.X) + (destRect.Y - srcRect.Y));
-      startTime = gameTime.TotalRealTime;
+      this.startTime = startTime;
       this.speed = speed;
       this.isAcceleration = isAcceleration;
     }
@@ -73,7 +73,7 @@ namespace XnaTetris.Blocks
 
     private long GetCurrentMovingTime(GameTime gameTime)
     {
-      return (gameTime.TotalRealTime - startTime).Ticks/TimeSpan.TicksPerMillisecond;
+      return (long)((double)gameTime.TotalRealTime.Ticks / TimeSpan.TicksPerMillisecond - startTime);
     }
 
     private long GetTotalMovingTime()
