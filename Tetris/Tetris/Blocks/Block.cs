@@ -124,7 +124,7 @@ namespace XnaTetris.Blocks
       }
       if (BlockRectangle.Y >= minY)
       {
-        if (LinesGame.IsRemoveProcess && IsDestroyed)
+        if ((LinesGame.IsRemoveProcess || LinesGame.IsRestartProcess) && IsDestroyed)
         {
           if (BlockRectangle.Width - 2 <= 0)
           {

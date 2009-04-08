@@ -289,7 +289,14 @@ namespace XnaTetris
 
         if (!blocksGridHelper.FindBestMovement(out dummy1, out dummy2, out dummy3, out dummy4))
         {
-          // restart
+          for (int x = 0; x < GRID_WIDTH; x++)
+          {
+            for (int y = 0; y < GRID_HEIGHT; y++)
+            {
+              Grid[x, y].IsDestroyed = true;
+            }
+          }
+          LinesGame.IsRestartProcess = true;
         }
       }
       isSwap = false;
@@ -298,6 +305,11 @@ namespace XnaTetris
     public void RemoveLines(GameTime gameTime)
     {
       blocksGridHelper.RemoveLines(gameTime);
+    }
+
+    public void ReadyToRestart()
+    {
+      Restart();
     }
 
     public void EnableComponents(bool isEnable)
