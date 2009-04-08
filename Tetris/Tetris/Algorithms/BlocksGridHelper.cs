@@ -178,27 +178,42 @@ namespace XnaTetris.Algorithms
           blocksGrid.LinesGame.Score += blocksGrid.Grid[x, y].GetScore(blocksForScoreCount);
           if (blocksForScoreCount > 0)
           {
-            int xx, yy;
-            if (isHorizontalLine)
-            {
-              xx = (GetRectangle(x, y).Right - GetRectangle(x - blocksForScoreCount + 1, y).Left)/2
-                + GetRectangle(x - blocksForScoreCount + 1, y).Left;
-              yy = GetRectangle(x, y).Center.Y;
-            }
-            else
-            {
-              xx = GetRectangle(x, y).Center.X;
-              yy = (GetRectangle(x, y).Bottom - GetRectangle(x, y - blocksForScoreCount + 1).Top) / 2
-                + GetRectangle(x, y - blocksForScoreCount + 1).Top;
-            }
-            Point p = Serv.InvertCorrectPositionWithGameScale(new Point(xx, yy));
-            blocksGrid.AddDestroyPopupText((int)blocksGrid.LinesGame.ElapsedGameMs,
-                                           new Vector2(p.X, p.Y),
-                                           blocksGrid.Grid[x, y].GetScore(blocksForScoreCount).ToString());
+            GeneratePopupScore(x, y, blocksForScoreCount, isHorizontalLine);
           }
         }
       }
       return result;
+    }
+
+    /// <summary>
+    /// Генерит всплывающие над убитой линией очки
+    /// </summary>
+    /// <param name="x">X - крайнего блока</param>
+    /// <param name="y">Y - крайнего блока</param>
+    /// <param name="blocksForScoreCount">число прибитых блоков в линии</param>
+    /// <param name="isHorizontalLine"></param>
+    private void GeneratePopupScore(int x, int y, int blocksForScoreCount, bool isHorizontalLine)
+    {
+      // find popup text position == center of center of destroyed blocks line
+      int xx, yy;
+      if (isHorizontalLine)
+      {
+        xx = (GetRectangle(x, y).Right - GetRectangle(x - blocksForScoreCount + 1, y).Left) / 2
+          + GetRectangle(x - blocksForScoreCount + 1, y).Left;
+        yy = GetRectangle(x, y).Center.Y;
+      }
+      else
+      {
+        xx = GetRectangle(x, y).Center.X;
+        yy = (GetRectangle(x, y).Bottom - GetRectangle(x, y - blocksForScoreCount + 1).Top) / 2
+          + GetRectangle(x, y - blocksForScoreCount + 1).Top;
+      }
+      // позицию необходимо сжать по размерам экрана
+      Point p = Serv.InvertCorrectPositionWithGameScale(new Point(xx, yy));
+      blocksGrid.AddDestroyPopupText((int)blocksGrid.LinesGame.ElapsedGameMs,
+                                     new Vector2(p.X, p.Y),
+                                     blocksGrid.Grid[x, y].GetScore(blocksForScoreCount).ToString(),
+                                     blocksGrid.Grid[x, y].ScoreColor);
     }
 
     public bool FindBestMovement(out int x1, out int y1, out int x2, out int y2)
