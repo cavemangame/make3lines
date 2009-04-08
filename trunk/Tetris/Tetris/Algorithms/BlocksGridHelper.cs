@@ -338,7 +338,7 @@ namespace XnaTetris.Algorithms
           else
           {
             blocksGrid.Grid[x, bottommestDestroyedY] = blocksGrid.Grid[x, y];
-            blocksGrid.Grid[x, y].MakeMove(gameTime, GetRectangle(x, bottommestDestroyedY), x, bottommestDestroyedY);
+            blocksGrid.Grid[x, y].MakeMove(GetRectangle(x, bottommestDestroyedY), x, bottommestDestroyedY);
             -- bottommestDestroyedY;
           }
         }
@@ -349,7 +349,7 @@ namespace XnaTetris.Algorithms
           Block block = blocksGrid.GetNewRandomBlock(x, y - destroyedBlocksCount);
 
           blocksGrid.Grid[x, y] = block;
-          block.MakeMove(gameTime, GetRectangle(x, y), x, y);
+          block.MakeMove(GetRectangle(x, y), x, y);
         }
 
       }
@@ -388,7 +388,7 @@ namespace XnaTetris.Algorithms
       return count;
     }
 
-    private void SwapBlocks(int x1, int y1, int x2, int y2)
+    public void SwapBlocks(int x1, int y1, int x2, int y2)
     {
       Block temp = blocksGrid.Grid[x1, y1];
 

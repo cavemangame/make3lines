@@ -32,8 +32,6 @@ namespace XnaTetris.Blocks
     {
       if (game != null)
       {
-        game.Content.RootDirectory = "Content";
-
         // Create block sprites
         ContentSpace.blackBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksGeneral"), new Rectangle(0, 0, 64, 64));
         ContentSpace.blueBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksGeneral"), new Rectangle(64, 0, 64, 64));

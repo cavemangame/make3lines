@@ -34,7 +34,7 @@ namespace XnaTetris
     /// <summary>
     /// List of PopupText that currently showing over grid
     /// </summary>
-    private List<PopupText> popupTexts = new List<PopupText>();
+    private readonly List<PopupText> popupTexts = new List<PopupText>();
 
     #endregion
 
@@ -83,7 +83,7 @@ namespace XnaTetris
           // repeat until the board is in stable state
           while (true)
           {
-            Block curBlock = GetNewRandomBlock(x, y);
+            Block curBlock = GetNewRandomBlock(x, y - GRID_HEIGHT);
 
             Grid[x, y] = curBlock;
 
@@ -102,13 +102,21 @@ namespace XnaTetris
       {
         Restart();
       }
+
+      for (int x = 0; x < GRID_WIDTH; x++)
+      {
+        for (int y = 0; y < GRID_HEIGHT; y++)
+        {
+          Grid[x, y].MakeMove(blocksGridHelper.GetRectangle(x, y), x, y);
+        }
+      }
     }
     #endregion
 
     #region Update
     public override void Update(GameTime gameTime)
     {
-      if (LinesGame.GameState == Serv.GameState.GameStateRunning && Input.MouseLeftButtonJustPressed)
+      if (Input.MouseLeftButtonJustPressed)
       {
         UpdateClickedBlock(Input.MousePos, gameTime);
       }
@@ -153,7 +161,7 @@ namespace XnaTetris
               lastSwapX2 = xN;
               lastSwapY1 = block.Y;
               lastSwapY2 = yN;
-              SwapBlocks(lastSwapX1, lastSwapY1, lastSwapX2, lastSwapY2, gameTime);
+              SwapBlocks(lastSwapX1, lastSwapY1, lastSwapX2, lastSwapY2);
             }
             else
             {
@@ -189,16 +197,11 @@ namespace XnaTetris
     #endregion
 
     #region functions
-    private void SwapBlocks(int x1, int y1, int x2, int y2, GameTime gameTime)
+    private void SwapBlocks(int x1, int y1, int x2, int y2)
     {
-      Grid[x1, y1].MakeMove(gameTime, blocksGridHelper.GetRectangle(x2, y2), x2, y2);
-      Grid[x2, y2].MakeMove(gameTime, blocksGridHelper.GetRectangle(x1, y1), x1, y1);
-
-      Block temp = Grid[x1, y1];
-
-      Grid[x1, y1] = Grid[x2, y2];
-      Grid[x2, y2] = temp;
-
+      Grid[x1, y1].MakeMove(blocksGridHelper.GetRectangle(x2, y2), x2, y2);
+      Grid[x2, y2].MakeMove(blocksGridHelper.GetRectangle(x1, y1), x1, y1);
+      blocksGridHelper.SwapBlocks(x1, y1, x2, y2);
       Grid[x1, y1].IsClicked = false;
       Grid[x2, y2].IsClicked = false;
     }
@@ -268,8 +271,6 @@ namespace XnaTetris
         return;
       }
 
-      Block block = sender as Block;
-      GameTime gameTime = block.blockGameTime;
       bool successfulMovement = blocksGridHelper.FindLines();
 
       if (successfulMovement)
@@ -280,8 +281,8 @@ namespace XnaTetris
       {
         // undo the movement
         isUndo = true;
-        LinesGame.Timer -= 5000;
-        SwapBlocks(lastSwapX1, lastSwapY1, lastSwapX2, lastSwapY2, gameTime);
+        LinesGame.Timer -= LinesGame.PENALTY_FOR_WRONG_SWAP;
+        SwapBlocks(lastSwapX1, lastSwapY1, lastSwapX2, lastSwapY2);
       }
       else
       {
@@ -289,6 +290,7 @@ namespace XnaTetris
 
         if (!blocksGridHelper.FindBestMovement(out dummy1, out dummy2, out dummy3, out dummy4))
         {
+          LinesGame.Timer -= LinesGame.PENALTY_FOR_RESTART;
           for (int x = 0; x < GRID_WIDTH; x++)
           {
             for (int y = 0; y < GRID_HEIGHT; y++)
@@ -310,14 +312,6 @@ namespace XnaTetris
     public void ReadyToRestart()
     {
       Restart();
-    }
-
-    public void EnableComponents(bool isEnable)
-    {
-      Enabled = isEnable;
-      for (int x = 0; x < GRID_WIDTH; x++)
-        for (int y = 0; y < GRID_HEIGHT; y++)
-          Grid[x, y].Enabled = isEnable;
     }
 
     public void AddDestroyPopupText(long elapsedTime, Vector2 pos, string text, Color color)
