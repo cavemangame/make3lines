@@ -184,7 +184,7 @@ namespace XnaTetris.Algorithms
                 + GetRectangle(x, y - blocksForScoreCount + 1).Top;
             }
             Point p = Serv.InvertCorrectPositionWithGameScale(new Point(xx, yy));
-            blocksGrid.AddDestroyPopupText(blocksGrid.LinesGame.ElapsedGameMs,
+            blocksGrid.AddDestroyPopupText((int)blocksGrid.LinesGame.ElapsedGameMs,
                                            new Vector2(p.X, p.Y),
                                            blocksGrid.Grid[x, y].GetScore(blocksForScoreCount).ToString());
           }

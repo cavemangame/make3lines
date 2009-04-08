@@ -42,7 +42,7 @@ namespace XnaTetris
     public int Score { get; set; }
     public Serv.GameState GameState { get; set; }
     public SpriteFont NormalFont { get; set; }
-    public long ElapsedGameMs { get; set; }
+    public double ElapsedGameMs { get; set; }
 
     /// <summary>
     /// true if the game has just found lines
@@ -131,8 +131,7 @@ namespace XnaTetris
 
     protected override void Draw(GameTime gameTime)
     {
-      int frameMs = (int)gameTime.ElapsedGameTime.TotalMilliseconds;
-			ElapsedGameMs += frameMs;
+      ElapsedGameMs = gameTime.TotalRealTime.TotalMilliseconds;
 
       if (GameState == Serv.GameState.GameStateMenu)
       {
