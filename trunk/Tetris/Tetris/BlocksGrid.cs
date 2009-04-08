@@ -320,12 +320,12 @@ namespace XnaTetris
           Grid[x, y].Enabled = isEnable;
     }
 
-    public void AddDestroyPopupText(long elapsedTime, Vector2 pos, string text)
+    public void AddDestroyPopupText(long elapsedTime, Vector2 pos, string text, Color color)
     {
       Vector2 measure = LinesGame.NormalFont.MeasureString(text);
       Vector2 corrPos = new Vector2(pos.X-measure.X/2, pos.Y-measure.Y/2);
-      PopupText popup = new PopupText(Game, elapsedTime, text, 3000, corrPos, new Vector2(corrPos.X, corrPos.Y - 30), 
-        LinesGame.NormalFont, 1.2f, 0.8f, Color.White, 255, 0);
+      PopupText popup = new PopupText(Game, elapsedTime, text, 3000, corrPos, new Vector2(corrPos.X, corrPos.Y - 30),
+        LinesGame.NormalFont, 1.2f, 0.8f, color, 255, 0);
       popup.EndDrawing += popup_EndDrawing;
       Game.Components.Add(popup);
       popupTexts.Add(popup);

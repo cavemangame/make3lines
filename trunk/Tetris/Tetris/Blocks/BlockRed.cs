@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Helpers;
 
 namespace XnaTetris.Blocks
@@ -17,6 +18,11 @@ namespace XnaTetris.Blocks
 		{
 			get { return BlockFactory.BlockType.Red; }
 		}
+
+    public override Color ScoreColor
+    {
+      get { return Color.DarkRed; }
+    }
 
 		public override int GetScore(int N)
 		{
