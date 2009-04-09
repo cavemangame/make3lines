@@ -370,12 +370,15 @@ namespace XnaTetris
 
     private void FindAndShowHelp()
     {
-      int x1, y1, x2, y2;
-      if (blocksGridHelper.FindBestMovement(out x1, out y1, out x2, out y2))
+      if (!isShowingHelp)
       {
-        isShowingHelp = true;
-        Grid[x1, y1].IsHelped = true;
-        Grid[x2, y2].IsHelped = true;
+        int x1, y1, x2, y2;
+        if (blocksGridHelper.FindBestMovement(out x1, out y1, out x2, out y2))
+        {
+          isShowingHelp = true;
+          Grid[x1, y1].IsHelped = true;
+          Grid[x2, y2].IsHelped = true;
+        }
       }
     }
 
