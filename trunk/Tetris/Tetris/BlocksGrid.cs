@@ -40,7 +40,7 @@ namespace XnaTetris
     /// <summary>
     /// Idle Time what user don't move right 
     /// </summary>
-    public long StartIdleTime { get; set;}
+    public double StartIdleTime { get; set;}
 
     /// <summary>
     /// Check for showing help at this moment
@@ -121,8 +121,6 @@ namespace XnaTetris
           Grid[x, y].MakeMove(blocksGridHelper.GetRectangle(x, y), x, y);
         }
       }
-
-      StartIdleTime = (long)LinesGame.ElapsedGameMs;
     }
     #endregion
 
@@ -134,7 +132,6 @@ namespace XnaTetris
         if (isShowingHelp)
         {
           isShowingHelp = false;
-          StartIdleTime = (long)LinesGame.ElapsedGameMs;
           CleanHelpedStates();
         }
         UpdateClickedBlock(Input.MousePos, gameTime);
@@ -144,10 +141,6 @@ namespace XnaTetris
         block.Update(gameTime);
       }
 
-     /* foreach (PopupText popupText in popupTexts)
-      {
-        popupText.Update(gameTime);
-      }*/
     }
 
     private void UpdateClickedBlock(Point point, GameTime gameTime)
@@ -213,7 +206,7 @@ namespace XnaTetris
         popupText.Draw(gameTime);
       }
 
-      if ((long)LinesGame.ElapsedGameMs - StartIdleTime >= IDLE_TIME)
+      if (LinesGame.IsBoardInStableState() && LinesGame.ElapsedGameMs - StartIdleTime >= IDLE_TIME)
         FindAndShowHelp();
     }
 
@@ -302,6 +295,7 @@ namespace XnaTetris
       if (isUndo)
       {
         isUndo = false;
+        StartIdleTime = LinesGame.ElapsedGameMs;
         return;
       }
 
@@ -334,6 +328,7 @@ namespace XnaTetris
           }
           LinesGame.IsRestartProcess = true;
         }
+        StartIdleTime = LinesGame.ElapsedGameMs;
       }
       isSwap = false;
     }
