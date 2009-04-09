@@ -15,6 +15,7 @@ namespace XnaTetris
     #region Constants
     public const int GRID_WIDTH = 8;
     public const int GRID_HEIGHT = 8;
+    public const int IDLE_TIME = 5000;
     #endregion
 
     #region Variables
@@ -35,6 +36,16 @@ namespace XnaTetris
     /// List of PopupText that currently showing over grid
     /// </summary>
     private readonly List<PopupText> popupTexts = new List<PopupText>();
+
+    /// <summary>
+    /// Idle Time what user don't move right 
+    /// </summary>
+    public long StartIdleTime { get; set;}
+
+    /// <summary>
+    /// Check for showing help at this moment
+    /// </summary>
+    private bool isShowingHelp;
 
     #endregion
 
@@ -110,6 +121,8 @@ namespace XnaTetris
           Grid[x, y].MakeMove(blocksGridHelper.GetRectangle(x, y), x, y);
         }
       }
+
+      StartIdleTime = (long)LinesGame.ElapsedGameMs;
     }
     #endregion
 
@@ -118,6 +131,12 @@ namespace XnaTetris
     {
       if (Input.MouseLeftButtonJustPressed)
       {
+        if (isShowingHelp)
+        {
+          isShowingHelp = false;
+          StartIdleTime = (long)LinesGame.ElapsedGameMs;
+          CleanHelpedStates();
+        }
         UpdateClickedBlock(Input.MousePos, gameTime);
       }
       foreach (Block block in Grid)
@@ -193,7 +212,11 @@ namespace XnaTetris
       {
         popupText.Draw(gameTime);
       }
+
+      if ((long)LinesGame.ElapsedGameMs - StartIdleTime >= IDLE_TIME)
+        FindAndShowHelp();
     }
+
     #endregion
 
     #region functions
@@ -213,6 +236,17 @@ namespace XnaTetris
         for (int y = 0; y < GRID_HEIGHT; y++)
         {
           Grid[x, y].IsClicked = false;
+        }
+      }
+    }
+
+    private void CleanHelpedStates()
+    {
+      for (int x = 0; x < GRID_WIDTH; x++)
+      {
+        for (int y = 0; y < GRID_HEIGHT; y++)
+        {
+          Grid[x, y].IsHelped = false;
         }
       }
     }
@@ -314,11 +348,11 @@ namespace XnaTetris
       Restart();
     }
 
-    public void AddDestroyPopupText(long elapsedTime, Vector2 pos, string text, Color color)
+    public void AddDestroyPopupText(Vector2 pos, string text, Color color)
     {
       Vector2 measure = LinesGame.NormalFont.MeasureString(text);
       Vector2 corrPos = new Vector2(pos.X-measure.X/2, pos.Y-measure.Y/2);
-      PopupText popup = new PopupText(Game, elapsedTime, text, 3000, corrPos, new Vector2(corrPos.X, corrPos.Y - 30),
+      PopupText popup = new PopupText(Game, (long)LinesGame.ElapsedGameMs, text, 3000, corrPos, new Vector2(corrPos.X, corrPos.Y - 30),
         LinesGame.NormalFont, 1.2f, 0.8f, color, 255, 0);
       popup.EndDrawing += popup_EndDrawing;
       Game.Components.Add(popup);
@@ -333,6 +367,18 @@ namespace XnaTetris
         Game.Components.Remove(sender as PopupText);
       }
     }
+
+    private void FindAndShowHelp()
+    {
+      int x1, y1, x2, y2;
+      if (blocksGridHelper.FindBestMovement(out x1, out y1, out x2, out y2))
+      {
+        isShowingHelp = true;
+        Grid[x1, y1].IsHelped = true;
+        Grid[x2, y2].IsHelped = true;
+      }
+    }
+
     #endregion
   }
 }

@@ -244,8 +244,7 @@ namespace XnaTetris.Algorithms
       }
       // позицию необходимо сжать по размерам экрана
       Point p = Serv.InvertCorrectPositionWithGameScale(new Point(xx, yy));
-      blocksGrid.AddDestroyPopupText((int)blocksGrid.LinesGame.ElapsedGameMs,
-                                     new Vector2(p.X, p.Y),
+      blocksGrid.AddDestroyPopupText(new Vector2(p.X, p.Y),
                                      blocksGrid.Grid[x, y].GetScore(blocksForScoreCount).ToString(),
                                      blocksGrid.Grid[x, y].ScoreColor);
     }

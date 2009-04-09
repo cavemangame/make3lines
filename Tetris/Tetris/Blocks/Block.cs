@@ -47,6 +47,7 @@ namespace XnaTetris.Blocks
     public abstract BlockFactory.BlockType Type { get; }
     public LinesGame LinesGame { get { return Game as LinesGame; } }
     public bool IsClicked { get; set; }
+    public bool IsHelped { get; set; }
     public Rectangle BlockRectangle { get; set; }
     public bool IsDestroyed { get; set; }
     public Serv.MoveDirection CurrentDir { get; set; }
@@ -71,6 +72,10 @@ namespace XnaTetris.Blocks
       if (IsClicked)
       {
         ContentSpace.selectionBlock.Render(BlockRectangle);
+      }
+      if (IsHelped)
+      {
+        ContentSpace.helpBlock.Render(BlockRectangle);
       }
 
       base.Draw(gameTime);
