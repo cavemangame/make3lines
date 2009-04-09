@@ -8,6 +8,12 @@ namespace XnaTetris.Blocks
 {
   public abstract class Block : DrawableGameComponent
   {
+    #region Константы
+
+    private const int BLINK_TIME = 250;
+
+    #endregion
+
     #region Переменные
 
     private readonly SpriteHelper block;
@@ -15,11 +21,14 @@ namespace XnaTetris.Blocks
     private BlockAnimator blockAnimator;
 
     private bool isMoving;
+    private bool isHelped;
 
     public event EventHandler StartMove;
     public event EventHandler EndMove;
     public GameTime blockGameTime;
 
+    public long lastBlinkTime;
+    private bool isHelpShow;
     #endregion
 
     #region Конструктор
@@ -47,7 +56,19 @@ namespace XnaTetris.Blocks
     public abstract BlockFactory.BlockType Type { get; }
     public LinesGame LinesGame { get { return Game as LinesGame; } }
     public bool IsClicked { get; set; }
-    public bool IsHelped { get; set; }
+    public bool IsHelped
+    {
+      get { return isHelped; }
+      set
+      {
+        isHelped = value;
+        if (value)
+        {
+          isHelpShow = true;
+          lastBlinkTime = (long) LinesGame.ElapsedGameMs;
+        }
+      }
+    }
     public Rectangle BlockRectangle { get; set; }
     public bool IsDestroyed { get; set; }
     public Serv.MoveDirection CurrentDir { get; set; }
@@ -75,7 +96,13 @@ namespace XnaTetris.Blocks
       }
       if (IsHelped)
       {
-        ContentSpace.helpBlock.Render(BlockRectangle);
+        if ((long)LinesGame.ElapsedGameMs - lastBlinkTime >= BLINK_TIME)
+        {
+          isHelpShow = !isHelpShow;
+          lastBlinkTime = (long) LinesGame.ElapsedGameMs;
+        }
+        if (isHelpShow)
+          ContentSpace.helpBlock.Render(BlockRectangle);
       }
 
       base.Draw(gameTime);
