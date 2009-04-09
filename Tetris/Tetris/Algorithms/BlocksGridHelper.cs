@@ -51,18 +51,14 @@ namespace XnaTetris.Algorithms
     /// </summary>
     /// <param name="x">block's x coordinate</param>
     /// <param name="y">block's y coordinate</param>
-    /// <param name="horizontalBlocksCount">amount of blocks on the left and on the right sides (without itself)</param>
-    /// <param name="verticalBlocksCount">amount of blocks on the top and on the bottom sides (without itself)</param>
-    private void BlocksFormingLinesCount(int x, int y,
-                                         out int horizontalBlocksCount, out int verticalBlocksCount)
+    /// <returns>amount of blocks (without itself)</returns>
+    private int BlocksFormingLinesCount(int x, int y)
     {
       Block block = blocksGrid.Grid[x, y];
       int rightmostX = x;
       int bottommestY = y;
       int sameTypeBlocksCount;
-
-      horizontalBlocksCount = 0;
-      verticalBlocksCount = 0;
+      int result = 0;
 
       while (rightmostX + 1 < BlocksGrid.GRID_WIDTH &&
              block.Type.Equals(blocksGrid.Grid[rightmostX + 1, y].Type))
@@ -72,7 +68,7 @@ namespace XnaTetris.Algorithms
       sameTypeBlocksCount = SameTypeLeftBlocksCount(rightmostX, y);
       if (sameTypeBlocksCount >= 2)
       {
-        horizontalBlocksCount = sameTypeBlocksCount;
+        result += sameTypeBlocksCount;
       }
 
       while (bottommestY + 1 < BlocksGrid.GRID_HEIGHT &&
@@ -83,8 +79,46 @@ namespace XnaTetris.Algorithms
       sameTypeBlocksCount = SameTypeUpBlocksCount(x, bottommestY);
       if (sameTypeBlocksCount >= 2)
       {
-        verticalBlocksCount += sameTypeBlocksCount;
+        result += sameTypeBlocksCount;
       }
+
+      return result;
+    }
+
+    /// <summary>
+    /// Counts how many blocks will create lines after swap
+    /// </summary>
+    /// <param name="x1">first block's x coordinate</param>
+    /// <param name="y1">first block's y coordinate</param>
+    /// <param name="x2">second block's x coordinate</param>
+    /// <param name="y2">second block's y coordinate</param>
+    /// <returns>blocks amount</returns>
+    private int BlocksFormingLinesAfterSwap(int x1, int y1, int x2, int y2)
+    {
+      if (blocksGrid.Grid[x1, y1].Type.Equals(blocksGrid.Grid[x2, y2].Type))
+      {
+        return 0;
+      }
+
+      SwapBlocks(x1, y1, x2, y2);
+
+      int blocksCount;
+      int totalBlocks = 0;
+
+      blocksCount = BlocksFormingLinesCount(x1, y1);
+      if (blocksCount != 0)
+      {
+        totalBlocks += blocksCount + 1;
+      }
+      blocksCount = BlocksFormingLinesCount(x2, y2);
+      if (blocksCount != 0)
+      {
+        totalBlocks += blocksCount + 1;
+      }
+
+      SwapBlocks(x1, y1, x2, y2);
+
+      return totalBlocks;
     }
 
     /// <summary>
@@ -225,78 +259,43 @@ namespace XnaTetris.Algorithms
       {
         for (int x = 0; x < BlocksGrid.GRID_WIDTH; ++ x)
         {
+          int swapX1, swapY1, swapX2, swapY2;
+          int totalBlocks;
+
           // swap with left block
-          if (x != 0)
+          swapX1 = x - 1;
+          swapY1 = y;
+          swapX2 = x;
+          swapY2 = y;
+          if (swapX1 >= 0)
           {
-            SwapBlocks(x - 1, y, x, y);
-
-            bool isSameType = blocksGrid.Grid[x - 1, y].Type.Equals(blocksGrid.Grid[x, y].Type);
-            int horizontalBlocksCount, verticalBlocksCount;
-            int totalBlocks = 0;
-            
-            BlocksFormingLinesCount(x - 1, y, out horizontalBlocksCount, out verticalBlocksCount);
-            if (horizontalBlocksCount != 0 || verticalBlocksCount != 0)
-            {
-              totalBlocks = horizontalBlocksCount + verticalBlocksCount + 1;
-            }
-            BlocksFormingLinesCount(x, y, out horizontalBlocksCount, out verticalBlocksCount);
-            if (!isSameType)
-            {
-              totalBlocks += horizontalBlocksCount;
-            }
-            totalBlocks += verticalBlocksCount;
-            if (!isSameType && verticalBlocksCount != 0)
-            {
-              totalBlocks += 1;
-            }
-
+            totalBlocks = BlocksFormingLinesAfterSwap(swapX1, swapY1, swapX2, swapY2);
             if (totalBlocks > bestBlocksCount)
             {
               bestBlocksCount = totalBlocks;
-              x1 = x - 1;
-              y1 = y;
-              x2 = x;
-              y2 = y;
+              x1 = swapX1;
+              y1 = swapY1;
+              x2 = swapX2;
+              y2 = swapY2;
             }
-
-            SwapBlocks(x - 1, y, x, y);
           }
 
           // swap with top block
-          if (y != 0)
+          swapX1 = x;
+          swapY1 = y - 1;
+          swapX2 = x;
+          swapY2 = y;
+          if (swapY1 >= 0)
           {
-            SwapBlocks(x, y - 1, x, y);
-
-            bool isSameType = blocksGrid.Grid[x, y - 1].Type.Equals(blocksGrid.Grid[x, y].Type);
-            int horizontalBlocksCount, verticalBlocksCount;
-            int totalBlocks = 0;
-            
-            BlocksFormingLinesCount(x, y - 1, out horizontalBlocksCount, out verticalBlocksCount);
-            if (horizontalBlocksCount != 0 || verticalBlocksCount != 0)
-            {
-              totalBlocks = horizontalBlocksCount + verticalBlocksCount + 1;
-            }
-            BlocksFormingLinesCount(x, y, out horizontalBlocksCount, out verticalBlocksCount);
-            if (!isSameType)
-            {
-              totalBlocks += verticalBlocksCount;
-            }
-            totalBlocks += horizontalBlocksCount;
-            if (!isSameType && horizontalBlocksCount != 0)
-            {
-              totalBlocks += 1;
-            }
-
+            totalBlocks = BlocksFormingLinesAfterSwap(swapX1, swapY1, swapX2, swapY2);
             if (totalBlocks > bestBlocksCount)
             {
               bestBlocksCount = totalBlocks;
-              x1 = x;
-              y1 = y - 1;
-              x2 = x;
-              y2 = y;
+              x1 = swapX1;
+              y1 = swapY1;
+              x2 = swapX2;
+              y2 = swapY2;
             }
-
-            SwapBlocks(x, y - 1, x, y);
           }
         }
       }
