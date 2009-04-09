@@ -48,6 +48,7 @@ namespace XnaTetris.Blocks
         ContentSpace.someHiBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksHilight"), new Rectangle(64 * 5, 0, 64, 64));
 
         ContentSpace.selectionBlock = new SpriteHelper(game.Content.Load<Texture2D>("Selection"), null);
+        ContentSpace.helpBlock = new SpriteHelper(game.Content.Load<Texture2D>("HelpBlock"), null);
       }
     }
 
