@@ -26,8 +26,6 @@ namespace XnaTetris
     private readonly BlocksGrid blocksGrid;
     private Menu menu;
 
-    // graphics
-    SpriteHelper background, backgroundSmallBox, backgroundBigBox, buttonPause, buttonExit;
 
     private Level currentLevel;
     private int curLevelNumber;
@@ -44,6 +42,9 @@ namespace XnaTetris
     public int Score { get; set; }
     public Serv.GameState GameState { get; private set; }
     public SpriteFont NormalFont { get; private set; }
+    public SpriteFont BigFont { get; private set; }
+    public SpriteFont SmallFont { get; private set; }
+
     public double ElapsedGameMs { get; private set; }
 
     /// <summary>
@@ -82,21 +83,21 @@ namespace XnaTetris
       Components.Add(menu);
 
       // Create all sprites
-      background = new SpriteHelper(content.Load<Texture2D>("skybackground"), null);
-      backgroundSmallBox = new SpriteHelper(content.Load<Texture2D>("BackgroundSmallBox"), null);
-      backgroundBigBox = new SpriteHelper(content.Load<Texture2D>("BackgroundBigBox"), null);
-      buttonPause = new SpriteHelper(content.Load<Texture2D>("PauseButton"), null);
-      buttonExit = new SpriteHelper(content.Load<Texture2D>("ExitButton"), null);
+      ContentSpace.background = new SpriteHelper(content.Load<Texture2D>("skybackground"), null);
+      ContentSpace.backgroundSmallBox = new SpriteHelper(content.Load<Texture2D>("BackgroundSmallBox"), null);
+      ContentSpace.backgroundBigBox = new SpriteHelper(content.Load<Texture2D>("BackgroundBigBox"), null);
+      ContentSpace.buttonPause = new SpriteHelper(content.Load<Texture2D>("PauseButton"), null);
+      ContentSpace.buttonExit = new SpriteHelper(content.Load<Texture2D>("ExitButton"), null);
 
       NormalFont = content.Load<SpriteFont>("normalfont");
+      BigFont = content.Load<SpriteFont>("bigfont");
+      SmallFont = content.Load<SpriteFont>("smallfont");
 
       // Create interface elements
-      btnPause = new Button(this, rectPauseButton, buttonPause);
+      btnPause = new Button(this, rectPauseButton, ContentSpace.buttonPause);
       btnPause.ButtonAction += btnPause_ButtonAction;
-      btnExit = new Button(this, rectExitButton, buttonExit);
+      btnExit = new Button(this, rectExitButton, ContentSpace.buttonExit);
       btnExit.ButtonAction += btnExit_ButtonAction;
-      Components.Add(btnPause);
-      Components.Add(btnExit);
 
       base.LoadContent();
     }
@@ -108,7 +109,7 @@ namespace XnaTetris
     {
       if (IsBoardInStableState())
       {
-        int frameMs = (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+        long frameMs = (long)gameTime.ElapsedGameTime.TotalMilliseconds;
 
         if (Input.KeyboardSpaceJustPressed)
         {
@@ -143,11 +144,11 @@ namespace XnaTetris
       else
       {
         // Render background
-        background.Render();
+        ContentSpace.background.Render();
 
         // Draw background boxes for all the components
-        backgroundBigBox.Render(new Rectangle(300, 25, 720, 720));
-        backgroundSmallBox.Render(new Rectangle(25, 25, 260, 720));
+        ContentSpace.backgroundBigBox.Render(new Rectangle(300, 25, 720, 720));
+        ContentSpace.backgroundSmallBox.Render(new Rectangle(25, 25, 260, 720));
 
         if (GameState == Serv.GameState.GameStateRunning || GameState == Serv.GameState.GameStatePause)
           blocksGrid.Draw(gameTime);
@@ -161,7 +162,7 @@ namespace XnaTetris
         TextureFont.WriteText(40, 140, currentLevel.LevelString);
         TextureFont.WriteText(40, 180, Serv.GetTimeString(Timer));
 
-        TextHelper.DrawText(NormalFont, String.Format("Pos {0},{1}", Input.MousePos.X, Input.MousePos.Y), 40, 220, Color.SteelBlue, 0.76f);
+        //TextHelper.DrawText(NormalFont, String.Format("Pos {0},{1}", Input.MousePos.X, Input.MousePos.Y), 40, 220, Color.SteelBlue, 0.76f);
 
         if (GameState == Serv.GameState.GameStatePause)
           TextureFont.WriteText(610, 370, "PAUSE", Color.AliceBlue);
@@ -171,6 +172,8 @@ namespace XnaTetris
     }
 
     #endregion
+
+    #region Loose and win level
 
     private void CheckForLoose()
     {
@@ -186,6 +189,40 @@ namespace XnaTetris
       }
     }
 
+    private void StartNextLevel()
+    {
+      curLevelNumber++;
+      currentLevel = LevelGenerator.GetLevel(curLevelNumber);
+      GameState = Serv.GameState.GameStateRunning;
+      Timer = currentLevel.time;
+      blocksGrid.Restart();
+    }
+
+    #endregion
+
+    #region Interface Events
+
+    void btnExit_ButtonAction(object sender, EventArgs e)
+    {
+      ExitToMenu();
+    }
+
+    void btnPause_ButtonAction(object sender, EventArgs e)
+    {
+      SetPauseUnpause();
+    }
+
+    internal void Start()
+    {
+      GameState = Serv.GameState.GameStateRunning;
+      Score = 0;
+      menu.EnableComponents(false);
+      Components.Add(blocksGrid);
+      Components.Add(btnPause);
+      Components.Add(btnExit);
+      StartNextLevel();
+    }
+
     private void ExitToMenu()
     {
       Score = 0;
@@ -193,6 +230,8 @@ namespace XnaTetris
       curLevelNumber = 0;
       menu.EnableComponents(true);
       Components.Remove(blocksGrid);
+      Components.Remove(btnPause);
+      Components.Remove(btnExit);
       GameState = Serv.GameState.GameStateMenu;
     }
 
@@ -214,26 +253,6 @@ namespace XnaTetris
       GameState = Serv.GameState.GameStateRunning;
     }
 
-    private void StartNextLevel()
-    {
-      curLevelNumber++;
-      currentLevel = LevelGenerator.GetLevel(curLevelNumber);
-      GameState = Serv.GameState.GameStateRunning;
-      Timer = currentLevel.time;
-    }
-
-    #region Interface Events
-
-    void btnExit_ButtonAction(object sender, EventArgs e)
-    {
-      ExitToMenu();
-    }
-
-    void btnPause_ButtonAction(object sender, EventArgs e)
-    {
-      SetPauseUnpause();
-    }
-
     #endregion
 
     #region Start game
@@ -248,14 +267,8 @@ namespace XnaTetris
 
     #endregion
 
-    internal void Start()
-    {
-      GameState = Serv.GameState.GameStateRunning;
-      Score = 0;
-      menu.EnableComponents(false);
-      Components.Add(blocksGrid);
-      StartNextLevel();
-    }
+
+    #region Some help methods
 
     /// <summary>
     /// Determines if there are moving blocks on the board or not
@@ -283,5 +296,7 @@ namespace XnaTetris
         blocksGrid.ReadyToRestart();
       }
     }
+
+    #endregion
   }
 }

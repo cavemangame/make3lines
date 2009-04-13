@@ -27,7 +27,7 @@ namespace XnaTetris.Algorithms
     {
       switch (number)
       {
-        case 1: return new Level(500000, 1, 150000000);
+        case 1: return new Level(50, 1, 1500);
         case 2: return new Level(50, 2, 4000);
         case 3: return new Level(30, 3, 5000);
         case 4: return new Level(30, 4, 6500);

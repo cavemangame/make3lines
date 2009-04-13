@@ -7,16 +7,16 @@ using XnaTetris.Helpers;
 
 namespace XnaTetris.Blocks
 {
-	class BlockBlack : Block
+	class BlockWhite : Block
 	{
-		public BlockBlack(LinesGame setGame, Rectangle setBlockRect, SpriteHelper setBlock, SpriteHelper setHiBlock, int x, int y)
+		public BlockWhite(LinesGame setGame, Rectangle setBlockRect, SpriteHelper setBlock, SpriteHelper setHiBlock, int x, int y)
 			: base(setGame, setBlockRect, setBlock, setHiBlock, x, y)
 		{
 		}
 
 		public override BlockFactory.BlockType Type
 		{
-			get { return BlockFactory.BlockType.Black; }
+			get { return BlockFactory.BlockType.White; }
 		}
 
 	  public override Color ScoreColor
@@ -29,11 +29,11 @@ namespace XnaTetris.Blocks
 			switch (N)
 			{
 				case 3:
-					return 55;
+					return 50;
 				case 4:
-					return 145;
+					return 100;
 				case 5:
-					return 245;
+					return 200;
 				default:
 					return 0;
 			}
