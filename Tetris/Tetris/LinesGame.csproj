@@ -85,12 +85,12 @@
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="BlocksGrid.cs" />
     <Compile Include="Blocks\BlockAnimator.cs" />
-    <Compile Include="Blocks\BlockBlack.cs" />
+    <Compile Include="Blocks\BlockWhite.cs" />
     <Compile Include="Blocks\BlockBlue.cs" />
     <Compile Include="Blocks\BlockFactory.cs" />
     <Compile Include="Blocks\BlockGreen.cs" />
     <Compile Include="Blocks\BlockRed.cs" />
-    <Compile Include="Blocks\BlockSomeone.cs" />
+    <Compile Include="Blocks\BlockGray.cs" />
     <Compile Include="Blocks\BlockYellow.cs" />
     <Compile Include="Game\BaseGame.cs" />
     <Compile Include="Game\ContentSpace.cs" />

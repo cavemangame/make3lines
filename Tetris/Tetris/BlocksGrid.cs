@@ -78,7 +78,7 @@ namespace XnaTetris
     #region Initialize
     public override void Initialize()
     {
-      Restart();
+      //Restart();
 
       base.Initialize();
     }

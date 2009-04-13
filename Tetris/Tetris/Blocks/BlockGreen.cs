@@ -29,9 +29,9 @@ namespace XnaTetris.Blocks
 			switch (N)
 			{
 				case 3:
-					return 40;
+					return 30;
 				case 4:
-					return 150;
+					return 100;
 				case 5:
 					return 230;
 				default:

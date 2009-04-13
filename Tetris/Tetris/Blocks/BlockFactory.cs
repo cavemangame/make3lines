@@ -18,8 +18,8 @@ namespace XnaTetris.Blocks
       Red,
       Blue,
       Yellow,
-      Black,
-      Someone
+      White,
+      Gray
     }
 
     private BlockFactory(LinesGame setGame)
@@ -73,10 +73,10 @@ namespace XnaTetris.Blocks
           return new BlockBlue(game, setRect, ContentSpace.blueBlock, ContentSpace.blueHiBlock, x, y);
         case BlockType.Yellow:
           return new BlockYellow(game, setRect, ContentSpace.yellowBlock, ContentSpace.yellowHiBlock, x, y);
-        case BlockType.Black:
-          return new BlockBlack(game, setRect, ContentSpace.blackBlock, ContentSpace.blackHiBlock, x, y);
-        case BlockType.Someone:
-          return new BlockSomeone(game, setRect, ContentSpace.someBlock, ContentSpace.someHiBlock, x, y);
+        case BlockType.White:
+          return new BlockWhite(game, setRect, ContentSpace.blackBlock, ContentSpace.blackHiBlock, x, y);
+        case BlockType.Gray:
+          return new BlockGray(game, setRect, ContentSpace.someBlock, ContentSpace.someHiBlock, x, y);
         default:
           throw new ArgumentOutOfRangeException("blockType");
       }

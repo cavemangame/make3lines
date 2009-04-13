@@ -42,14 +42,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SpaceBackground.dds">
-      <Name>SpaceBackground</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="BackgroundSmallBox.png">
       <Name>BackgroundSmallBox</Name>
       <Importer>TextureImporter</Importer>

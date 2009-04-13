@@ -25,7 +25,7 @@ namespace XnaTetris.Game
         curPos += pair.Value;
       }
 
-      return BlockFactory.BlockType.Black;
+      return BlockFactory.BlockType.White;
     }
 
     // упрощенная версия, все остальные эл-ты с luck = 1

@@ -131,7 +131,8 @@ namespace XnaTetris.Interface
 
     private void btnStart_ButtonAction(object sender, EventArgs e)
     {
-      (Game as LinesGame).Start();
+      if (Game is LinesGame)
+        (Game as LinesGame).Start();
     }
 
     private void btnExit_ButtonAction(object sender, EventArgs e)
