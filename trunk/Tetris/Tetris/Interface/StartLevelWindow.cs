@@ -6,51 +6,54 @@ using XnaTetris.Helpers;
 
 namespace XnaTetris.Interface
 {
-  class StartLevelWindow : DrawableGameComponent
+  class StartLevelWindow : GameScene
   {
     #region Variables
 
-    private readonly Rectangle rect;
-    private readonly SpriteHelper background;
+    private readonly Rectangle rect = new Rectangle(0, 0, 1024, 768);
 
-    private static readonly Rectangle srcGeneral = new Rectangle(0, 0, 80, 40);
-    private static readonly Rectangle srcHilight = new Rectangle(80, 0, 80, 40);
-
+    private readonly Rectangle srcGeneral = new Rectangle(0, 0, 80, 40);
+    private readonly Rectangle srcHilight = new Rectangle(80, 0, 80, 40);
 
     private Button btnOk;
 
     #endregion
 
+    #region Properties
+
+    public LinesGame LinesGame { get { return Game as LinesGame; } }
+
+    #endregion
+
     #region Constructor
 
-    public StartLevelWindow(LinesGame setGame, Rectangle setRect, SpriteHelper setBackground)
+    public StartLevelWindow(LinesGame setGame)
 			: base(setGame)
 		{
-			rect = setRect;
-			background = setBackground;
-      InitButtons(setGame);
+      InitButtons();
     }
 
-    private void InitButtons(LinesGame setGame)
+    private void InitButtons()
     {
-      LoadTexturesAndSprites(setGame);
+      LoadTexturesAndSprites();
 
-      btnOk = new Button(setGame, new Rectangle(420, 300, 80, 40), ContentSpace.buttonLevelDialogOk,
+      btnOk = new Button(LinesGame, new Rectangle(472, 700, 80, 40), ContentSpace.buttonLevelDialogOk,
                             ContentSpace.buttonHiLevelDialogOk);
       btnOk.ButtonAction += btnOk_ButtonAction;
-      Game.Components.Add(btnOk);
+      Components.Add(btnOk);
     }
 
 
-    private static void LoadTexturesAndSprites(LinesGame game)
+    private void LoadTexturesAndSprites()
     {
-      if (game != null)
+      if (LinesGame != null)
       {
-        // Load menu content
+        ContentSpace.levelDialogBackground = 
+          new SpriteHelper(LinesGame.Content.Load<Texture2D>("LevelBackground"), null);
         ContentSpace.buttonLevelDialogOk =
-          new SpriteHelper(game.Content.Load<Texture2D>("LevelOkButton"), srcGeneral);
+          new SpriteHelper(LinesGame.Content.Load<Texture2D>("LevelOkButton"), srcGeneral);
         ContentSpace.buttonHiLevelDialogOk =
-          new SpriteHelper(game.Content.Load<Texture2D>("LevelOkButton"), srcHilight);
+          new SpriteHelper(LinesGame.Content.Load<Texture2D>("LevelOkButton"), srcHilight);
       }
     }
 
@@ -60,8 +63,7 @@ namespace XnaTetris.Interface
 
     public override void Draw(GameTime gameTime)
     {
-      background.Render(rect);
-      btnOk.Draw(gameTime);
+      ContentSpace.levelDialogBackground.Render(rect);
 
       base.Draw(gameTime);
     }
@@ -73,11 +75,6 @@ namespace XnaTetris.Interface
     public override void Update(GameTime gameTime)
     {
       base.Update(gameTime);
-    }
-
-    public void EnableComponents(bool isEnable)
-    {
-      Enabled = btnOk.Enabled = isEnable;
     }
 
     #endregion
