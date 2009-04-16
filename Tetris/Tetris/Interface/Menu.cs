@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Helpers;
@@ -9,23 +6,30 @@ using XnaTetris.Game;
 
 namespace XnaTetris.Interface
 {
-	public class Menu : DrawableGameComponent
+	public class Menu : GameScene
 	{
 		#region Variables
 
-		private Rectangle rect;
+		private readonly Rectangle rect;
+
 	  private static readonly Rectangle srcGeneral = new Rectangle(0, 0, 200, 50);
     private static readonly Rectangle srcHilight = new Rectangle(200, 0, 200, 50);
 
-	  private SpriteHelper background; 
+	  private readonly SpriteHelper background; 
 
 		private Button btnStart, btnExit, btnHelp, btnHiScore, btnAuthors;
 
 		#endregion
 
-		#region Constructor
+    #region Properties
 
-		public Menu(LinesGame setGame, Rectangle setRect, SpriteHelper setBackground)
+    public LinesGame LinesGame { get { return Game as LinesGame; } }
+
+    #endregion
+
+    #region Constructor
+
+    public Menu(LinesGame setGame, Rectangle setRect, SpriteHelper setBackground)
 			: base(setGame)
 		{
 			rect = setRect;
@@ -33,38 +37,37 @@ namespace XnaTetris.Interface
 			InitButtons(setGame);
 		}
 
-		private void InitButtons(LinesGame setGame)
+		private void InitButtons(Microsoft.Xna.Framework.Game setGame)
 		{
 		  LoadTexturesAndSprites(setGame);
 
 			btnStart = new Button(setGame, new Rectangle(420, 200, 200, 50), ContentSpace.menuButtonStart,
         ContentSpace.menuHiButtonStart);
 			btnStart.ButtonAction += btnStart_ButtonAction;
-			Game.Components.Add(btnStart);
+			Components.Add(btnStart);
 
       btnHelp = new Button(setGame, new Rectangle(420, 270, 200, 50), ContentSpace.menuButtonHelp,
         ContentSpace.menuHiButtonHelp);
       btnHelp.ButtonAction += btnHelp_ButtonAction;
-      Game.Components.Add(btnHelp);
+      Components.Add(btnHelp);
 
       btnHiScore = new Button(setGame, new Rectangle(420, 340, 200, 50), ContentSpace.menuButtonHiScore,
         ContentSpace.menuHiButtonHiScore);
       btnHiScore.ButtonAction += btnHiScore_ButtonAction;
-      Game.Components.Add(btnHiScore);
+      Components.Add(btnHiScore);
 
       btnAuthors = new Button(setGame, new Rectangle(420, 410, 200, 50), ContentSpace.menuButtonAuthors,
         ContentSpace.menuHiButtonAuthors);
       btnAuthors.ButtonAction += btnAuthors_ButtonAction;
-      Game.Components.Add(btnAuthors);
+      Components.Add(btnAuthors);
 
       btnExit = new Button(setGame, new Rectangle(420, 480, 200, 50), ContentSpace.menuButtonExit,
         ContentSpace.menuHiButtonExit);
       btnExit.ButtonAction += btnExit_ButtonAction;
-      Game.Components.Add(btnExit);
-
+      Components.Add(btnExit);
 		}
 
-    private static void LoadTexturesAndSprites(LinesGame game)
+    private static void LoadTexturesAndSprites(Microsoft.Xna.Framework.Game game)
     {
       if (game != null)
       {
@@ -100,13 +103,6 @@ namespace XnaTetris.Interface
 		{
 			background.Render(rect);
 
-			// draw buttons
-			btnStart.Draw(gameTime);
-			btnExit.Draw(gameTime);
-			btnHiScore.Draw(gameTime);
-			btnHelp.Draw(gameTime);
-			btnAuthors.Draw(gameTime);
-
 			base.Draw(gameTime);
 		}
 
@@ -119,20 +115,13 @@ namespace XnaTetris.Interface
 			base.Update(gameTime);
 		}
 
-    public void EnableComponents(bool isEnable)
-    {
-      Enabled = btnStart.Enabled = btnExit.Enabled = btnHiScore.Enabled = btnHelp.Enabled = 
-      btnAuthors.Enabled = isEnable;
-    }
-
 		#endregion
 
     #region Events
 
     private void btnStart_ButtonAction(object sender, EventArgs e)
     {
-      if (Game is LinesGame)
-        (Game as LinesGame).Start();
+      LinesGame.Start();
     }
 
     private void btnExit_ButtonAction(object sender, EventArgs e)

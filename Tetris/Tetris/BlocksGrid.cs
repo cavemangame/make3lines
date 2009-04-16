@@ -10,7 +10,7 @@ using XnaTetris.Interface;
 
 namespace XnaTetris
 {
-  class BlocksGrid : DrawableGameComponent
+  public class BlocksGrid : DrawableGameComponent
   {
     #region Constants
     public const int GRID_WIDTH = 8;
