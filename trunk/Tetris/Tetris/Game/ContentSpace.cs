@@ -20,6 +20,9 @@ namespace XnaTetris.Game
     public static SpriteHelper greenHiBlock, redHiBlock, blueHiBlock, yellowHiBlock, blackHiBlock, someHiBlock;
 
     public static SpriteHelper background, backgroundSmallBox, backgroundBigBox, buttonPause, buttonExit;
+    public static SpriteHelper buttonHiLevelDialogOk, buttonLevelDialogOk;
+
+    public static SpriteHelper levelDialogBackground;
 
 	  private ContentSpace()
     {

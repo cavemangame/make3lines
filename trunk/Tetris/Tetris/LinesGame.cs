@@ -17,23 +17,15 @@ namespace XnaTetris
     public const int GRID_RECTANGLE_WIDTH = 700;
     public const int PENALTY_FOR_WRONG_SWAP = 5000;
     public const int PENALTY_FOR_RESTART = 5000;
-    private readonly Rectangle rectPauseButton = new Rectangle(55, 600, 200, 50);
-    private readonly Rectangle rectExitButton = new Rectangle(55, 670, 200, 50);
     #endregion
 
     #region Variables
 
-    private readonly BlocksGrid blocksGrid;
+    private GameField gameField;
     private Menu menu;
+    private StartLevelWindow levelDialog;
 
-
-    private Level currentLevel;
     private int curLevelNumber;
-
-    /// <summary>
-    /// Interface
-    /// </summary>
-    private Button btnPause, btnExit;
 
     #endregion
 
@@ -44,6 +36,7 @@ namespace XnaTetris
     public SpriteFont NormalFont { get; private set; }
     public SpriteFont BigFont { get; private set; }
     public SpriteFont SmallFont { get; private set; }
+    public Level CurrentLevel { get; private set; }
 
     public double ElapsedGameMs { get; private set; }
 
@@ -58,8 +51,6 @@ namespace XnaTetris
 
     public LinesGame()
     {
-      blocksGrid = new BlocksGrid(this, new Rectangle(GRID_RECTANGLE_X_COORDINATE, GRID_RECTANGLE_Y_COORDINATE,
-                                                      GRID_RECTANGLE_WIDTH, GRID_RECTANGLE_HEIGHT));
     }
 
     #endregion
@@ -78,27 +69,21 @@ namespace XnaTetris
       // Load all our content
       content.RootDirectory = "Content";
 
-      menu = new Menu(this, new Rectangle(0, 0, 1024, 768),
-        new SpriteHelper(content.Load<Texture2D>("MenuBackground"), null));
-      Components.Add(menu);
-
       // Create all sprites
       ContentSpace.background = new SpriteHelper(content.Load<Texture2D>("skybackground"), null);
-      ContentSpace.backgroundSmallBox = new SpriteHelper(content.Load<Texture2D>("BackgroundSmallBox"), null);
-      ContentSpace.backgroundBigBox = new SpriteHelper(content.Load<Texture2D>("BackgroundBigBox"), null);
-      ContentSpace.buttonPause = new SpriteHelper(content.Load<Texture2D>("PauseButton"), null);
-      ContentSpace.buttonExit = new SpriteHelper(content.Load<Texture2D>("ExitButton"), null);
+      ContentSpace.levelDialogBackground = new SpriteHelper(content.Load<Texture2D>("LevelBackground"), null);
 
       NormalFont = content.Load<SpriteFont>("normalfont");
       BigFont = content.Load<SpriteFont>("bigfont");
       SmallFont = content.Load<SpriteFont>("smallfont");
 
-      // Create interface elements
-      btnPause = new Button(this, rectPauseButton, ContentSpace.buttonPause);
-      btnPause.ButtonAction += btnPause_ButtonAction;
-      btnExit = new Button(this, rectExitButton, ContentSpace.buttonExit);
-      btnExit.ButtonAction += btnExit_ButtonAction;
+      menu = new Menu(this, new Rectangle(0, 0, 1024, 768),
+            new SpriteHelper(content.Load<Texture2D>("MenuBackground"), null));
+      gameField = new GameField(this);
+      Components.Add(menu);
+      Components.Add(gameField);
 
+      menu.Show();
       base.LoadContent();
     }
 
@@ -107,7 +92,7 @@ namespace XnaTetris
     #region Update
     protected override void Update(GameTime gameTime)
     {
-      if (IsBoardInStableState())
+      if (gameField.Enabled && IsBoardInStableState())
       {
         long frameMs = (long)gameTime.ElapsedGameTime.TotalMilliseconds;
 
@@ -135,38 +120,13 @@ namespace XnaTetris
     protected override void Draw(GameTime gameTime)
     {
       ElapsedGameMs = gameTime.TotalRealTime.TotalMilliseconds;
-
-      if (GameState == Serv.GameState.GameStateMenu)
-      {
-        menu.Draw(gameTime);
-      }
-
-      else
-      {
         // Render background
-        ContentSpace.background.Render();
+      ContentSpace.background.Render();
 
-        // Draw background boxes for all the components
-        ContentSpace.backgroundBigBox.Render(new Rectangle(300, 25, 720, 720));
-        ContentSpace.backgroundSmallBox.Render(new Rectangle(25, 25, 260, 720));
-
-        if (GameState == Serv.GameState.GameStateRunning || GameState == Serv.GameState.GameStatePause)
-          blocksGrid.Draw(gameTime);
-
-        btnPause.Draw(gameTime);
-        btnExit.Draw(gameTime);
-
-        TextureFont.WriteText(40, 50, String.Format("Score: {0}", Score));
-        TextureFont.WriteText(40, 90, String.Format("Remain: {0}", 
-          Math.Max(currentLevel.maxScore - Score, 0)));
-        TextureFont.WriteText(40, 140, currentLevel.LevelString);
-        TextureFont.WriteText(40, 180, Serv.GetTimeString(Timer));
-
-        //TextHelper.DrawText(NormalFont, String.Format("Pos {0},{1}", Input.MousePos.X, Input.MousePos.Y), 40, 220, Color.SteelBlue, 0.76f);
-
-        if (GameState == Serv.GameState.GameStatePause)
-          TextureFont.WriteText(610, 370, "PAUSE", Color.AliceBlue);
-      }
+      if (menu.Visible)
+        menu.Draw(gameTime);
+      if (gameField.Visible)
+        gameField.Draw(gameTime);
 
       base.Draw(gameTime);
     }
@@ -179,23 +139,36 @@ namespace XnaTetris
     {
       if (Timer <= 0)
       {
-        if (Score <= currentLevel.maxScore)
+        if (Score <= CurrentLevel.maxScore)
           ExitToMenu();
         else
         {
           GameState = Serv.GameState.GameStateLevelEnd;
           StartNextLevel();
+          //ShowLevelDialog();
         }
       }
     }
 
-    private void StartNextLevel()
+    private void ShowLevelDialog()
+    {
+     /* levelDialog = new StartLevelWindow(this, new Rectangle(300, 200, 400, 300), 
+        ContentSpace.levelDialogBackground);
+      Components.Add(levelDialog);
+      blocksGrid.Enabled = false;
+      btnExit.Enabled = btnPause.Enabled = false;*/
+    }
+
+    public void StartNextLevel()
     {
       curLevelNumber++;
-      currentLevel = LevelGenerator.GetLevel(curLevelNumber);
+      CurrentLevel = LevelGenerator.GetLevel(curLevelNumber);
       GameState = Serv.GameState.GameStateRunning;
-      Timer = currentLevel.time;
-      blocksGrid.Restart();
+      Timer = CurrentLevel.time;
+
+      //Components.Remove(levelDialog);
+      gameField.Show();
+      gameField.BlockGrid.Restart();
     }
 
     #endregion
@@ -216,26 +189,22 @@ namespace XnaTetris
     {
       GameState = Serv.GameState.GameStateRunning;
       Score = 0;
-      menu.EnableComponents(false);
-      Components.Add(blocksGrid);
-      Components.Add(btnPause);
-      Components.Add(btnExit);
+      menu.Hide();
+      gameField.Show();
       StartNextLevel();
     }
 
-    private void ExitToMenu()
+    public void ExitToMenu()
     {
       Score = 0;
       Timer = 0;
       curLevelNumber = 0;
-      menu.EnableComponents(true);
-      Components.Remove(blocksGrid);
-      Components.Remove(btnPause);
-      Components.Remove(btnExit);
+      menu.Show();
+      gameField.Hide();
       GameState = Serv.GameState.GameStateMenu;
     }
 
-    private void SetPauseUnpause()
+    public void SetPauseUnpause()
     {
       if (GameState == Serv.GameState.GameStateRunning)
         PauseGame();
@@ -276,7 +245,7 @@ namespace XnaTetris
     /// <returns>true if there are no moving blocks</returns>
     public bool IsBoardInStableState()
     {
-      return blocksGrid.ActiveBlocks == 0 && !IsRemoveProcess && !IsRestartProcess;
+      return gameField.BlockGrid.ActiveBlocks == 0 && !IsRemoveProcess && !IsRestartProcess;
     }
 
     /// <summary>
@@ -288,12 +257,12 @@ namespace XnaTetris
       if (IsRemoveProcess)
       {
         IsRemoveProcess = false;
-        blocksGrid.RemoveLines(gameTime);
+        gameField.BlockGrid.RemoveLines(gameTime);
       }
       if (IsRestartProcess)
       {
         IsRestartProcess = false;
-        blocksGrid.ReadyToRestart();
+        gameField.BlockGrid.ReadyToRestart();
       }
     }
 
