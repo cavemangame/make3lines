@@ -24,6 +24,7 @@ namespace XnaTetris
     private GameField gameField;
     private Menu menu;
     private StartLevelWindow levelDialog;
+    private readonly Rectangle levelDialogRect = new Rectangle(200, 300, 200, 300);
 
     private int curLevelNumber;
 
@@ -71,7 +72,6 @@ namespace XnaTetris
 
       // Create all sprites
       ContentSpace.background = new SpriteHelper(content.Load<Texture2D>("skybackground"), null);
-      ContentSpace.levelDialogBackground = new SpriteHelper(content.Load<Texture2D>("LevelBackground"), null);
 
       NormalFont = content.Load<SpriteFont>("normalfont");
       BigFont = content.Load<SpriteFont>("bigfont");
@@ -80,8 +80,10 @@ namespace XnaTetris
       menu = new Menu(this, new Rectangle(0, 0, 1024, 768),
             new SpriteHelper(content.Load<Texture2D>("MenuBackground"), null));
       gameField = new GameField(this);
+      levelDialog = new StartLevelWindow(this);
       Components.Add(menu);
       Components.Add(gameField);
+      Components.Add(levelDialog);
 
       menu.Show();
       base.LoadContent();
@@ -127,6 +129,8 @@ namespace XnaTetris
         menu.Draw(gameTime);
       if (gameField.Visible)
         gameField.Draw(gameTime);
+      if (levelDialog.Visible)
+        levelDialog.Draw(gameTime);
 
       base.Draw(gameTime);
     }
@@ -144,19 +148,16 @@ namespace XnaTetris
         else
         {
           GameState = Serv.GameState.GameStateLevelEnd;
-          StartNextLevel();
-          //ShowLevelDialog();
+          //StartNextLevel();
+          ShowLevelDialog();
         }
       }
     }
 
     private void ShowLevelDialog()
     {
-     /* levelDialog = new StartLevelWindow(this, new Rectangle(300, 200, 400, 300), 
-        ContentSpace.levelDialogBackground);
-      Components.Add(levelDialog);
-      blocksGrid.Enabled = false;
-      btnExit.Enabled = btnPause.Enabled = false;*/
+      levelDialog.Show();
+      gameField.Hide();
     }
 
     public void StartNextLevel()
@@ -166,7 +167,7 @@ namespace XnaTetris
       GameState = Serv.GameState.GameStateRunning;
       Timer = CurrentLevel.time;
 
-      //Components.Remove(levelDialog);
+      levelDialog.Hide();
       gameField.Show();
       gameField.BlockGrid.Restart();
     }
