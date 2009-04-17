@@ -12,9 +12,6 @@ namespace XnaTetris.Interface
 
 		private readonly Rectangle rect;
 
-
-	  private readonly SpriteHelper background; 
-
 		private Button btnStart, btnExit, btnHelp, btnHiScore, btnAuthors;
 
 		#endregion
@@ -27,11 +24,10 @@ namespace XnaTetris.Interface
 
     #region Constructor
 
-    public Menu(LinesGame setGame, Rectangle setRect, SpriteHelper setBackground)
+    public Menu(LinesGame setGame, Rectangle setRect)
 			: base(setGame)
 		{
 			rect = setRect;
-			background = setBackground;
 			InitButtons(setGame);
 		}
 
@@ -69,7 +65,7 @@ namespace XnaTetris.Interface
 
 		public override void Draw(GameTime gameTime)
 		{
-			background.Render(rect);
+			ContentSpace.menuBackground.Render(rect);
 
 			base.Draw(gameTime);
 		}
