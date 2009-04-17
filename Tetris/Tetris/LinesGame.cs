@@ -77,8 +77,7 @@ namespace XnaTetris
       SmallFont = content.Load<SpriteFont>("smallfont");
 
       // create scenes
-      menu = new Menu(this, new Rectangle(0, 0, 1024, 768),
-            new SpriteHelper(content.Load<Texture2D>("MenuBackground"), null));
+      menu = new Menu(this, new Rectangle(0, 0, 1024, 768));
       gameField = new GameField(this);
       levelDialog = new StartLevelWindow(this);
 
