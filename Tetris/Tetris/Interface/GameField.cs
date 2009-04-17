@@ -32,12 +32,6 @@ namespace XnaTetris.Interface
         new Rectangle(GRID_RECTANGLE_X_COORDINATE, GRID_RECTANGLE_Y_COORDINATE,
                       GRID_RECTANGLE_WIDTH, GRID_RECTANGLE_HEIGHT));
 
-      ContentSpace.backgroundSmallBox = new SpriteHelper(game.Content.Load<Texture2D>("BackgroundSmallBox"), null);
-      ContentSpace.backgroundBigBox = new SpriteHelper(game.Content.Load<Texture2D>("BackgroundBigBox"), null);
-      ContentSpace.buttonPause = new SpriteHelper(game.Content.Load<Texture2D>("PauseButton"), null);
-      ContentSpace.buttonExit = new SpriteHelper(game.Content.Load<Texture2D>("ExitButton"), null);
-
-
       btnPause = new Button(LinesGame, rectPauseButton, ContentSpace.buttonPause);
       btnPause.ButtonAction += btnPause_ButtonAction;
       btnExit = new Button(LinesGame, rectExitButton, ContentSpace.buttonExit);

@@ -12,8 +12,6 @@ namespace XnaTetris.Interface
 
 		private readonly Rectangle rect;
 
-	  private static readonly Rectangle srcGeneral = new Rectangle(0, 0, 200, 50);
-    private static readonly Rectangle srcHilight = new Rectangle(200, 0, 200, 50);
 
 	  private readonly SpriteHelper background; 
 
@@ -39,8 +37,6 @@ namespace XnaTetris.Interface
 
 		private void InitButtons(Microsoft.Xna.Framework.Game setGame)
 		{
-		  LoadTexturesAndSprites(setGame);
-
 			btnStart = new Button(setGame, new Rectangle(420, 200, 200, 50), ContentSpace.menuButtonStart,
         ContentSpace.menuHiButtonStart);
 			btnStart.ButtonAction += btnStart_ButtonAction;
@@ -66,34 +62,6 @@ namespace XnaTetris.Interface
       btnExit.ButtonAction += btnExit_ButtonAction;
       Components.Add(btnExit);
 		}
-
-    private static void LoadTexturesAndSprites(Microsoft.Xna.Framework.Game game)
-    {
-      if (game != null)
-      {
-        // Load menu content
-        ContentSpace.menuButtonStart = new SpriteHelper(game.Content.Load<Texture2D>("MenuButtonStart"),
-          srcGeneral);
-        ContentSpace.menuHiButtonStart = new SpriteHelper(game.Content.Load<Texture2D>("MenuButtonStart"),
-          srcHilight);
-        ContentSpace.menuButtonExit = new SpriteHelper(game.Content.Load<Texture2D>("MenuButtonExit"),
-          srcGeneral);
-        ContentSpace.menuHiButtonExit = new SpriteHelper(game.Content.Load<Texture2D>("MenuButtonExit"),
-          srcHilight);
-        ContentSpace.menuButtonHelp = new SpriteHelper(game.Content.Load<Texture2D>("MenuButtonHelp"),
-          srcGeneral);
-        ContentSpace.menuHiButtonHelp = new SpriteHelper(game.Content.Load<Texture2D>("MenuButtonHelp"),
-          srcHilight);
-        ContentSpace.menuButtonHiScore = new SpriteHelper(game.Content.Load<Texture2D>("MenuButtonHiScore"),
-          srcGeneral);
-        ContentSpace.menuHiButtonHiScore = new SpriteHelper(game.Content.Load<Texture2D>("MenuButtonHiScore"),
-          srcHilight);
-        ContentSpace.menuButtonAuthors = new SpriteHelper(game.Content.Load<Texture2D>("MenuButtonAuthors"),
-          srcGeneral);
-        ContentSpace.menuHiButtonAuthors = new SpriteHelper(game.Content.Load<Texture2D>("MenuButtonAuthors"),
-          srcHilight);
-      }
-    }
 
 		#endregion
 

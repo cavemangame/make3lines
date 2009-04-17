@@ -67,20 +67,21 @@ namespace XnaTetris
 
     protected override void LoadContent()
     {
-      // Load all our content
+      // Load all our content in one time
       content.RootDirectory = "Content";
+      ContentSpace.LoadAllContent(content);
 
-      // Create all sprites
-      ContentSpace.background = new SpriteHelper(content.Load<Texture2D>("skybackground"), null);
-
+      // add fonts
       NormalFont = content.Load<SpriteFont>("normalfont");
       BigFont = content.Load<SpriteFont>("bigfont");
       SmallFont = content.Load<SpriteFont>("smallfont");
 
+      // create scenes
       menu = new Menu(this, new Rectangle(0, 0, 1024, 768),
             new SpriteHelper(content.Load<Texture2D>("MenuBackground"), null));
       gameField = new GameField(this);
       levelDialog = new StartLevelWindow(this);
+
       Components.Add(menu);
       Components.Add(gameField);
       Components.Add(levelDialog);
