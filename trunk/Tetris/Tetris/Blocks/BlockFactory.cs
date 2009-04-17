@@ -25,31 +25,6 @@ namespace XnaTetris.Blocks
     private BlockFactory(LinesGame setGame)
     {
       game = setGame;
-      LoadTexturesAndSprites();
-    }
-
-    private void LoadTexturesAndSprites()
-    {
-      if (game != null)
-      {
-        // Create block sprites
-        ContentSpace.blackBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksGeneral"), new Rectangle(0, 0, 64, 64));
-        ContentSpace.blueBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksGeneral"), new Rectangle(64, 0, 64, 64));
-        ContentSpace.greenBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksGeneral"), new Rectangle(64 * 2, 0, 64, 64));
-        ContentSpace.yellowBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksGeneral"), new Rectangle(64 * 3, 0, 64, 64));
-        ContentSpace.redBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksGeneral"), new Rectangle(64 * 4, 0, 64, 64));
-        ContentSpace.someBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksGeneral"), new Rectangle(64 * 5, 0, 64, 64));
-
-        ContentSpace.blackHiBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksHilight"), new Rectangle(0, 0, 64, 64));
-        ContentSpace.blueHiBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksHilight"), new Rectangle(64, 0, 64, 64));
-        ContentSpace.greenHiBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksHilight"), new Rectangle(64 * 2, 0, 64, 64));
-        ContentSpace.yellowHiBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksHilight"), new Rectangle(64 * 3, 0, 64, 64));
-        ContentSpace.redHiBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksHilight"), new Rectangle(64 * 4, 0, 64, 64));
-        ContentSpace.someHiBlock = new SpriteHelper(game.Content.Load<Texture2D>("BlocksHilight"), new Rectangle(64 * 5, 0, 64, 64));
-
-        ContentSpace.selectionBlock = new SpriteHelper(game.Content.Load<Texture2D>("Selection"), null);
-        ContentSpace.helpBlock = new SpriteHelper(game.Content.Load<Texture2D>("HelpBlock"), null);
-      }
     }
 
     public static BlockFactory GetBlockFactory(LinesGame setGame)

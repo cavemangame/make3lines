@@ -7,6 +7,7 @@ namespace XnaTetris.Algorithms
     public long time;
     public int number;
     public int maxScore;
+    public String levelStartDialog;
 
     public Level(int setTime, int setNumber, int setMaxScore)
     {
