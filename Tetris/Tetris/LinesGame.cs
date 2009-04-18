@@ -123,7 +123,7 @@ namespace XnaTetris
     {
       ElapsedGameMs = gameTime.TotalRealTime.TotalMilliseconds;
         // Render background
-      ContentSpace.background.Render();
+      ContentSpace.GetSprite("SkyBackground").Render();
 
       if (menu.Visible)
         menu.Draw(gameTime);

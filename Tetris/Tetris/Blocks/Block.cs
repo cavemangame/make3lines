@@ -92,7 +92,7 @@ namespace XnaTetris.Blocks
 
       if (IsClicked)
       {
-        ContentSpace.selectionBlock.Render(BlockRectangle);
+        ContentSpace.GetSprite("SelectionBlock").Render(BlockRectangle);
       }
       if (IsHelped)
       {
@@ -102,7 +102,7 @@ namespace XnaTetris.Blocks
           lastBlinkTime = (long) LinesGame.ElapsedGameMs;
         }
         if (isHelpShow)
-          ContentSpace.helpBlock.Render(BlockRectangle);
+          ContentSpace.GetSprite("HelpBlock").Render(BlockRectangle);
       }
 
       base.Draw(gameTime);
