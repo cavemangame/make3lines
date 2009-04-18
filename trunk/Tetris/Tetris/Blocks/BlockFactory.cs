@@ -41,17 +41,23 @@ namespace XnaTetris.Blocks
       switch (blockType)
       {
         case BlockType.Green:
-          return new BlockGreen(game, setRect, ContentSpace.greenBlock, ContentSpace.greenHiBlock, x, y);
+          return new BlockGreen(game, setRect, ContentSpace.GetSprite("GreenBlock"),
+            ContentSpace.GetSprite("GreenHiBlock"), x, y);
         case BlockType.Red:
-          return new BlockRed(game, setRect, ContentSpace.redBlock, ContentSpace.redHiBlock, x, y);
+          return new BlockRed(game, setRect, ContentSpace.GetSprite("RedBlock"),
+            ContentSpace.GetSprite("RedHiBlock"), x, y);
         case BlockType.Blue:
-          return new BlockBlue(game, setRect, ContentSpace.blueBlock, ContentSpace.blueHiBlock, x, y);
+          return new BlockBlue(game, setRect, ContentSpace.GetSprite("BlueBlock"),
+            ContentSpace.GetSprite("BlueHiBlock"), x, y);
         case BlockType.Yellow:
-          return new BlockYellow(game, setRect, ContentSpace.yellowBlock, ContentSpace.yellowHiBlock, x, y);
+          return new BlockYellow(game, setRect, ContentSpace.GetSprite("YellowBlock"),
+            ContentSpace.GetSprite("YellowHiBlock"), x, y);
         case BlockType.White:
-          return new BlockWhite(game, setRect, ContentSpace.blackBlock, ContentSpace.blackHiBlock, x, y);
+          return new BlockWhite(game, setRect, ContentSpace.GetSprite("WhiteBlock"),
+            ContentSpace.GetSprite("WhiteBlock"), x, y);
         case BlockType.Gray:
-          return new BlockGray(game, setRect, ContentSpace.someBlock, ContentSpace.someHiBlock, x, y);
+          return new BlockGray(game, setRect, ContentSpace.GetSprite("GrayBlock"),
+            ContentSpace.GetSprite("GrayHiBlock"), x, y);
         default:
           throw new ArgumentOutOfRangeException("blockType");
       }

@@ -32,9 +32,9 @@ namespace XnaTetris.Interface
         new Rectangle(GRID_RECTANGLE_X_COORDINATE, GRID_RECTANGLE_Y_COORDINATE,
                       GRID_RECTANGLE_WIDTH, GRID_RECTANGLE_HEIGHT));
 
-      btnPause = new Button(LinesGame, rectPauseButton, ContentSpace.buttonPause);
+      btnPause = new Button(LinesGame, rectPauseButton, ContentSpace.GetSprite("PauseButton"));
       btnPause.ButtonAction += btnPause_ButtonAction;
-      btnExit = new Button(LinesGame, rectExitButton, ContentSpace.buttonExit);
+      btnExit = new Button(LinesGame, rectExitButton, ContentSpace.GetSprite("ExitButton"));
       btnExit.ButtonAction += btnExit_ButtonAction;
 
       Components.Add(BlockGrid);
@@ -52,8 +52,8 @@ namespace XnaTetris.Interface
     public override void Draw(GameTime gameTime)
     {
       // Draw background boxes for all the components
-      ContentSpace.backgroundBigBox.Render(new Rectangle(300, 25, 720, 720));
-      ContentSpace.backgroundSmallBox.Render(new Rectangle(25, 25, 260, 720));
+      ContentSpace.GetSprite("BackgroundBigBox").Render(new Rectangle(300, 25, 720, 720));
+      ContentSpace.GetSprite("BackgroundSmallBox").Render(new Rectangle(25, 25, 260, 720));
 
       TextureFont.WriteText(40, 50, String.Format("Score: {0}", LinesGame.Score));
       TextureFont.WriteText(40, 90, String.Format("Remain: {0}",

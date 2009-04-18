@@ -1,8 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Game;
-using XnaTetris.Helpers;
 
 namespace XnaTetris.Interface
 {
@@ -33,8 +31,8 @@ namespace XnaTetris.Interface
 
     private void InitButtons()
     {
-      btnOk = new Button(LinesGame, new Rectangle(472, 700, 80, 40), ContentSpace.buttonLevelDialogOk,
-                            ContentSpace.buttonHiLevelDialogOk);
+      btnOk = new Button(LinesGame, new Rectangle(472, 700, 80, 40), ContentSpace.GetSprite("LevelOkButton"),
+                            ContentSpace.GetSprite("LevelHiOkButton"));
       btnOk.ButtonAction += btnOk_ButtonAction;
       Components.Add(btnOk);
     }
@@ -45,18 +43,9 @@ namespace XnaTetris.Interface
 
     public override void Draw(GameTime gameTime)
     {
-      ContentSpace.levelDialogBackground.Render(rect);
+      ContentSpace.GetSprite("LevelBackground").Render(rect);
 
       base.Draw(gameTime);
-    }
-
-    #endregion
-
-    #region Update
-
-    public override void Update(GameTime gameTime)
-    {
-      base.Update(gameTime);
     }
 
     #endregion

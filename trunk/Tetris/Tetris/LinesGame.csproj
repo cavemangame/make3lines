@@ -99,6 +99,7 @@
     <Compile Include="Game\Serv.cs" />
     <Compile Include="Game\TestGame.cs" />
     <Compile Include="Helpers\ColorHelper.cs" />
+    <Compile Include="Helpers\ConvertTaggedTextHelper.cs" />
     <Compile Include="Helpers\Directories.cs" />
     <Compile Include="Helpers\DisposeHelper.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
@@ -125,6 +126,7 @@
   <ItemGroup>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
+    <Content Include="Helpers\LevelDataDescription.txt" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">
