@@ -345,10 +345,10 @@ namespace XnaTetris
 
     public void AddDestroyPopupText(Vector2 pos, string text, Color color)
     {
-      Vector2 measure = LinesGame.NormalFont.MeasureString(text);
+      Vector2 measure = ContentSpace.GetFont("NormalFont").MeasureString(text);
       Vector2 corrPos = new Vector2(pos.X-measure.X/2, pos.Y-measure.Y/2);
       PopupText popup = new PopupText(Game, (long)LinesGame.ElapsedGameMs, text, 3000, corrPos, new Vector2(corrPos.X, corrPos.Y - 30),
-        LinesGame.NormalFont, 1.2f, 0.8f, color, 255, 0);
+        ContentSpace.GetFont("NormalFont"), 1.2f, 0.8f, color, 255, 0);
       popup.EndDrawing += popup_EndDrawing;
       Game.Components.Add(popup);
       popupTexts.Add(popup);

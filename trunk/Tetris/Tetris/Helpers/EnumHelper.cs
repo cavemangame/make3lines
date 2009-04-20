@@ -85,7 +85,7 @@ namespace XnaTetris.Helpers
           return objEnum;
 
       // Else not found, just return first!
-      return 0;
+      return GetEnumerator(type).Current;
     }
     #endregion
 

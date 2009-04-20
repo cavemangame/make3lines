@@ -15,6 +15,7 @@
 		- left, top, width, height, wrap (width, height по умолчанию в размер спрайта)
 
 Пример:
+<level>
 <text color='Red' scale='3' left='200'>Уровень 2</text>
 <text top='50' left='27'>Добро пожаловать на второй уровень</text>
 <text>Старайтесь уничтожать длинные рады блоков - за них дают больше очков</text>
@@ -27,3 +28,4 @@
 <image left='10' wrap='false'>BlueBlock</image> 
 <text left='10' scale='2' wrap='false'>= 110 очков</text>
 ...
+</level>
