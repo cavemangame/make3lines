@@ -42,13 +42,6 @@ namespace XnaTetris.Interface
       Components.Add(btnExit);
     }
 
-    public override void Update(GameTime gameTime)
-    {
-      // TODO: Add your update code here
-
-      base.Update(gameTime);
-    }
-
     public override void Draw(GameTime gameTime)
     {
       // Draw background boxes for all the components

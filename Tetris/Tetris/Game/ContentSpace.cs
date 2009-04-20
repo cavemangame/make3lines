@@ -9,7 +9,7 @@ namespace XnaTetris.Game
 {
 	class ContentSpace
 	{
-	  private static bool IsContentLoaded = false;
+	  private static bool IsContentLoaded;
 
     private static readonly Rectangle srcMenuBtnGeneral = new Rectangle(0, 0, 200, 50);
     private static readonly Rectangle srcMenuBtnHilight = new Rectangle(200, 0, 200, 50);
@@ -18,6 +18,7 @@ namespace XnaTetris.Game
 
 
 	  private static Dictionary<string, SpriteHelper> sprites = new Dictionary<string, SpriteHelper>();
+    private static Dictionary<string, SpriteFont> fonts = new Dictionary<string, SpriteFont>();
 
 	  private ContentSpace()
     {
@@ -66,11 +67,18 @@ namespace XnaTetris.Game
 
           sprites.Add("SelectionBlock", new SpriteHelper(content.Load<Texture2D>("Selection"), null));
           sprites.Add("HelpBlock", new SpriteHelper(content.Load<Texture2D>("HelpBlock"), null));
+
+
+          // add fonts
+          fonts.Add("NormalFont", content.Load<SpriteFont>("normalfont"));
+          fonts.Add("BigFont", content.Load<SpriteFont>("bigfont"));
+          fonts.Add("SmallFont", content.Load<SpriteFont>("smallfont"));
         }
         catch (Exception ex)
         {
           throw new ContentLoadException("Content do not loaded", ex);
         }
+        IsContentLoaded = true;
       }
     }
 
@@ -78,7 +86,14 @@ namespace XnaTetris.Game
     {
       if (sprites.ContainsKey(name))
         return sprites[name];
-      throw new ContentLoadException("This sprite not loaded");
+      throw new ContentLoadException("This sprite was not loaded");
+    }
+
+    public static SpriteFont GetFont(string name)
+    {
+      if (sprites.ContainsKey(name))
+        return fonts[name];
+      throw new ContentLoadException("This font was not loaded");
     }
 	}
 }

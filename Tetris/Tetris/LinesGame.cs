@@ -34,9 +34,6 @@ namespace XnaTetris
     public long Timer { get; set; }
     public int Score { get; set; }
     public Serv.GameState GameState { get; private set; }
-    public SpriteFont NormalFont { get; private set; }
-    public SpriteFont BigFont { get; private set; }
-    public SpriteFont SmallFont { get; private set; }
     public Level CurrentLevel { get; private set; }
 
     public double ElapsedGameMs { get; private set; }
@@ -70,11 +67,6 @@ namespace XnaTetris
       // Load all our content in one time
       content.RootDirectory = "Content";
       ContentSpace.LoadAllContent(content);
-
-      // add fonts
-      NormalFont = content.Load<SpriteFont>("normalfont");
-      BigFont = content.Load<SpriteFont>("bigfont");
-      SmallFont = content.Load<SpriteFont>("smallfont");
 
       // create scenes
       menu = new Menu(this, new Rectangle(0, 0, 1024, 768));
