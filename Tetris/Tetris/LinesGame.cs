@@ -72,7 +72,7 @@ namespace XnaTetris
       menu = new Menu(this, new Rectangle(0, 0, 1024, 768));
       gameField = new GameField(this);
       levelDialog = new StartLevelWindow(this);
-
+      levelDialog.SetNewDescription(@"Content\level1.xml");
       Components.Add(menu);
       Components.Add(gameField);
       Components.Add(levelDialog);
