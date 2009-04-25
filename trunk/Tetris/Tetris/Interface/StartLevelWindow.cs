@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Game;
+using XnaTetris.Helpers;
 
 namespace XnaTetris.Interface
 {
@@ -9,9 +11,8 @@ namespace XnaTetris.Interface
     #region Variables
 
     private readonly Rectangle rect = new Rectangle(0, 0, 1024, 768);
-
-
     private Button btnOk;
+    private ConvertTaggedTextHelper helper;
 
     #endregion
 
@@ -27,6 +28,7 @@ namespace XnaTetris.Interface
 			: base(setGame)
 		{
       InitButtons();
+      helper = new ConvertTaggedTextHelper(rect);
     }
 
     private void InitButtons()
@@ -44,7 +46,28 @@ namespace XnaTetris.Interface
     public override void Draw(GameTime gameTime)
     {
       ContentSpace.GetSprite("LevelBackground").Render(rect);
+      if (helper != null)
+      {
+        foreach (SpriteToRender stor in helper.Sprites)
+        {
+          stor.Sprite.Render(stor.Rect);
+        }
 
+        SpriteBatch spriteBatch = new SpriteBatch(LinesGame.GraphicsDevice);
+        spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
+
+        foreach (TextToRender ttor in helper.Texts)
+        {
+          spriteBatch.DrawString(ttor.Font, ttor.Text,
+            new Vector2(ttor.Pos.X * BaseGame.Width / 1024, ttor.Pos.Y * BaseGame.Height / 768), 
+            ttor.TextColor, 0f,
+            new Vector2(0, 0), ttor.Scale,
+            SpriteEffects.None, 0);
+
+        }
+        spriteBatch.End();
+
+      }
       base.Draw(gameTime);
     }
 
@@ -55,6 +78,11 @@ namespace XnaTetris.Interface
     {
       if (Game is LinesGame)
         (Game as LinesGame).StartNextLevel();
+    }
+
+    public void SetNewDescription(string filename)
+    {
+      helper.ConvertTaggedText(filename);
     }
   }
 }

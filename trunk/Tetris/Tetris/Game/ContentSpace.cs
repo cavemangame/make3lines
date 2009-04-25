@@ -91,7 +91,7 @@ namespace XnaTetris.Game
 
     public static SpriteFont GetFont(string name)
     {
-      if (sprites.ContainsKey(name))
+      if (fonts.ContainsKey(name))
         return fonts[name];
       throw new ContentLoadException("This font was not loaded");
     }

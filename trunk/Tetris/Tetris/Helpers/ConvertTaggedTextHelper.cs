@@ -58,9 +58,8 @@ namespace XnaTetris.Helpers
     #region Variables
 
     private Rectangle boundingRect;
-    private readonly ContentManager content;
 
-    private int curX, curY; // текущая позиция "курсора"
+    private int curX, curY, maxY; // текущая позиция "курсора"
 
     public List<SpriteToRender> Sprites { get; private set;}
     public List<TextToRender> Texts { get; private set; }
@@ -69,13 +68,21 @@ namespace XnaTetris.Helpers
 
     #region Constructor
 
-    public ConvertTaggedTextHelper(ContentManager setContent, Rectangle setRect)
+    public ConvertTaggedTextHelper(Rectangle setRect)
     {
-      boundingRect = setRect;
-      content = setContent;
+      boundingRect = Serv.InvertCorrectRectangleWithGameScale(setRect);
+      Sprites = new List<SpriteToRender>();
+      Texts = new List<TextToRender>();
     }
 
     #endregion
+
+    public void ConvertTaggedText(string filename)
+    {
+      XmlDocument doc = new XmlDocument();
+      doc.Load(filename);
+      ConvertTaggedText(doc);
+    }
 
     public void ConvertTaggedText(XmlDocument doc)
     {
@@ -102,9 +109,11 @@ namespace XnaTetris.Helpers
 
     private void ParseNodeAsText(XmlNode node)
     {
-      bool wrap = false;
-      string text = node.Value;
-      if (text.Length == 0)
+      bool wrap = true;
+      int top = 0;
+      int left = 0;
+      string text = node.InnerText;
+      if (text != null && text.Length == 0)
         return;
 
       SpriteFont font = null;
@@ -130,23 +139,23 @@ namespace XnaTetris.Helpers
             }
           case "scale":
             {
-              scale = Convert.ToInt32(attr.Value);
+              scale = Convert.ToSingle(attr.Value);
               break;
             }
           case "color":
             {
-              color = (Color)EnumHelper.SearchEnumerator(typeof(Color), attr.Value);
+              //color = Color.White;//(Color)EnumHelper.SearchEnumerator(typeof(Color), attr.Value);
               break;
             }
           case "left":
             {
-              curX += Convert.ToInt32(attr.Value);
+              left = Convert.ToInt32(attr.Value);
               pos.X = curX;
               break;
             }
           case "top":
             {
-              curY += Convert.ToInt32(attr.Value);
+              top += Convert.ToInt32(attr.Value);
               pos.Y = curY;
               break;
             }
@@ -164,19 +173,50 @@ namespace XnaTetris.Helpers
       if (wrap)
       {
         pos.X = elememtLeftSpan;
-        curX = (int) pos.X;
-        pos.Y = (curY + elememtVertSpan);
+        curX = (int)pos.X;
+        pos.Y = maxY + elememtVertSpan;
         curY = (int)pos.Y;
       }
 
-      Texts.Add(new TextToRender(font, pos, scale, color, text));
+      curX += left;
+      curY += top;
+
+      int curPos = 0;
+      int textLen = text.Length;
+      if (font == null)
+        font = ContentSpace.GetFont("NormalFont");
+
+      while (curPos < textLen)
+      {
+        if (font.MeasureString(text.Substring(0, ++curPos)).Length() * scale + curX > boundingRect.Right)
+        {
+          Texts.Add(new TextToRender(font, new Vector2(curX, curY), scale, color, text.Substring(0, curPos)));
+          curX = elememtLeftSpan;
+          if (curY + (int) (font.MeasureString("A").Y * scale) > maxY)
+            maxY = curY + (int) (font.MeasureString("A").Y * scale);
+          curY = maxY + elememtVertSpan;
+          text = text.Substring(curPos, textLen - curPos);
+          textLen -= curPos;
+          curPos = 0;
+        }
+      }
+      if (text.Length > 0)
+      {
+        Texts.Add(new TextToRender(font, new Vector2(curX, curY), scale, color, text));
+        curX += (int) (font.MeasureString(text).Length() * scale);
+        if (curY + (int) (font.MeasureString("A").Y * scale) > maxY)
+          maxY = curY + (int)(font.MeasureString("A").Y * scale);
+      }
     }
 
     private void ParseNodeAsImage(XmlNode node)
     {
       //- left, top, width, height, wrap 
-      bool wrap = false;
-      string contentName = node.Value;
+      bool wrap = true;
+      int top = 0;
+      int left = 0;
+
+      string contentName = node.InnerText;
       if (contentName.Length == 0)
         return;
 
@@ -202,13 +242,13 @@ namespace XnaTetris.Helpers
             }
           case "left":
             {
-              curX += Convert.ToInt32(attr.Value);
+              left = Convert.ToInt32(attr.Value);
               rect.X = curX;
               break;
             }
           case "top":
             {
-              curY += Convert.ToInt32(attr.Value);
+              top = Convert.ToInt32(attr.Value);
               rect.Y = curY;
               break;
             }
@@ -226,10 +266,19 @@ namespace XnaTetris.Helpers
       if (wrap || (curX + rect.Width > boundingRect.Right)) 
       {
         curX = rect.X = elememtLeftSpan;
-        curY = rect.Y = (curY + elememtVertSpan);
+        curY = rect.Y = (maxY + elememtVertSpan);
       }
 
-      Sprites.Add(new SpriteToRender(sprite, rect));
+      curX += left;
+      curY += top;
+
+      if (curY + rect.Height > maxY)
+        maxY = curY + rect.Height;
+
+      Sprites.Add(new SpriteToRender(sprite, 
+        new Rectangle(curX, curY, rect.Width, rect.Height)));
+
+      curX += rect.Width;
     }
   }
 }
