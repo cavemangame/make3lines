@@ -23,8 +23,6 @@ namespace XnaTetris
 
     private GameField gameField;
     private Menu menu;
-    private StartLevelWindow levelDialog;
-    private readonly Rectangle levelDialogRect = new Rectangle(200, 300, 200, 300);
 
     private int curLevelNumber = 0;
 
@@ -72,11 +70,8 @@ namespace XnaTetris
       // create scenes
       menu = new Menu(this, new Rectangle(0, 0, 1024, 768));
       gameField = new GameField(this);
-      levelDialog = new StartLevelWindow(this);
-      //levelDialog.SetNewDescription(@"Content\level1.xml");
       Components.Add(menu);
       Components.Add(gameField);
-      Components.Add(levelDialog);
 
       menu.Show();
       base.LoadContent();
@@ -122,8 +117,9 @@ namespace XnaTetris
         menu.Draw(gameTime);
       if (gameField.Visible)
         gameField.Draw(gameTime);
-      if (levelDialog.Visible)
-        levelDialog.Draw(gameTime);
+      if (CurrentLevel != null && CurrentLevel.StartWindow != null)
+        if (CurrentLevel.StartWindow.Visible)
+          CurrentLevel.StartWindow.Draw(gameTime);
 
       base.Draw(gameTime);
     }
@@ -149,9 +145,9 @@ namespace XnaTetris
 
     private void ShowLevelDialog()
     {
-      CurrentLevel = new Level(++curLevelNumber);
-
-      levelDialog.Show();
+      CurrentLevel = new Level(++curLevelNumber, this);
+      this.Components.Add(CurrentLevel.StartWindow);
+      CurrentLevel.StartWindow.Show();
       gameField.Hide();
     }
 
@@ -161,7 +157,9 @@ namespace XnaTetris
       GameState = Serv.GameState.GameStateRunning;
       Timer = CurrentLevel.Time * 1000;
 
-      levelDialog.Hide();
+      CurrentLevel.StartWindow.Hide();
+      this.Components.Remove(CurrentLevel.StartWindow);
+
       gameField.Show();
       gameField.BlockGrid.Restart();
     }

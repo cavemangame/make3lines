@@ -68,32 +68,23 @@ namespace XnaTetris.Helpers
 
     #region Constructor
 
-    public ConvertTaggedTextHelper(Rectangle setRect)
+    public ConvertTaggedTextHelper(Rectangle setRect, XmlNode node)
     {
       boundingRect = Serv.InvertCorrectRectangleWithGameScale(setRect);
       Sprites = new List<SpriteToRender>();
       Texts = new List<TextToRender>();
+      ConvertTaggedText(node);
     }
 
     #endregion
 
-    public void ConvertTaggedText(string filename)
+    public void ConvertTaggedText(XmlNode loadNode)
     {
-      XmlDocument doc = new XmlDocument();
-      doc.Load(filename);
-      ConvertTaggedText(doc);
-    }
-
-    public void ConvertTaggedText(XmlDocument doc)
-    {
-      if (doc == null || doc.DocumentElement == null)
-        throw new ArgumentNullException("doc");
-
       Sprites.Clear();
       Texts.Clear();
 
       // all nodes in one upper level
-      foreach (XmlNode node in doc.DocumentElement.ChildNodes)
+      foreach (XmlNode node in loadNode.ChildNodes)
       {
         ParseNode(node);
       }
