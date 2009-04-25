@@ -6,7 +6,7 @@ using XnaTetris.Helpers;
 
 namespace XnaTetris.Interface
 {
-  class StartLevelWindow : GameScene
+  public class StartLevelWindow : GameScene
   {
     #region Variables
 
@@ -28,7 +28,7 @@ namespace XnaTetris.Interface
 			: base(setGame)
 		{
       InitButtons();
-      helper = new ConvertTaggedTextHelper(rect);
+      //helper = new ConvertTaggedTextHelper(rect);
     }
 
     private void InitButtons()

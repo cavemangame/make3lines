@@ -209,7 +209,9 @@ namespace XnaTetris.Algorithms
             }
           }
 
-          blocksGrid.LinesGame.Score += blocksGrid.Grid[x, y].GetScore(blocksForScoreCount);
+          int score = blocksGrid.Grid[x, y].GetScore(blocksForScoreCount);
+          blocksGrid.LinesGame.OverallScore += score;
+          blocksGrid.LinesGame.LevelScore += score;
           if (blocksForScoreCount > 0)
           {
             GeneratePopupScore(x, y, blocksForScoreCount, isHorizontalLine);

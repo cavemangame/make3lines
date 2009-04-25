@@ -26,13 +26,14 @@ namespace XnaTetris
     private StartLevelWindow levelDialog;
     private readonly Rectangle levelDialogRect = new Rectangle(200, 300, 200, 300);
 
-    private int curLevelNumber;
+    private int curLevelNumber = 0;
 
     #endregion
 
     #region Properties
     public long Timer { get; set; }
-    public int Score { get; set; }
+    public int OverallScore { get; set; }
+    public int LevelScore { get; set; }
     public Serv.GameState GameState { get; private set; }
     public Level CurrentLevel { get; private set; }
 
@@ -72,7 +73,7 @@ namespace XnaTetris
       menu = new Menu(this, new Rectangle(0, 0, 1024, 768));
       gameField = new GameField(this);
       levelDialog = new StartLevelWindow(this);
-      levelDialog.SetNewDescription(@"Content\level1.xml");
+      //levelDialog.SetNewDescription(@"Content\level1.xml");
       Components.Add(menu);
       Components.Add(gameField);
       Components.Add(levelDialog);
@@ -135,12 +136,12 @@ namespace XnaTetris
     {
       if (Timer <= 0)
       {
-        if (Score <= CurrentLevel.maxScore)
+        if (LevelScore <= CurrentLevel.LevelScore)
           ExitToMenu();
         else
         {
           GameState = Serv.GameState.GameStateLevelEnd;
-          //StartNextLevel();
+         // StartNextLevel();
           ShowLevelDialog();
         }
       }
@@ -148,16 +149,17 @@ namespace XnaTetris
 
     private void ShowLevelDialog()
     {
+      CurrentLevel = new Level(++curLevelNumber);
+
       levelDialog.Show();
       gameField.Hide();
     }
 
     public void StartNextLevel()
     {
-      curLevelNumber++;
-      CurrentLevel = LevelGenerator.GetLevel(curLevelNumber);
+      LevelScore = 0;
       GameState = Serv.GameState.GameStateRunning;
-      Timer = CurrentLevel.time;
+      Timer = CurrentLevel.Time * 1000;
 
       levelDialog.Hide();
       gameField.Show();
@@ -181,15 +183,16 @@ namespace XnaTetris
     internal void Start()
     {
       GameState = Serv.GameState.GameStateRunning;
-      Score = 0;
+      OverallScore = 0;
       menu.Hide();
       gameField.Show();
-      StartNextLevel();
+
+      ShowLevelDialog();
     }
 
     public void ExitToMenu()
     {
-      Score = 0;
+      OverallScore = 0;
       Timer = 0;
       curLevelNumber = 0;
       menu.Show();
