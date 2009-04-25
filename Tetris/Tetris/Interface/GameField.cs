@@ -16,7 +16,8 @@ namespace XnaTetris.Interface
     private readonly Rectangle rectPauseButton = new Rectangle(55, 600, 200, 50);
     private readonly Rectangle rectExitButton = new Rectangle(55, 670, 200, 50);
 
-    private Button btnPause, btnExit;
+    private readonly Button btnPause;
+    private readonly Button btnExit;
 
     #region Properties
 
@@ -48,11 +49,12 @@ namespace XnaTetris.Interface
       ContentSpace.GetSprite("BackgroundBigBox").Render(new Rectangle(300, 25, 720, 720));
       ContentSpace.GetSprite("BackgroundSmallBox").Render(new Rectangle(25, 25, 260, 720));
 
-      TextureFont.WriteText(40, 50, String.Format("Score: {0}", LinesGame.Score));
-      TextureFont.WriteText(40, 90, String.Format("Remain: {0}",
-        Math.Max(LinesGame.CurrentLevel.maxScore - LinesGame.Score, 0)));
-      TextureFont.WriteText(40, 140, LinesGame.CurrentLevel.LevelString);
-      TextureFont.WriteText(40, 180, Serv.GetTimeString(LinesGame.Timer));
+      TextureFont.WriteText(40, 50, String.Format("Score: {0}", LinesGame.OverallScore));
+      TextureFont.WriteText(40, 90, String.Format("Level Score: {0}", LinesGame.LevelScore));
+      TextureFont.WriteText(40, 140, String.Format("Remain: {0}",
+        Math.Max(LinesGame.CurrentLevel.LevelScore - LinesGame.LevelScore, 0)));
+      TextureFont.WriteText(40, 180, LinesGame.CurrentLevel.LevelString);
+      TextureFont.WriteText(40, 230, Serv.GetTimeString(LinesGame.Timer));
 
       if (LinesGame.GameState == Serv.GameState.GameStatePause)
         TextureFont.WriteText(610, 370, "PAUSE", Color.AliceBlue);

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<levels>
+	<level number='1'>
+		<time>50</time>
+		<score>2000</score>
+		<background>SkyBackground</background>
+		<dialog>
+			<text color="Red" scale="2" left="250">Level 1</text> 
+			<text left="30">Welcome to level 1</text> 
+			<text>Try to kill larger lines - you gain more points</text> 
+			<text scale="1,5">4x</text> 
+			<image left="10" wrap="false">GreenBlock</image> 
+			<text left="10" scale="1,5" wrap="false">= 100 point</text> 
+			<text scale="1,5">4x</text> 
+			<image left="10" wrap="false">BlueBlock</image> 
+			<text left="10" scale="1,5" wrap="false">= 110 point</text> 
+		</dialog>
+	</level>
+	<level number='2'>
+		<time>50</time>
+		<score>2500</score>
+		<background>SkyBackground</background>
+		<dialog>
+			<text color="Red" scale="2" left="250">Level 1</text> 
+			<text left="30">Welcome to level 1</text> 
+			<text>Try to kill larger lines - you gain more points</text> 
+			<text scale="1,5">4x</text> 
+			<image left="10" wrap="false">GreenBlock</image> 
+			<text left="10" scale="1,5" wrap="false">= 100 point</text> 
+			<text scale="1,5">4x</text> 
+			<image left="10" wrap="false">BlueBlock</image> 
+			<text left="10" scale="1,5" wrap="false">= 110 point</text> 
+		</dialog>
+	</level>
+</levels>
