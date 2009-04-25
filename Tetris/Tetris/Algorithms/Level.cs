@@ -15,9 +15,11 @@ namespace XnaTetris.Algorithms
     public int LevelScore { get; set;}
     public StartLevelWindow  StartWindow { get; set;}
     public SpriteHelper BackgroundSprite { get; set; }
+    public LinesGame LinesGame { get; private set;}
 
-    public Level(int number)
+    public Level(int number, LinesGame game)
     {
+      LinesGame = game;
       Number = number;
       LoadLevel();
     }
@@ -46,6 +48,11 @@ namespace XnaTetris.Algorithms
               BackgroundSprite = ContentSpace.GetSprite(childNode.InnerText);
               break;
             } 
+          case "dialog":
+            {
+              StartWindow = new StartLevelWindow(LinesGame, childNode);
+              break;
+            }
           default :
             break;
         }

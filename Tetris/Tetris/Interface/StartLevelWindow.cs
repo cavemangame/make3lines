@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Game;
 using XnaTetris.Helpers;
+using System.Xml;
 
 namespace XnaTetris.Interface
 {
@@ -24,11 +25,11 @@ namespace XnaTetris.Interface
 
     #region Constructor
 
-    public StartLevelWindow(LinesGame setGame)
+    public StartLevelWindow(LinesGame setGame, XmlNode loadNode)
 			: base(setGame)
 		{
       InitButtons();
-      //helper = new ConvertTaggedTextHelper(rect);
+      helper = new ConvertTaggedTextHelper(rect, loadNode);
     }
 
     private void InitButtons()
@@ -78,11 +79,6 @@ namespace XnaTetris.Interface
     {
       if (Game is LinesGame)
         (Game as LinesGame).StartNextLevel();
-    }
-
-    public void SetNewDescription(string filename)
-    {
-      helper.ConvertTaggedText(filename);
     }
   }
 }
