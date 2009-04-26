@@ -80,7 +80,7 @@ namespace XnaTetris.Blocks
 
     public override void Draw(GameTime gameTime)
     {
-      if (PointInBlock(Serv.CorrectPositionWithGameScale(Input.MousePos)) &&
+      if (PointInBlock(Input.MousePos) &&
           LinesGame.IsBoardInStableState())
       {
         hiblock.Render(BlockRectangle);

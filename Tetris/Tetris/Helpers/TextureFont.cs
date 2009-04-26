@@ -259,10 +259,10 @@ namespace XnaTetris.Helpers
             //TODO: if we want upscaling, just use destRect
             fontSprite.Draw(fontTexture,
                             new Rectangle(
-                              destRect.X * BaseGame.Width / 1024,
-                              destRect.Y * BaseGame.Height / 768,
-                              destRect.Width * BaseGame.Width / 1024,
-                              destRect.Height * BaseGame.Height / 768),
+                              destRect.X,
+                              destRect.Y,
+                              destRect.Width,
+                              destRect.Height),
                             rect, color);
             //,
             // Make sure fonts are always displayed at the front of everything

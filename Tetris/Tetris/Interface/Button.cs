@@ -76,12 +76,12 @@ namespace XnaTetris.Interface
 		{
 			if (Input.MouseLeftButtonJustPressed)
 			{
-				if (Serv.PointInRectangle(Serv.CorrectPositionWithGameScale(Input.MousePos), rect))
+				if (Serv.PointInRectangle(Input.MousePos, rect))
 					HandleMouseClick();
 			}
 			else 
       {
-        HandleMouseOver(Serv.PointInRectangle(Serv.CorrectPositionWithGameScale(Input.MousePos), rect));
+        HandleMouseOver(Serv.PointInRectangle(Input.MousePos, rect));
       }
 
 			base.Update(gameTime);

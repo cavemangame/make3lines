@@ -42,26 +42,5 @@ namespace XnaTetris.Game
 			return result;
 		}
 
-		public static Point CorrectPositionWithGameScale(Point point)
-		{
-			return new Point(point.X*1024/BaseGame.Width, point.Y*768/BaseGame.Height);
-		}
-
-    public static Point InvertCorrectPositionWithGameScale(Point point)
-    {
-      return new Point(point.X * BaseGame.Width / 1024, point.Y * BaseGame.Height / 768);
-    }
-
-    public static Rectangle InvertCorrectRectangleWithGameScale(Rectangle rect)
-    {
-      return new Rectangle(rect.X, rect.Y, rect.Width * BaseGame.Width / 1024, 
-        rect.Height * BaseGame.Height / 768);
-    }
-
-    public static Rectangle CorrectRectangleWithGameScale(Rectangle rect)
-    {
-      return new Rectangle(rect.X, rect.Y, rect.Width * 1024 / BaseGame.Width,
-        rect.Height * 768 / BaseGame.Height);
-    }
 	}
 }

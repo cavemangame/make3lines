@@ -70,7 +70,7 @@ namespace XnaTetris.Helpers
 
     public ConvertTaggedTextHelper(Rectangle setRect, XmlNode node)
     {
-      boundingRect = Serv.InvertCorrectRectangleWithGameScale(setRect);
+      boundingRect = setRect;
       Sprites = new List<SpriteToRender>();
       Texts = new List<TextToRender>();
       ConvertTaggedText(node);
@@ -194,7 +194,7 @@ namespace XnaTetris.Helpers
       if (text.Length > 0)
       {
         Texts.Add(new TextToRender(font, new Vector2(curX, curY), scale, color, text));
-        curX += (int) (font.MeasureString(text).Length() * scale);
+        curX += (int)(font.MeasureString(text).Length() * scale);
         if (curY + (int) (font.MeasureString("A").Y * scale) > maxY)
           maxY = curY + (int)(font.MeasureString("A").Y * scale);
       }

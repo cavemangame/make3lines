@@ -9,12 +9,12 @@ namespace XnaTetris.Interface
 {
   public class GameField : GameScene
   {
-    public const int GRID_RECTANGLE_X_COORDINATE = 310;
-    public const int GRID_RECTANGLE_Y_COORDINATE = 35;
-    public const int GRID_RECTANGLE_HEIGHT = 700;
-    public const int GRID_RECTANGLE_WIDTH = 700;
-    private readonly Rectangle rectPauseButton = new Rectangle(55, 600, 200, 50);
-    private readonly Rectangle rectExitButton = new Rectangle(55, 670, 200, 50);
+    public const int GRID_RECTANGLE_X_COORDINATE = 270;
+    public const int GRID_RECTANGLE_Y_COORDINATE = 10;
+    public const int GRID_RECTANGLE_HEIGHT = 512;
+    public const int GRID_RECTANGLE_WIDTH = 512;
+    private readonly Rectangle rectPauseButton = new Rectangle(40, 400, 180, 50);
+    private readonly Rectangle rectExitButton = new Rectangle(40, 460, 180, 50);
 
     private readonly Button btnPause;
     private readonly Button btnExit;
@@ -33,9 +33,9 @@ namespace XnaTetris.Interface
         new Rectangle(GRID_RECTANGLE_X_COORDINATE, GRID_RECTANGLE_Y_COORDINATE,
                       GRID_RECTANGLE_WIDTH, GRID_RECTANGLE_HEIGHT));
 
-      btnPause = new Button(LinesGame, rectPauseButton, ContentSpace.GetSprite("PauseButton"));
+      btnPause = new Button(LinesGame, rectPauseButton, ContentSpace.GetSprite("PauseButton"), ContentSpace.GetSprite("PauseHiButton"));
       btnPause.ButtonAction += btnPause_ButtonAction;
-      btnExit = new Button(LinesGame, rectExitButton, ContentSpace.GetSprite("ExitButton"));
+      btnExit = new Button(LinesGame, rectExitButton, ContentSpace.GetSprite("ExitButton"), ContentSpace.GetSprite("ExitHiButton"));
       btnExit.ButtonAction += btnExit_ButtonAction;
 
       Components.Add(BlockGrid);
@@ -43,22 +43,27 @@ namespace XnaTetris.Interface
       Components.Add(btnExit);
     }
 
-    public override void Draw(GameTime gameTime)
+    public override void Draw(GameTime gameTime) 
     {
       // Draw background boxes for all the components
-      ContentSpace.GetSprite("BackgroundBigBox").Render(new Rectangle(300, 25, 720, 720));
-      ContentSpace.GetSprite("BackgroundSmallBox").Render(new Rectangle(25, 25, 260, 720));
+      ContentSpace.GetSprite("BackgroundBigBox").Render(new Rectangle(270, 10, 512, 512));
+      ContentSpace.GetSprite("BackgroundSmallBox").Render(new Rectangle(10, 10, 240, 512));
 
-      TextureFont.WriteText(40, 50, String.Format("Score: {0}", LinesGame.OverallScore));
-      TextureFont.WriteText(40, 90, String.Format("Level Score: {0}", LinesGame.LevelScore));
-      TextureFont.WriteText(40, 140, String.Format("Remain: {0}",
-        Math.Max(LinesGame.CurrentLevel.LevelScore - LinesGame.LevelScore, 0)));
-      TextureFont.WriteText(40, 180, LinesGame.CurrentLevel.LevelString);
-      TextureFont.WriteText(40, 230, Serv.GetTimeString(LinesGame.Timer));
+      TextHelper.DrawText(ContentSpace.GetFont("NormalFont"), 
+        String.Format("Score: {0}", LinesGame.OverallScore), 20, 20, Color.White);
+      TextHelper.DrawText(ContentSpace.GetFont("NormalFont"),
+        String.Format("Level Score: {0}", LinesGame.LevelScore), 20, 60, Color.WhiteSmoke);
+      TextHelper.DrawText(ContentSpace.GetFont("NormalFont"),
+        String.Format("Remain: {0}", Math.Max(LinesGame.CurrentLevel.LevelScore - LinesGame.LevelScore, 0)), 
+        20, 100, Color.WhiteSmoke);
+      TextHelper.DrawText(ContentSpace.GetFont("NormalFont"),
+         LinesGame.CurrentLevel.LevelString, 20, 140, Color.LightCoral);
+      TextHelper.DrawText(ContentSpace.GetFont("NormalFont"),
+         Serv.GetTimeString(LinesGame.Timer), 20, 180, Color.LightPink);
 
+      
       if (LinesGame.GameState == Serv.GameState.GameStatePause)
-        TextureFont.WriteText(610, 370, "PAUSE", Color.AliceBlue);
-
+        TextHelper.DrawText(ContentSpace.GetFont("NormalFont"), "PAUSE", 340, 280, Color.LightPink);
 
       base.Draw(gameTime);
     }

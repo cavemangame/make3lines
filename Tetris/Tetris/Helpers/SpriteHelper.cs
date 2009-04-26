@@ -95,14 +95,14 @@ namespace XnaTetris.Helpers
 
     public void Render()
     {
-      Render(new Rectangle(0, 0, 1024, 768));
+      Render(new Rectangle(0, 0, 800, 600));
     } // Render(texture)
 
     public void RenderCentered(float x, float y, float scale)
     {
       Render(new Rectangle(
-        (int)(x * 1024 - scale * GfxRect.Width / 2),
-        (int)(y * 768 - scale * GfxRect.Height / 2),
+        (int)(x * 800 - scale * GfxRect.Width / 2),
+        (int)(y * 600 - scale * GfxRect.Height / 2),
         (int)(scale * GfxRect.Width),
         (int)(scale * GfxRect.Height)));
     } // RenderCentered(x, y)
@@ -119,7 +119,7 @@ namespace XnaTetris.Helpers
     #endregion
 
     #region DrawSprites
-    public static void DrawSprites(int width, int height)
+    public static void DrawSprites()
     {
       // No need to render if we got no sprites this frame
       if (sprites.Count == 0)
@@ -149,10 +149,10 @@ namespace XnaTetris.Helpers
         spriteBatch.Draw(sprite.texture,
           // Rescale to fit resolution
           new Rectangle(
-          sprite.rect.X * width / 1024,
-          sprite.rect.Y * height / 768,
-          sprite.rect.Width * width / 1024,
-          sprite.rect.Height * height / 768),
+          sprite.rect.X,
+          sprite.rect.Y,
+          sprite.rect.Width,
+          sprite.rect.Height),
           sprite.sourceRect, sprite.color);
       } // foreach
 

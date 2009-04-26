@@ -6,6 +6,10 @@ namespace XnaTetris.Algorithms
 {
   class BlocksGridHelper
   {
+    #region Constants
+
+    #endregion
+
     #region Variables
     private readonly BlocksGrid blocksGrid;
     #endregion
@@ -245,7 +249,7 @@ namespace XnaTetris.Algorithms
           + GetRectangle(x, y - blocksForScoreCount + 1).Top;
       }
       // позицию необходимо сжать по размерам экрана
-      Point p = Serv.InvertCorrectPositionWithGameScale(new Point(xx, yy));
+      Point p = new Point(xx, yy);
       blocksGrid.AddDestroyPopupText(new Vector2(p.X, p.Y),
                                      blocksGrid.Grid[x, y].GetScore(blocksForScoreCount).ToString(),
                                      blocksGrid.Grid[x, y].ScoreColor);
@@ -364,9 +368,10 @@ namespace XnaTetris.Algorithms
     /// <returns>Rectangle instance for given block's coordinates</returns>
     public Rectangle GetRectangle(int x, int y)
     {
-      return new Rectangle(blocksGrid.GridRectangle.X + x * blocksGrid.BlockWidth,
-                           blocksGrid.GridRectangle.Y + y * blocksGrid.BlockHeight,
-                           blocksGrid.BlockWidth, blocksGrid.BlockHeight);
+      return new Rectangle(blocksGrid.GridRectangle.X + 8 + x * (blocksGrid.BlockWidth-2),
+                           blocksGrid.GridRectangle.Y + 8 + y * (blocksGrid.BlockHeight-2),
+                           blocksGrid.BlockWidth-2,
+                           blocksGrid.BlockHeight-2);
     }
 
     /// <summary>

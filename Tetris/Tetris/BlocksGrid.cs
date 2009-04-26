@@ -153,7 +153,7 @@ namespace XnaTetris
 
       foreach (Block block in Grid)
       {
-        if (block.PointInBlock(Serv.CorrectPositionWithGameScale(point)))
+        if (block.PointInBlock(point))
         {
           int count = blocksGridHelper.ClickedBlocksCount();
 

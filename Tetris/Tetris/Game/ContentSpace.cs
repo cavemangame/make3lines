@@ -33,8 +33,10 @@ namespace XnaTetris.Game
           sprites.Add("SkyBackground", new SpriteHelper(content.Load<Texture2D>("skybackground"), null));
           sprites.Add("BackgroundSmallBox", new SpriteHelper(content.Load<Texture2D>("BackgroundSmallBox"), null));
           sprites.Add("BackgroundBigBox", new SpriteHelper(content.Load<Texture2D>("BackgroundBigBox"), null));
-          sprites.Add("PauseButton", new SpriteHelper(content.Load<Texture2D>("PauseButton"), null));
-          sprites.Add("ExitButton", new SpriteHelper(content.Load<Texture2D>("ExitButton"), null));
+          sprites.Add("PauseButton", new SpriteHelper(content.Load<Texture2D>("PauseButton"), new Rectangle(0, 0, 180, 50)));
+          sprites.Add("PauseHiButton", new SpriteHelper(content.Load<Texture2D>("PauseButton"), new Rectangle(180, 0, 180, 50)));
+          sprites.Add("ExitButton", new SpriteHelper(content.Load<Texture2D>("ExitButton"), new Rectangle(0, 0, 180, 50)));
+          sprites.Add("ExitHiButton", new SpriteHelper(content.Load<Texture2D>("ExitButton"), new Rectangle(180, 0, 180, 50)));
           sprites.Add("MenuButtonStart", new SpriteHelper(content.Load<Texture2D>("MenuButtonStart"), srcMenuBtnGeneral));
           sprites.Add("MenuHiButtonStart", new SpriteHelper(content.Load<Texture2D>("MenuButtonStart"), srcMenuBtnHilight));
           sprites.Add("MenuButtonExit", new SpriteHelper(content.Load<Texture2D>("MenuButtonExit"), srcMenuBtnGeneral));
