@@ -54,7 +54,7 @@ namespace XnaTetris.Blocks
             ContentSpace.GetSprite("YellowHiBlock"), x, y);
         case BlockType.White:
           return new BlockWhite(game, setRect, ContentSpace.GetSprite("WhiteBlock"),
-            ContentSpace.GetSprite("WhiteBlock"), x, y);
+            ContentSpace.GetSprite("WhiteHiBlock"), x, y);
         case BlockType.Gray:
           return new BlockGray(game, setRect, ContentSpace.GetSprite("GrayBlock"),
             ContentSpace.GetSprite("GrayHiBlock"), x, y);

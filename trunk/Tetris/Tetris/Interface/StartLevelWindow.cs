@@ -11,7 +11,7 @@ namespace XnaTetris.Interface
   {
     #region Variables
 
-    private readonly Rectangle rect = new Rectangle(0, 0, 1024, 768);
+    private readonly Rectangle rect = new Rectangle(0, 0, 800, 600);
     private Button btnOk;
     private ConvertTaggedTextHelper helper;
 
@@ -34,7 +34,7 @@ namespace XnaTetris.Interface
 
     private void InitButtons()
     {
-      btnOk = new Button(LinesGame, new Rectangle(472, 700, 80, 40), ContentSpace.GetSprite("LevelOkButton"),
+      btnOk = new Button(LinesGame, new Rectangle(360, 550, 80, 40), ContentSpace.GetSprite("LevelOkButton"),
                             ContentSpace.GetSprite("LevelHiOkButton"));
       btnOk.ButtonAction += btnOk_ButtonAction;
       Components.Add(btnOk);
@@ -60,7 +60,7 @@ namespace XnaTetris.Interface
         foreach (TextToRender ttor in helper.Texts)
         {
           spriteBatch.DrawString(ttor.Font, ttor.Text,
-            new Vector2(ttor.Pos.X * BaseGame.Width / 1024, ttor.Pos.Y * BaseGame.Height / 768), 
+            new Vector2(ttor.Pos.X, ttor.Pos.Y), 
             ttor.TextColor, 0f,
             new Vector2(0, 0), ttor.Scale,
             SpriteEffects.None, 0);

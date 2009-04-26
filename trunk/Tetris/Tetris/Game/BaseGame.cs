@@ -43,6 +43,13 @@ namespace XnaTetris.Game
     public BaseGame()
     {
       graphics = new GraphicsDeviceManager(this);
+      graphics.PreferredBackBufferWidth = 800;
+      graphics.PreferredBackBufferHeight = 600;
+      graphics.IsFullScreen = false;
+      Window.AllowUserResizing = true;
+
+      graphics.ApplyChanges();
+
       content = new ContentManager(Services);
       Content.RootDirectory = "Content";
 
@@ -97,7 +104,7 @@ namespace XnaTetris.Game
     protected override void Draw(GameTime gameTime)
     {
       // Draw all sprites and fonts
-      SpriteHelper.DrawSprites(Width, Height);
+      SpriteHelper.DrawSprites();
       font.WriteAll();
       textHelper.WriteAll();
       base.Draw(gameTime);

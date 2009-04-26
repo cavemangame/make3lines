@@ -11,10 +11,8 @@ namespace XnaTetris
   public class LinesGame : BaseGame
   {
     #region Constants
-    public const int GRID_RECTANGLE_X_COORDINATE = 310;
-    public const int GRID_RECTANGLE_Y_COORDINATE = 35;
-    public const int GRID_RECTANGLE_HEIGHT = 700;
-    public const int GRID_RECTANGLE_WIDTH = 700;
+    public const int GRID_RECTANGLE_X_COORDINATE = 270;
+    public const int GRID_RECTANGLE_Y_COORDINATE = 10;
     public const int PENALTY_FOR_WRONG_SWAP = 5000;
     public const int PENALTY_FOR_RESTART = 5000;
     #endregion
@@ -48,6 +46,7 @@ namespace XnaTetris
 
     public LinesGame()
     {
+
     }
 
     #endregion
@@ -68,7 +67,7 @@ namespace XnaTetris
       ContentSpace.LoadAllContent(content);
 
       // create scenes
-      menu = new Menu(this, new Rectangle(0, 0, 1024, 768));
+      menu = new Menu(this, new Rectangle(0, 0, 800, 600));
       gameField = new GameField(this);
       Components.Add(menu);
       Components.Add(gameField);
