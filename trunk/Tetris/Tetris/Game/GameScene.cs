@@ -10,29 +10,23 @@ namespace XnaTetris.Game
   public class GameScene : DrawableGameComponent
   {
     // components can't have child components by default. Emulate it!
-    public List<GameComponent> Components
-    {
-      get; private set;
-    }
-
+    public List<GameComponent> Components { get; private set; }
 
     public GameScene(Microsoft.Xna.Framework.Game game)
       : base(game)
     {
       Components = new List<GameComponent>();
-
-      Visible = false;
-      Enabled = false;
+      Hide();
     }
 
     public override void Update(GameTime gameTime)
     {
       // Refresh all child components (if Enabled)
-      for (int i = 0; i < Components.Count; i++)
+      foreach (GameComponent component in Components)
       {
-        if (Components[i].Enabled)
+        if (component.Enabled)
         {
-          Components[i].Update(gameTime);
+          component.Update(gameTime);
         }
       }
 
@@ -42,30 +36,29 @@ namespace XnaTetris.Game
     public override void Draw(GameTime gameTime)
     {
       // Draw all child components (if Visible)
-      for (int i = 0; i < Components.Count; i++)
+      foreach (GameComponent component in Components)
       {
-        GameComponent gc = Components[i];
+        DrawableGameComponent drawableComponent = component as DrawableGameComponent;
 
-        if ((gc is DrawableGameComponent) && ((DrawableGameComponent) gc).Visible)
+        if (drawableComponent != null && drawableComponent.Visible)
         {
-          ((DrawableGameComponent) gc).Draw(gameTime);
+          drawableComponent.Draw(gameTime);
         }
       }
 
       base.Draw(gameTime);
     }
 
-    public virtual void Show()
+    public void Show()
     {
       Visible = true;
       Enabled = true;
     }
 
-    public virtual void Hide()
+    public void Hide()
     {
       Visible = false;
       Enabled = false;
     }
-
   }
 }

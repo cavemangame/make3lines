@@ -69,6 +69,7 @@ namespace XnaTetris
       Height = graphics.GraphicsDevice.Viewport.Height;
       IsMouseVisible = true;
       GameState = Serv.GameState.GameStateMenu;
+
       base.Initialize();
     }
 
@@ -78,7 +79,6 @@ namespace XnaTetris
       textHelper = new TextHelper(graphics.GraphicsDevice);
       ContentSpace.LoadAllContent(content);
 
-      // create scenes
       menu = new Menu(this, new Rectangle(0, 0, 800, 600));
       gameField = new GameField(this);
       Components.Add(menu);
