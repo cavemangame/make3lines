@@ -116,15 +116,12 @@ namespace XnaTetris
 
         if (Input.KeyboardSpaceJustPressed)
         {
-          SetPauseUnpause();
+            gameField.PauseAction();
         }
 
-        if (GameState == Serv.GameState.GameStateRunning)
+        if (!gameField.Paused)
         {
           Timer -= frameMs;
-        }
-        if (GameState == Serv.GameState.GameStateRunning)
-        {
           CheckForLoose();
         }
       }
@@ -216,27 +213,6 @@ namespace XnaTetris
       GameState = Serv.GameState.GameStateMenu;
     }
 
-    public void SetPauseUnpause()
-    {
-      if (GameState == Serv.GameState.GameStateRunning)
-      {
-        PauseGame();
-      }
-      else if (GameState == Serv.GameState.GameStatePause)
-      {
-        RunGame();
-      }
-    }
-
-    private void PauseGame()
-    {
-      GameState = Serv.GameState.GameStatePause;
-    }
-
-    private void RunGame()
-    {
-      GameState = Serv.GameState.GameStateRunning;
-    }
     #endregion
 
     #region Start game

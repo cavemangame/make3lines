@@ -9,8 +9,8 @@ namespace XnaTetris.Blocks
 {
 	class BlockRed : Block
 	{
-		public BlockRed(LinesGame setGame, Rectangle setBlockRect, SpriteHelper setBlock, SpriteHelper setHiBlock, int x, int y)
-			: base(setGame, setBlockRect, setBlock, setHiBlock, x, y)
+		public BlockRed(LinesGame setGame, Rectangle setBlockRect, SpriteHelper setBlock, SpriteHelper setHiBlock, int x, int y, int multiplier)
+			: base(setGame, setBlockRect, setBlock, setHiBlock, x, y, multiplier)
 		{
 		}
 

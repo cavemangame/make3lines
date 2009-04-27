@@ -29,12 +29,19 @@ namespace XnaTetris.Blocks
 
     public long lastBlinkTime;
     private bool isHelpShow;
+
+    #endregion
+
+    #region Properties
+
+    public int Multiplier { get; private set; }
+
     #endregion
 
     #region Конструктор
 
     protected Block(Microsoft.Xna.Framework.Game setGame, Rectangle setBlockRect, SpriteHelper setBlock, 
-      SpriteHelper setHiBlock, int x, int y)
+      SpriteHelper setHiBlock, int x, int y, int multiplier)
       : base(setGame)
     {
       BlockRectangle = setBlockRect;
@@ -42,11 +49,18 @@ namespace XnaTetris.Blocks
       hiblock = setHiBlock;
       X = x;
       Y = y;
+      Multiplier = multiplier;
     }
 
     protected Block(Microsoft.Xna.Framework.Game setGame, Rectangle setBlockRect, SpriteHelper setBlock, 
+       int x, int y, int multiplier)
+      : this(setGame, setBlockRect, setBlock, setBlock, x, y, multiplier)
+    {
+    }
+
+    protected Block(Microsoft.Xna.Framework.Game setGame, Rectangle setBlockRect, SpriteHelper setBlock,
        int x, int y)
-      : this(setGame, setBlockRect, setBlock, setBlock, x, y)
+      : this(setGame, setBlockRect, setBlock, x, y, 1)
     {
     }
 
@@ -78,6 +92,8 @@ namespace XnaTetris.Blocks
 
     #endregion
 
+    #region Draw
+
     public override void Draw(GameTime gameTime)
     {
       if (PointInBlock(Input.MousePos) &&
@@ -94,6 +110,13 @@ namespace XnaTetris.Blocks
       {
         ContentSpace.GetSprite("SelectionBlock").Render(BlockRectangle);
       }
+
+      if (Multiplier > 1)
+      {
+        TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"), 
+          String.Format("x{0}", Multiplier), BlockRectangle.X + 15, BlockRectangle.Y + 10, Color.White, 1.25f);
+      }
+
       if (IsHelped)
       {
         if ((long)LinesGame.ElapsedGameMs - lastBlinkTime >= BLINK_TIME)
@@ -107,6 +130,10 @@ namespace XnaTetris.Blocks
 
       base.Draw(gameTime);
     }
+
+    #endregion
+
+    #region Update
 
     public override void Update(GameTime gameTime)
     {
@@ -123,6 +150,8 @@ namespace XnaTetris.Blocks
         }
       }
     }
+
+    #endregion
 
     public bool PointInBlock(Point point)
     {
