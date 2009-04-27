@@ -25,11 +25,6 @@ namespace XnaTetris.Game
       Enabled = false;
     }
 
-    public override void Initialize()
-    {
-      base.Initialize();
-    }
-
     public override void Update(GameTime gameTime)
     {
       // Refresh all child components (if Enabled)
@@ -46,7 +41,7 @@ namespace XnaTetris.Game
 
     public override void Draw(GameTime gameTime)
     {
-      // Draw all child components (if visible)
+      // Draw all child components (if Visible)
       for (int i = 0; i < Components.Count; i++)
       {
         GameComponent gc = Components[i];
