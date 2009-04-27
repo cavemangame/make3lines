@@ -99,16 +99,6 @@ namespace XnaTetris
     protected override void Draw(GameTime gameTime)
     {
       ElapsedGameMs = gameTime.TotalRealTime.TotalMilliseconds;
-        // Render background
-      ContentSpace.GetSprite("SkyBackground").Render();
-
-      if (menu.Visible)
-        menu.Draw(gameTime);
-      if (gameField.Visible)
-        gameField.Draw(gameTime);
-      if (CurrentLevel != null && CurrentLevel.StartWindow != null)
-        if (CurrentLevel.StartWindow.Visible)
-          CurrentLevel.StartWindow.Draw(gameTime);
 
       base.Draw(gameTime);
     }
