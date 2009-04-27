@@ -49,23 +49,50 @@ namespace XnaTetris.Interface
       ContentSpace.GetSprite("BackgroundBigBox").Render(new Rectangle(270, 10, 512, 512));
       ContentSpace.GetSprite("BackgroundSmallBox").Render(new Rectangle(10, 10, 240, 512));
 
-      TextHelper.DrawText(ContentSpace.GetFont("NormalFont"), 
-        String.Format("Score: {0}", LinesGame.OverallScore), 20, 20, Color.White);
-      TextHelper.DrawText(ContentSpace.GetFont("NormalFont"),
+      TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"), 
+        String.Format("Score: {0}", LinesGame.Score.OverallScore), 20, 20, Color.White);
+      TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"),
         String.Format("Level Score: {0}", LinesGame.LevelScore), 20, 60, Color.WhiteSmoke);
-      TextHelper.DrawText(ContentSpace.GetFont("NormalFont"),
+      TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"),
         String.Format("Remain: {0}", Math.Max(LinesGame.CurrentLevel.LevelScore - LinesGame.LevelScore, 0)), 
         20, 100, Color.WhiteSmoke);
-      TextHelper.DrawText(ContentSpace.GetFont("NormalFont"),
+      TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"),
          LinesGame.CurrentLevel.LevelString, 20, 140, Color.LightCoral);
-      TextHelper.DrawText(ContentSpace.GetFont("NormalFont"),
+      TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"),
          Serv.GetTimeString(LinesGame.Timer), 20, 180, Color.LightPink);
 
+      DrawScores();
       
       if (LinesGame.GameState == Serv.GameState.GameStatePause)
-        TextHelper.DrawText(ContentSpace.GetFont("NormalFont"), "PAUSE", 340, 280, Color.LightPink);
+        TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"), "PAUSE", 340, 280, Color.LightPink);
 
       base.Draw(gameTime);
+    }
+
+    private void DrawScores()
+    {
+      SpriteFont font = ContentSpace.GetFont("SmallFont");
+
+      DrawScore(font, ContentSpace.GetSprite("BlueBlock"), new Rectangle(10, 530, 32, 32), 
+        LinesGame.Score.BlueScore, Color.Blue);
+      DrawScore(font, ContentSpace.GetSprite("GreenBlock"), new Rectangle(10, 565, 32, 32),
+        LinesGame.Score.GreenScore, Color.Green);
+      DrawScore(font, ContentSpace.GetSprite("RedBlock"), new Rectangle(200, 530, 32, 32),
+        LinesGame.Score.RedScore, Color.Red);
+      DrawScore(font, ContentSpace.GetSprite("YellowBlock"), new Rectangle(200, 565, 32, 32),
+        LinesGame.Score.YellowScore, Color.Yellow);
+      DrawScore(font, ContentSpace.GetSprite("WhiteBlock"), new Rectangle(390, 530, 32, 32),
+        LinesGame.Score.WhiteScore, Color.White);
+      DrawScore(font, ContentSpace.GetSprite("GrayBlock"), new Rectangle(390, 565, 32, 32),
+        LinesGame.Score.GrayScore, Color.LightGray);
+    }
+
+    private static void DrawScore(SpriteFont font, SpriteHelper block, Rectangle rect, long score, Color col)
+    {
+      block.Render(rect);
+      // shadow
+      TextHelper.DrawShadowedText(font, String.Format("= {0}", score),
+        rect.Right + 8, rect.Top + 5, col);
     }
 
     void btnExit_ButtonAction(object sender, EventArgs e)

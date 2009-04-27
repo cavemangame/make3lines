@@ -26,10 +26,11 @@ namespace XnaTetris
 
     #region Properties
     public long Timer { get; set; }
-    public int OverallScore { get; set; }
+    //public int OverallScore { get; set; }
     public int LevelScore { get; set; }
     public Serv.GameState GameState { get; private set; }
     public Level CurrentLevel { get; private set; }
+    public Scores Score { get; private set; }
 
     public double ElapsedGameMs { get; private set; }
 
@@ -159,7 +160,8 @@ namespace XnaTetris
     internal void Start()
     {
       GameState = Serv.GameState.GameStateRunning;
-      OverallScore = 0;
+      Score = new Scores();
+      Score.OverallScore = 0;
       menu.Hide();
       gameField.Show();
 
@@ -178,7 +180,7 @@ namespace XnaTetris
 
     public void ExitToMenu()
     {
-      OverallScore = 0;
+      Score.OverallScore = 0;
       Timer = 0;
       curLevelNumber = 0;
       menu.Show();

@@ -54,10 +54,27 @@ namespace XnaTetris.Helpers
       DrawText(font, text, x, y, color, 1f);
     }
 
-    // хер проссыт как из SpriteFont добть размер, поэтому метод со scale
+    // хер проссыт как из SpriteFont добыть размер, поэтому метод со scale
     public static void DrawText(SpriteFont font, string text, int x, int y, Color color, float scale)
     {
       renderTexts.Add(new TextToRender(font, text, x, y, color, scale));
+    }
+
+    public static void DrawShadowedText(SpriteFont font, string text, int x, int y)
+    {
+      DrawShadowedText(font, text, x, y, Color.White);
+    }
+
+    public static void DrawShadowedText(SpriteFont font, string text, int x, int y, Color color)
+    {
+      DrawShadowedText(font, text, x, y, color, 1f);
+    }
+
+    // хер проссыт как из SpriteFont добыть размер, поэтому метод со scale
+    public static void DrawShadowedText(SpriteFont font, string text, int x, int y, Color color, float scale)
+    {
+      DrawText(font, text, x + 1, y + 1, Color.Black, scale); //shadow
+      DrawText(font, text, x, y, color, scale);
     }
 
     public void WriteAll()
