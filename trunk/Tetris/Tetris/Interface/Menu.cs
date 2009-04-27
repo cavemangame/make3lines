@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using XnaTetris.Game;
 
+
 namespace XnaTetris.Interface
 {
 	public class Menu : GameScene
@@ -22,7 +23,7 @@ namespace XnaTetris.Interface
 
     #region Constructor
 
-    public Menu(LinesGame setGame, Rectangle setRect)
+    public Menu(Microsoft.Xna.Framework.Game setGame, Rectangle setRect)
 			: base(setGame)
 		{
 			rect = setRect;
@@ -89,7 +90,7 @@ namespace XnaTetris.Interface
 
     private void btnHiScore_ButtonAction(object sender, EventArgs e)
     {
-      //throw new NotImplementedException();
+      LinesGame.ShowHiScores();
     }
 
     private void btnAuthors_ButtonAction(object sender, EventArgs e)

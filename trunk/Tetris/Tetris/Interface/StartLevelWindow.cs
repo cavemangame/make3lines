@@ -13,7 +13,7 @@ namespace XnaTetris.Interface
 
     private readonly Rectangle rect = new Rectangle(0, 0, 800, 600);
     private Button btnOk;
-    private ConvertTaggedTextHelper helper;
+    private readonly ConvertTaggedTextHelper helper;
 
     #endregion
 
@@ -25,7 +25,7 @@ namespace XnaTetris.Interface
 
     #region Constructor
 
-    public StartLevelWindow(LinesGame setGame, XmlNode loadNode)
+    public StartLevelWindow(Microsoft.Xna.Framework.Game setGame, XmlNode loadNode)
 			: base(setGame)
 		{
       InitButtons();

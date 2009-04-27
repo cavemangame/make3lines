@@ -1,6 +1,4 @@
-﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Helpers;
 using XnaTetris.Game;
 using XnaTetris.Algorithms;
@@ -22,7 +20,7 @@ namespace XnaTetris
     private GameField gameField;
     private Menu menu;
 
-    private int curLevelNumber = 0;
+    private int curLevelNumber;
 
     #endregion
 
@@ -40,15 +38,6 @@ namespace XnaTetris
     /// </summary>
     public bool IsRemoveProcess { get; set; }
     public bool IsRestartProcess { get; set; }
-    #endregion
-
-    #region Constructor
-
-    public LinesGame()
-    {
-
-    }
-
     #endregion
 
     #region Init and Load methods
@@ -145,7 +134,7 @@ namespace XnaTetris
     private void ShowLevelDialog()
     {
       CurrentLevel = new Level(++curLevelNumber, this);
-      this.Components.Add(CurrentLevel.StartWindow);
+      Components.Add(CurrentLevel.StartWindow);
       CurrentLevel.StartWindow.Show();
       gameField.Hide();
     }
@@ -157,7 +146,7 @@ namespace XnaTetris
       Timer = CurrentLevel.Time * 1000;
 
       CurrentLevel.StartWindow.Hide();
-      this.Components.Remove(CurrentLevel.StartWindow);
+      Components.Remove(CurrentLevel.StartWindow);
 
       gameField.Show();
       gameField.BlockGrid.Restart();
@@ -167,16 +156,6 @@ namespace XnaTetris
 
     #region Interface Events
 
-    void btnExit_ButtonAction(object sender, EventArgs e)
-    {
-      ExitToMenu();
-    }
-
-    void btnPause_ButtonAction(object sender, EventArgs e)
-    {
-      SetPauseUnpause();
-    }
-
     internal void Start()
     {
       GameState = Serv.GameState.GameStateRunning;
@@ -185,6 +164,16 @@ namespace XnaTetris
       gameField.Show();
 
       ShowLevelDialog();
+    }
+
+    public void ShowHiScores()
+    {
+      GameScene hiScores = new HiScores(this);
+
+      GameState = Serv.GameState.GameStateRunning;
+      Components.Add(hiScores);
+      hiScores.Show();
+      menu.Hide();
     }
 
     public void ExitToMenu()
