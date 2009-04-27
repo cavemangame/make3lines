@@ -85,43 +85,5 @@ namespace XnaTetris.Sounds
         audioEngine.Update();
     }
     #endregion
-
-    #region Unit Testing
-#if DEBUG
-    /// <summary>
-    /// Test play click sound
-    /// </summary>
-    //[Test]
-    public static void TestPlayClickSound()
-    {
-      //int crazyCounter = 0;
-
-      TestGame.Start(
-        delegate
-        {
-          if (Input.MouseLeftButtonJustPressed ||
-            Input.GamePadAJustPressed)
-            Play(Sounds.BlockMove);
-          else if (Input.MouseRightButtonJustPressed ||
-            Input.GamePadBJustPressed)
-            Play(Sounds.BlockRotate);
-          else if (Input.KeyboardKeyJustPressed(Keys.D1))
-            Play(Sounds.BlockFalldown);
-          else if (Input.KeyboardKeyJustPressed(Keys.D2))
-            Play(Sounds.LineKill);
-          else if (Input.KeyboardKeyJustPressed(Keys.D3))
-            Play(Sounds.Fight);
-          else if (Input.KeyboardKeyJustPressed(Keys.D4))
-            Play(Sounds.Victory);
-          else if (Input.KeyboardKeyJustPressed(Keys.D5))
-            Play(Sounds.Lose);
-
-          TextureFont.WriteText(2, 30,
-            "Press 0-5 or A/B or left/right mouse buttons to play back " +
-            "sounds!");
-        });
-    }
-#endif
-    #endregion
   }
 }
