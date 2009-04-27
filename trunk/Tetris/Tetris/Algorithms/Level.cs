@@ -8,7 +8,7 @@ namespace XnaTetris.Algorithms
 {
   public class Level
   {
-    private const string LevelsFileName = "Levels.xml";
+    private const string LevelsFileName = "Content/Levels.xml";
 
     public long Time { get; set;}
     public int Number { get; set; }
