@@ -93,7 +93,6 @@
     <Compile Include="Blocks\BlockRed.cs" />
     <Compile Include="Blocks\BlockGray.cs" />
     <Compile Include="Blocks\BlockYellow.cs" />
-    <Compile Include="Game\BaseGame.cs" />
     <Compile Include="Game\ContentSpace.cs" />
     <Compile Include="Game\GameScene.cs" />
     <Compile Include="Game\RandomBlockHelper.cs" />
