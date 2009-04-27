@@ -97,7 +97,6 @@
     <Compile Include="Game\GameScene.cs" />
     <Compile Include="Game\RandomBlockHelper.cs" />
     <Compile Include="Game\Serv.cs" />
-    <Compile Include="Game\TestGame.cs" />
     <Compile Include="Helpers\ColorHelper.cs" />
     <Compile Include="Helpers\ConvertTaggedTextHelper.cs" />
     <Compile Include="Helpers\Directories.cs" />
@@ -112,7 +111,6 @@
     <Compile Include="Helpers\TextHelper.cs" />
     <Compile Include="Helpers\TextureFont.cs" />
     <Compile Include="Helpers\Vector3Helper.cs" />
-    <Compile Include="Helpers\WindowsHelper.cs" />
     <Compile Include="Interface\Button.cs" />
     <Compile Include="Interface\GameField.cs" />
     <Compile Include="Interface\HiScores.cs" />

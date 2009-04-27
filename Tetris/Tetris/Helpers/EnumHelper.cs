@@ -111,31 +111,6 @@ namespace XnaTetris.Helpers
        */
     }
     #endregion
-
-    #region Unit Testing
-#if DEBUG
-    /*include NUnit.Framework for this
-		/// <summary>
-		/// EnumHelper tests to find out if all methods work properly.
-		/// </summary>
-		[TestFixture]
-		public class EnumHelperTests
-		{
-			/// <summary>
-			/// Test GetAllEnumNames method, which does return all names
-			/// from the enum. We test the RocketCommanderForm MenuButtons.
-			/// </summary>
-			[Test]
-			public void TestGetAllEnumNames()
-			{
-				Assert.AreEqual(
-					"Missions, Highscore, Credits, Help, Options, Exit, Back",
-					EnumHelper.GetAllEnumNames(typeof(MenuButton)));
-			} // TestGetAllEnumNames()
-		} // class EnumHelperTests
-		 */
-#endif
-    #endregion
   }
 #endif
 }
