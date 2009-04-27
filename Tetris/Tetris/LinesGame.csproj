@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="Algorithms\BlocksGridHelper.cs" />
     <Compile Include="Algorithms\Level.cs" />
+    <Compile Include="Algorithms\Scores.cs" />
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="BlocksGrid.cs" />
     <Compile Include="Blocks\BlockAnimator.cs" />

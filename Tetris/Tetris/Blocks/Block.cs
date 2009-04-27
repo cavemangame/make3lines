@@ -181,5 +181,8 @@ namespace XnaTetris.Blocks
     }
 
     public abstract int GetScore(int N);
+
+    public abstract void AddScore(int N);
+
   }
 }
