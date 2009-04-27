@@ -15,6 +15,8 @@ namespace XnaTetris
     public const int GRID_RECTANGLE_Y_COORDINATE = 10;
     public const int PENALTY_FOR_WRONG_SWAP = 5000;
     public const int PENALTY_FOR_RESTART = 5000;
+    public const int PREFERRED_RESOLUTION_WIDTH = 800;
+    public const int PREFERRED_RESOLUTION_HEIGHT = 600;
     #endregion
 
     #region Variables
@@ -52,11 +54,10 @@ namespace XnaTetris
     {
       graphics = new GraphicsDeviceManager(this)
                    {
-                     PreferredBackBufferWidth = 800,
-                     PreferredBackBufferHeight = 600,
+                     PreferredBackBufferWidth = PREFERRED_RESOLUTION_WIDTH,
+                     PreferredBackBufferHeight = PREFERRED_RESOLUTION_HEIGHT,
                      IsFullScreen = false
                    };
-      Window.AllowUserResizing = true;
       graphics.ApplyChanges();
       content = new ContentManager(Services) {RootDirectory = "Content"};
     }
@@ -79,7 +80,7 @@ namespace XnaTetris
       textHelper = new TextHelper(graphics.GraphicsDevice);
       ContentSpace.LoadAllContent(content);
 
-      menu = new Menu(this, new Rectangle(0, 0, 800, 600));
+      menu = new Menu(this, new Rectangle(0, 0, Width, Height));
       gameField = new GameField(this);
       Components.Add(menu);
       Components.Add(gameField);
