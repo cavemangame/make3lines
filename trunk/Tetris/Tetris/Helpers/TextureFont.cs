@@ -1,10 +1,7 @@
-#region Using directives
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using XnaTetris.Game;
 using Microsoft.Xna.Framework.Content;
-#endregion
 
 namespace XnaTetris.Helpers
 {
@@ -24,7 +21,7 @@ namespace XnaTetris.Helpers
     const int FontHeight = 36;
 
     /// <summary>
-    /// Substract this value from the y postion when rendering.
+    /// Subtract this value from the y position when rendering.
     /// Most letters start below the CharRects, this fixes that issue.
     /// </summary>
     const int SubRenderHeight = 5;
