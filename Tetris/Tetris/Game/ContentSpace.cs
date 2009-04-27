@@ -11,8 +11,8 @@ namespace XnaTetris.Game
 	{
 	  private static bool IsContentLoaded;
 
-    private static readonly Rectangle srcMenuBtnGeneral = new Rectangle(0, 0, 200, 50);
-    private static readonly Rectangle srcMenuBtnHilight = new Rectangle(200, 0, 200, 50);
+    private static readonly Rectangle srcMenuBtnGeneral = new Rectangle(0, 0, 150, 50);
+    private static readonly Rectangle srcMenuBtnHilight = new Rectangle(150, 0, 150, 50);
     private static readonly Rectangle srcLevelWindowGeneral = new Rectangle(0, 0, 80, 40);
     private static readonly Rectangle srcLevelWindowHilight = new Rectangle(80, 0, 80, 40);
 
