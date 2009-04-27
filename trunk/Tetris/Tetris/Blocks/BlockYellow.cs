@@ -9,11 +9,10 @@ namespace XnaTetris.Blocks
 {
 	class BlockYellow : Block
 	{
-		public BlockYellow(LinesGame setGame, Rectangle setBlockRect, SpriteHelper setBlock, SpriteHelper setHiBlock, int x, int y)
-			: base(setGame, setBlockRect, setBlock, setHiBlock, x, y)
+		public BlockYellow(LinesGame setGame, Rectangle setBlockRect, SpriteHelper setBlock, SpriteHelper setHiBlock, int x, int y, int multiplier)
+			: base(setGame, setBlockRect, setBlock, setHiBlock, x, y, multiplier)
 		{
 		}
-
 		public override BlockFactory.BlockType Type
 		{
 			get { return BlockFactory.BlockType.Yellow; }

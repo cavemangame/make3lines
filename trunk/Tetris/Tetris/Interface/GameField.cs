@@ -23,6 +23,7 @@ namespace XnaTetris.Interface
 
     public LinesGame LinesGame { get { return Game as LinesGame; } }
     public BlocksGrid BlockGrid { get; private set; }
+    public bool Paused { get; private set; }
 
     #endregion
 
@@ -64,7 +65,7 @@ namespace XnaTetris.Interface
 
       DrawScores();
       
-      if (LinesGame.GameState == Serv.GameState.GameStatePause)
+      if (Paused)
         TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"), "PAUSE", 340, 280, Color.LightPink);
 
       base.Draw(gameTime);
@@ -103,7 +104,13 @@ namespace XnaTetris.Interface
 
     void btnPause_ButtonAction(object sender, EventArgs e)
     {
-      LinesGame.SetPauseUnpause();
+      PauseAction();
+    }
+
+    public void PauseAction()
+    {
+      Paused = !Paused;
+      BlockGrid.Enabled = !Paused;
     }
   }
 }
