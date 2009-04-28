@@ -52,10 +52,8 @@ namespace XnaTetris.Interface
 
     private void btnOk_ButtonAction(object sender, EventArgs e)
     {
-      if (Game is LinesGame)
-      {
-        (Game as LinesGame).ExitToMenu();
-      }
+      Hide();
+      LinesGame.ShowMenu();
     }
   }
 }

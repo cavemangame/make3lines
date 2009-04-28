@@ -24,8 +24,12 @@ namespace XnaTetris
     private readonly ContentManager content;
     private TextureFont font;
     private TextHelper textHelper;
+
+    // components
+    private GameScene menu;
     private GameField gameField;
-    private Menu menu;
+    private GameScene hiScores;
+    
     private int curLevelNumber;
     #endregion
 
@@ -60,6 +64,7 @@ namespace XnaTetris
                    };
       graphics.ApplyChanges();
       content = new ContentManager(Services) {RootDirectory = "Content"};
+      Score = new Scores();
     }
     #endregion
 
@@ -69,7 +74,6 @@ namespace XnaTetris
       Width = graphics.GraphicsDevice.Viewport.Width;
       Height = graphics.GraphicsDevice.Viewport.Height;
       IsMouseVisible = true;
-      GameState = Serv.GameState.GameStateMenu;
 
       base.Initialize();
     }
@@ -81,13 +85,15 @@ namespace XnaTetris
       ContentSpace.LoadAllContent(content);
 
       menu = new Menu(this, new Rectangle(0, 0, Width, Height));
-      gameField = new GameField(this);
       Components.Add(menu);
+      gameField = new GameField(this);
       Components.Add(gameField);
-
-      menu.Show();
+      hiScores = new HiScores(this);
+      Components.Add(hiScores);
 
       base.LoadContent();
+
+      ShowMenu();
     }
 
     protected override void UnloadContent()
@@ -148,9 +154,10 @@ namespace XnaTetris
     {
       if (Timer <= 0)
       {
+        gameField.Hide();
         if (LevelScore <= CurrentLevel.LevelScore)
         {
-          ExitToMenu();
+          ShowMenu();
         }
         else
         {
@@ -165,7 +172,6 @@ namespace XnaTetris
       CurrentLevel = new Level(++curLevelNumber, this);
       Components.Add(CurrentLevel.StartWindow);
       CurrentLevel.StartWindow.Show();
-      gameField.Hide();
     }
 
     public void StartNextLevel()
@@ -174,7 +180,6 @@ namespace XnaTetris
       GameState = Serv.GameState.GameStateRunning;
       Timer = CurrentLevel.Time * 1000;
 
-      CurrentLevel.StartWindow.Hide();
       Components.Remove(CurrentLevel.StartWindow);
 
       gameField.Show();
@@ -183,36 +188,27 @@ namespace XnaTetris
     #endregion
 
     #region Interface Events
-    internal void Start()
+    public void Start()
     {
       GameState = Serv.GameState.GameStateRunning;
-      Score = new Scores {OverallScore = 0};
-      menu.Hide();
-      gameField.Show();
+      Score.Reset();
 
       ShowLevelDialog();
     }
 
     public void ShowHiScores()
     {
-      GameScene hiScores = new HiScores(this);
-
       GameState = Serv.GameState.GameStateRunning;
-      Components.Add(hiScores);
       hiScores.Show();
-      menu.Hide();
     }
 
-    public void ExitToMenu()
+    public void ShowMenu()
     {
-      Score.OverallScore = 0;
+      GameState = Serv.GameState.GameStateMenu;
       Timer = 0;
       curLevelNumber = 0;
       menu.Show();
-      gameField.Hide();
-      GameState = Serv.GameState.GameStateMenu;
     }
-
     #endregion
 
     #region Start game
@@ -226,7 +222,6 @@ namespace XnaTetris
     #endregion
 
     #region Some help methods
-
     /// <summary>
     /// Determines if there are moving blocks on the board or not
     /// </summary>
@@ -253,7 +248,6 @@ namespace XnaTetris
         gameField.BlockGrid.ReadyToRestart();
       }
     }
-
     #endregion
   }
 }
