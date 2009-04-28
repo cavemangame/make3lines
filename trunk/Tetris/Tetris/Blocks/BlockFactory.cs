@@ -19,7 +19,9 @@ namespace XnaTetris.Blocks
       Blue,
       Yellow,
       White,
-      Gray
+      Gray,
+      Neutral,
+      Invul
     }
 
     private BlockFactory(LinesGame setGame)
@@ -58,6 +60,13 @@ namespace XnaTetris.Blocks
         case BlockType.Gray:
           return new BlockGray(game, setRect, ContentSpace.GetSprite("GrayBlock"),
             ContentSpace.GetSprite("GrayHiBlock"), x, y, multiplier);
+        case BlockType.Invul:
+          return new BlockInvulnerable(game, setRect, ContentSpace.GetSprite("InvulBlock"),
+            ContentSpace.GetSprite("InvulBlock"), x, y, 1);
+        case BlockType.Neutral:
+          return new BlockNeutral(game, setRect, ContentSpace.GetSprite("NeutralBlock"),
+            ContentSpace.GetSprite("NeutralBlock"), x, y, 1);
+
         default:
           throw new ArgumentOutOfRangeException("blockType");
       }
@@ -65,6 +74,7 @@ namespace XnaTetris.Blocks
 
     internal static BlockType GetRandomBlockType()
     {
+      // без нейтральных
       return (BlockType)RandomHelper.GetRandomInt(EnumHelper.GetSize(typeof(BlockType)));
     }
   }
