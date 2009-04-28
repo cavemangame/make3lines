@@ -69,6 +69,8 @@ namespace XnaTetris.Game
 
           sprites.Add("SelectionBlock", new SpriteHelper(content.Load<Texture2D>("Selection"), null));
           sprites.Add("HelpBlock", new SpriteHelper(content.Load<Texture2D>("HelpBlock"), null));
+          sprites.Add("InvulBlock", new SpriteHelper(content.Load<Texture2D>("InvulBlock"), null));
+          sprites.Add("NeutralBlock", new SpriteHelper(content.Load<Texture2D>("NeutralBlock"), null));
 
 
           // add fonts

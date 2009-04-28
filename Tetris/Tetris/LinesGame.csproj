@@ -86,6 +86,7 @@
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="BlocksGrid.cs" />
     <Compile Include="Blocks\BlockAnimator.cs" />
+    <Compile Include="Blocks\BlockInvulnerable.cs" />
     <Compile Include="Blocks\BlockWhite.cs" />
     <Compile Include="Blocks\BlockBlue.cs" />
     <Compile Include="Blocks\BlockFactory.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Blocks\BlockRed.cs" />
     <Compile Include="Blocks\BlockGray.cs" />
     <Compile Include="Blocks\BlockYellow.cs" />
+    <Compile Include="Blocks\BlockNeutral.cs" />
     <Compile Include="Game\ContentSpace.cs" />
     <Compile Include="Game\GameScene.cs" />
     <Compile Include="Game\RandomBlockHelper.cs" />

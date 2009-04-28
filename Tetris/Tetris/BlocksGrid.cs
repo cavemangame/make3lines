@@ -155,6 +155,8 @@ namespace XnaTetris
       {
         if (block.PointInBlock(point))
         {
+          if (block.Type == BlockFactory.BlockType.Invul)
+            continue;
           int count = blocksGridHelper.ClickedBlocksCount();
 
           if (count == 0)
