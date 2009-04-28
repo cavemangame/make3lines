@@ -10,7 +10,7 @@ namespace XnaTetris.Interface
   public class StartLevelWindow : GameScene
   {
     #region Variables
-    private readonly Rectangle backgroundRect = new Rectangle(0, 0, 800, 600);
+    private readonly Rectangle backgroundRect;
     private Button btnOk;
     private readonly ConvertTaggedTextHelper helper;
     #endregion
@@ -23,14 +23,15 @@ namespace XnaTetris.Interface
     public StartLevelWindow(Microsoft.Xna.Framework.Game setGame, XmlNode loadNode)
 			: base(setGame)
 		{
+      backgroundRect = new Rectangle(0, 0, LinesGame.Width, LinesGame.Height);
       InitButtons();
       helper = new ConvertTaggedTextHelper(backgroundRect, loadNode);
     }
 
     private void InitButtons()
     {
-      btnOk = new Button(LinesGame, new Rectangle(360, 550, 80, 40), ContentSpace.GetSprite("LevelOkButton"),
-                            ContentSpace.GetSprite("LevelHiOkButton"));
+      btnOk = new Button(LinesGame, new Rectangle(360, 550, 80, 40), ContentSpace.GetSprite("OkButton"),
+                            ContentSpace.GetSprite("HiOkButton"));
       btnOk.ButtonAction += btnOk_ButtonAction;
       Components.Add(btnOk);
     }

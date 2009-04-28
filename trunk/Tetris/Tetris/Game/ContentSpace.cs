@@ -50,8 +50,8 @@ namespace XnaTetris.Game
           
           sprites.Add("LevelBackground", new SpriteHelper(content.Load<Texture2D>("LevelBackground"), null));
           sprites.Add("MenuBackground", new SpriteHelper(content.Load<Texture2D>("MenuBackground"), null));
-          sprites.Add("LevelOkButton", new SpriteHelper(content.Load<Texture2D>("LevelOkButton"), srcLevelWindowGeneral));
-          sprites.Add("LevelHiOkButton", new SpriteHelper(content.Load<Texture2D>("LevelOkButton"), srcLevelWindowHilight));
+          sprites.Add("OkButton", new SpriteHelper(content.Load<Texture2D>("OkButton"), srcLevelWindowGeneral));
+          sprites.Add("HiOkButton", new SpriteHelper(content.Load<Texture2D>("OkButton"), srcLevelWindowHilight));
 
           sprites.Add("WhiteBlock", new SpriteHelper(content.Load<Texture2D>("BlocksGeneral"), new Rectangle(0, 0, 64, 64)));
           sprites.Add("BlueBlock", new SpriteHelper(content.Load<Texture2D>("BlocksGeneral"), new Rectangle(64, 0, 64, 64)));

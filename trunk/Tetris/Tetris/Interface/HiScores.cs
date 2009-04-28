@@ -9,7 +9,7 @@ namespace XnaTetris.Interface
   {
     #region Variables
 
-    private readonly Rectangle backgroundRect = new Rectangle(0, 0, 800, 600);
+    private readonly Rectangle backgroundRect;
     private Button btnOk;
 
     #endregion
@@ -25,6 +25,7 @@ namespace XnaTetris.Interface
     public HiScores(Microsoft.Xna.Framework.Game setGame)
 			: base(setGame)
 		{
+      backgroundRect = new Rectangle(0, 0, LinesGame.Width, LinesGame.Height);
       InitButtons();
     }
 
@@ -34,6 +35,7 @@ namespace XnaTetris.Interface
 
     public override void Draw(GameTime gameTime)
     {
+      // TODO: use own background
       ContentSpace.GetSprite("LevelBackground").Render(backgroundRect);
 
       base.Draw(gameTime);
@@ -44,8 +46,8 @@ namespace XnaTetris.Interface
     private void InitButtons()
     {
       btnOk = new Button(LinesGame, new Rectangle(360, 550, 80, 40),
-                         ContentSpace.GetSprite("LevelOkButton"),
-                         ContentSpace.GetSprite("LevelHiOkButton"));
+                         ContentSpace.GetSprite("OkButton"),
+                         ContentSpace.GetSprite("HiOkButton"));
       btnOk.ButtonAction += btnOk_ButtonAction;
       Components.Add(btnOk);
     }
