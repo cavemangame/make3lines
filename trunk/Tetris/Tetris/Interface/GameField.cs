@@ -20,27 +20,25 @@ namespace XnaTetris.Interface
     private readonly Button btnExit;
 
     #region Properties
-
     public LinesGame LinesGame { get { return Game as LinesGame; } }
     public BlocksGrid BlockGrid { get; private set; }
     public bool Paused { get; private set; }
-
     #endregion
 
-    public GameField(LinesGame game)
+    public GameField(Microsoft.Xna.Framework.Game game)
       : base(game)
     {
       BlockGrid = new BlocksGrid(LinesGame, 
         new Rectangle(GRID_RECTANGLE_X_COORDINATE, GRID_RECTANGLE_Y_COORDINATE,
                       GRID_RECTANGLE_WIDTH, GRID_RECTANGLE_HEIGHT));
+      Components.Add(BlockGrid);
 
       btnPause = new Button(LinesGame, rectPauseButton, ContentSpace.GetSprite("PauseButton"), ContentSpace.GetSprite("PauseHiButton"));
       btnPause.ButtonAction += btnPause_ButtonAction;
+      Components.Add(btnPause);
+      
       btnExit = new Button(LinesGame, rectExitButton, ContentSpace.GetSprite("ExitButton"), ContentSpace.GetSprite("ExitHiButton"));
       btnExit.ButtonAction += btnExit_ButtonAction;
-
-      Components.Add(BlockGrid);
-      Components.Add(btnPause);
       Components.Add(btnExit);
     }
 
@@ -99,7 +97,8 @@ namespace XnaTetris.Interface
 
     void btnExit_ButtonAction(object sender, EventArgs e)
     {
-      LinesGame.ExitToMenu();
+      Hide();
+      LinesGame.ShowMenu();
     }
 
     void btnPause_ButtonAction(object sender, EventArgs e)

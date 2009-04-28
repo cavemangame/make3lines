@@ -10,26 +10,21 @@ namespace XnaTetris.Interface
   public class StartLevelWindow : GameScene
   {
     #region Variables
-
-    private readonly Rectangle rect = new Rectangle(0, 0, 800, 600);
+    private readonly Rectangle backgroundRect = new Rectangle(0, 0, 800, 600);
     private Button btnOk;
     private readonly ConvertTaggedTextHelper helper;
-
     #endregion
 
     #region Properties
-
     public LinesGame LinesGame { get { return Game as LinesGame; } }
-
     #endregion
 
     #region Constructor
-
     public StartLevelWindow(Microsoft.Xna.Framework.Game setGame, XmlNode loadNode)
 			: base(setGame)
 		{
       InitButtons();
-      helper = new ConvertTaggedTextHelper(rect, loadNode);
+      helper = new ConvertTaggedTextHelper(backgroundRect, loadNode);
     }
 
     private void InitButtons()
@@ -39,14 +34,12 @@ namespace XnaTetris.Interface
       btnOk.ButtonAction += btnOk_ButtonAction;
       Components.Add(btnOk);
     }
-
     #endregion
 
     #region Draw
-
     public override void Draw(GameTime gameTime)
     {
-      ContentSpace.GetSprite("LevelBackground").Render(rect);
+      ContentSpace.GetSprite("LevelBackground").Render(backgroundRect);
       if (helper != null)
       {
         foreach (SpriteToRender stor in helper.Sprites)
@@ -67,18 +60,16 @@ namespace XnaTetris.Interface
 
         }
         spriteBatch.End();
-
       }
+
       base.Draw(gameTime);
     }
-
     #endregion
-
 
     private void btnOk_ButtonAction(object sender, EventArgs e)
     {
-      if (Game is LinesGame)
-        (Game as LinesGame).StartNextLevel();
+      Hide();
+      LinesGame.StartNextLevel();
     }
   }
 }

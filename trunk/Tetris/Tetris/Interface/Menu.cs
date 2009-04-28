@@ -8,25 +8,19 @@ namespace XnaTetris.Interface
 	public class Menu : GameScene
 	{
 		#region Variables
-
-		private readonly Rectangle rect;
-
-		private Button btnStart, btnExit, btnHelp, btnHiScore, btnAuthors;
-
+		private readonly Rectangle backgroundRect;
+		private Button btnStart, btnExit, btnHelp, btnHiScores, btnAuthors;
 		#endregion
 
     #region Properties
-
     public LinesGame LinesGame { get { return Game as LinesGame; } }
-
     #endregion
 
     #region Constructor
-
     public Menu(Microsoft.Xna.Framework.Game setGame, Rectangle setRect)
 			: base(setGame)
 		{
-			rect = setRect;
+			backgroundRect = setRect;
 			InitButtons(setGame);
 		}
 
@@ -42,10 +36,10 @@ namespace XnaTetris.Interface
       btnHelp.ButtonAction += btnHelp_ButtonAction;
       Components.Add(btnHelp);
 
-      btnHiScore = new Button(setGame, new Rectangle(300, 290, 200, 50), ContentSpace.GetSprite("MenuButtonHiScore"),
+      btnHiScores = new Button(setGame, new Rectangle(300, 290, 200, 50), ContentSpace.GetSprite("MenuButtonHiScore"),
         ContentSpace.GetSprite("MenuHiButtonHiScore"));
-      btnHiScore.ButtonAction += btnHiScore_ButtonAction;
-      Components.Add(btnHiScore);
+      btnHiScores.ButtonAction += btnHiScore_ButtonAction;
+      Components.Add(btnHiScores);
 
       btnAuthors = new Button(setGame, new Rectangle(300, 360, 200, 50), ContentSpace.GetSprite("MenuButtonAuthors"),
         ContentSpace.GetSprite("MenuHiButtonAuthors"));
@@ -57,24 +51,21 @@ namespace XnaTetris.Interface
       btnExit.ButtonAction += btnExit_ButtonAction;
       Components.Add(btnExit);
 		}
-
 		#endregion
 
 		#region Draw
-
 		public override void Draw(GameTime gameTime)
 		{
-      ContentSpace.GetSprite("MenuBackground").Render(rect);
+      ContentSpace.GetSprite("MenuBackground").Render(backgroundRect);
 
 			base.Draw(gameTime);
 		}
-
 		#endregion
 
     #region Events
-
     private void btnStart_ButtonAction(object sender, EventArgs e)
     {
+      Hide();
       LinesGame.Start();
     }
 
@@ -90,6 +81,7 @@ namespace XnaTetris.Interface
 
     private void btnHiScore_ButtonAction(object sender, EventArgs e)
     {
+      Hide();
       LinesGame.ShowHiScores();
     }
 
@@ -97,7 +89,6 @@ namespace XnaTetris.Interface
     {
       //throw new NotImplementedException();
     }
-
     #endregion
   }
 }
