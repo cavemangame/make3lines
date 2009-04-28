@@ -92,30 +92,6 @@ namespace XnaTetris.Helpers
     {
       Render(new Rectangle(x, y, GfxRect.Width, GfxRect.Height));
     } // Render(texture, rect, sourceRect)
-
-    public void Render()
-    {
-      Render(new Rectangle(0, 0, 800, 600));
-    } // Render(texture)
-
-    public void RenderCentered(float x, float y, float scale)
-    {
-      Render(new Rectangle(
-        (int)(x * 800 - scale * GfxRect.Width / 2),
-        (int)(y * 600 - scale * GfxRect.Height / 2),
-        (int)(scale * GfxRect.Width),
-        (int)(scale * GfxRect.Height)));
-    } // RenderCentered(x, y)
-
-    public void RenderCentered(float x, float y)
-    {
-      RenderCentered(x, y, 1);
-    } // RenderCentered(x, y)
-
-    public void RenderCentered(Vector2 pos)
-    {
-      RenderCentered(pos.X, pos.Y);
-    } // RenderCentered(pos)
     #endregion
 
     #region DrawSprites
