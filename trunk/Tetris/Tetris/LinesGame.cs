@@ -29,6 +29,8 @@ namespace XnaTetris
     private GameScene menu;
     private GameField gameField;
     private GameScene hiScores;
+
+    public Player Player { get; set;}
     
     private int curLevelNumber;
     #endregion
@@ -65,6 +67,7 @@ namespace XnaTetris
       graphics.ApplyChanges();
       content = new ContentManager(Services) {RootDirectory = "Content"};
       Score = new Scores();
+      Player = new Player();
     }
     #endregion
 

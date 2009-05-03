@@ -97,6 +97,7 @@
     <Compile Include="Blocks\BlockNeutral.cs" />
     <Compile Include="Game\ContentSpace.cs" />
     <Compile Include="Game\GameScene.cs" />
+    <Compile Include="Game\Player.cs" />
     <Compile Include="Game\RandomBlockHelper.cs" />
     <Compile Include="Game\Serv.cs" />
     <Compile Include="Helpers\ColorHelper.cs" />

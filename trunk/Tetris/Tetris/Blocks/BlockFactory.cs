@@ -72,10 +72,10 @@ namespace XnaTetris.Blocks
       }
     }
 
-    internal static BlockType GetRandomBlockType()
+    internal BlockType GetRandomBlockType(ref int multiplier)
     {
       // без нейтральных
-      return (BlockType)RandomHelper.GetRandomInt(EnumHelper.GetSize(typeof(BlockType)));
+      return game.CurrentLevel.GetNewRandomBlock(ref multiplier);
     }
   }
 }
