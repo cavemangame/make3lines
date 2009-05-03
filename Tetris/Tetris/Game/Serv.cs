@@ -60,7 +60,7 @@ namespace XnaTetris.Game
 	    var result = new Dictionary<BlockFactory.BlockType, float>();
 	    foreach (var pair in chances)
 	    {
-	      result.Add(pair.Key, pair.Value + (blockChances.ContainsKey(pair.Key) ? blockChances[pair.Key] : 0f));    
+	      result.Add(pair.Key, pair.Value * (blockChances.ContainsKey(pair.Key) ? blockChances[pair.Key] : 1f));    
 	    }
 	    return result;
  	  }

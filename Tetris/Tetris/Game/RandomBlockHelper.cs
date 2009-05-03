@@ -15,7 +15,7 @@ namespace XnaTetris.Game
       foreach (var pair in allocation)
         len += pair.Value;
 
-      float shot = RandomHelper.GetRandomFloat(0f, len - 1); //стреляем, смотрим в какой отрезок попало
+      float shot = RandomHelper.GetRandomFloat(0f, len); //стреляем, смотрим в какой отрезок попало
 
       float curPos = 0;
       foreach (var pair in allocation)
