@@ -72,6 +72,12 @@ namespace XnaTetris.Game
           sprites.Add("InvulBlock", new SpriteHelper(content.Load<Texture2D>("InvulBlock"), null));
           sprites.Add("NeutralBlock", new SpriteHelper(content.Load<Texture2D>("NeutralBlock"), null));
 
+          sprites.Add("BlueBackground", new SpriteHelper(content.Load<Texture2D>("BlueBackground"), null));
+          sprites.Add("RedBackground", new SpriteHelper(content.Load<Texture2D>("RedBackground"), null));
+          sprites.Add("GreenBackground", new SpriteHelper(content.Load<Texture2D>("GreenBackground"), null));
+          sprites.Add("YellowBackground", new SpriteHelper(content.Load<Texture2D>("YellowBackground"), null));
+          sprites.Add("WhiteBackground", new SpriteHelper(content.Load<Texture2D>("WhiteBackground"), null));
+          sprites.Add("GrayBackground", new SpriteHelper(content.Load<Texture2D>("GrayBackground"), null));
 
           // add fonts
           fonts.Add("NormalFont", content.Load<SpriteFont>("normalfont"));

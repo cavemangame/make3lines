@@ -4,57 +4,61 @@
 		<time>50</time>
 		<score>2000</score>
 		<background>SkyBackground</background>
-		<dialog>
-			<text color="Red" scale="2" left="380">Level 1</text> 
-			<text left="350">Welcome to level 1</text> 
-			<text>Kill 3 lines blocks to gain scores</text> 
-			<text>Prices:</text> 
-				<text scale="1,5">3x</text> 
-				<image left="10" wrap="false">GreenBlock</image> 
-				<text left="10" scale="1,5" wrap="false">= 30 points</text> 
-				<text scale="1,5" wrap="false">3x</text> 
-				<image left="10" wrap="false">BlueBlock</image> 
-				<text left="10" scale="1,5" wrap="false">= 40 points</text> 
-				<text scale="1,5">3x</text> 
-				<image left="10" wrap="false">RedBlock</image> 
-				<text left="10" scale="1,5" wrap="false">= 60 points</text> 
-				<text scale="1,5" wrap="false">3x</text> 
-				<image left="10" wrap="false">GrayBlock</image> 
-				<text left="10" scale="1,5" wrap="false">= 20 points</text> 
-				<text scale="1,5">3x</text> 
-				<image left="10" wrap="false">WhiteBlock</image> 
-				<text left="10" scale="1,5" wrap="false">= 50 points</text> 
-				<text scale="1,5" wrap="false">3x</text> 
-				<image left="10" wrap="false">YellowBlock</image> 
-				<text left="10" scale="1,5" wrap="false">= 40 points</text> 
-		</dialog>
+    <dialog></dialog>
 	</level>
 	<level number='2'>
 		<time>50</time>
 		<score>2500</score>
 		<background>SkyBackground</background>
-		<dialog>
-			<text color="Red" scale="2" left="250">Level 2</text> 
-			<text left="30">Now, time to second level!</text> 
-			<text>Try to kill larger lines - you gain more points</text> 
-				<text scale="1,5">4x</text> 
-				<image left="10" wrap="false">GreenBlock</image> 
-				<text left="10" scale="1,5" wrap="false">= 100 points</text> 
-				<text scale="1,5">4x</text> 
-				<image left="10" wrap="false">BlueBlock</image> 
-				<text left="10" scale="1,5" wrap="false">= 110 points</text> 
-				<text scale="1,5">4x</text> 
-				<image left="10" wrap="false">RedBlock</image> 
-				<text left="10" scale="1,5" wrap="false">= 120 points</text> 
-				<text scale="1,5">4x</text> 
-				<image left="10" wrap="false">GrayBlock</image> 
-				<text left="10" scale="1,5" wrap="false">= 120 points</text> 
-				<text scale="1,5">4x</text> 
-				<image left="10" wrap="false">WhiteBlock</image> 
-				<text left="10" scale="1,5" wrap="false">= 100 points</text> 
-				<text scale="1,5">4x</text> 
-				<image left="10" wrap="false">YellowBlock</image> 
-				<text left="10" scale="1,5" wrap="false">= 140 points</text> 
-		</dialog>
+    <dialog></dialog>
 	</level>
+  
+  <level number='3'>
+    <time>40</time>
+    <score>2000</score>
+    <background>BlueBackground</background>
+    <dialog></dialog>
+    <BlueChance>1,5</BlueChance>
+    <RedChance>0,8</RedChance>
+  </level>
+  <level number='4'>
+    <time>40</time>
+    <score>2000</score>
+    <background>RedBackground</background>
+    <dialog></dialog>
+    <BlueChance>0,7</BlueChance>
+    <RedChance>1,4</RedChance>
+  </level>
+  <level number='5'>
+    <time>40</time>
+    <score>2000</score>
+    <background>GreenBackground</background>
+    <dialog></dialog>
+    <GreenChance>2</GreenChance>
+  </level>
+  <level number='6'>
+    <time>40</time>
+    <score>2000</score>
+    <background>YellowBackground</background>
+    <dialog></dialog>
+    <YellowChance>1,6</YellowChance>
+    <RedChance>1,2</RedChance>
+    <GrayChance>0,5</GrayChance>
+  </level>
+  <level number='7'>
+    <time>40</time>
+    <score>2000</score>
+    <background>GrayBackground</background>
+    <dialog></dialog>
+    <GrayChance>1,6</GrayChance>
+    <WhiteChance>0,5</WhiteChance>
+  </level>
+  <level number='8'>
+    <time>40</time>
+    <score>2000</score>
+    <background>WhiteBackground</background>
+    <dialog></dialog>
+    <GrayChance>0,6</GrayChance>
+    <WhiteChance>1,8</WhiteChance>
+  </level>
 </levels>

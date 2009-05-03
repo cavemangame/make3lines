@@ -248,8 +248,10 @@ namespace XnaTetris
 
     public Block GetNewRandomBlock(int x, int y)
     {
+      int multiplier = 1;
+      BlockFactory.BlockType type = BlockFactory.GetBlockFactory(LinesGame).GetRandomBlockType(ref multiplier);
       Block block = (BlockFactory.GetBlockFactory(LinesGame).GetNewBlock(
-        BlockFactory.GetRandomBlockType(), blocksGridHelper.GetRectangle(x, y), x, y, 1));
+        type, blocksGridHelper.GetRectangle(x, y), x, y, multiplier));
 
       block.StartMove += BlocksGrid_StartMove;
       block.EndMove += BlocksGrid_EndMove;
