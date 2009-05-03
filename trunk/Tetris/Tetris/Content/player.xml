@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<player>
+  <AllScore>0</AllScore>
+  <BlueScore>0</BlueScore>
+  <RedScore>0</RedScore>
+  <GreenScore>0</GreenScore>
+  <YellowScore>0</YellowScore>
+  <WhiteScore>0</WhiteScore>
+  <GrayScore>0</GrayScore>
+
+  <Level>1</Level>
+  
+  <BlueChances>1</BlueChances>
+  <RedChances>1</RedChances>
+  <GreenChances>1</GreenChances>
+  <YellowChances>1</YellowChances>
+  <WhiteChances>1</WhiteChances>
+  <GrayChances>1</GrayChances>
+
+  <mul2chance>0</mul2chance>
+  <mul3chance>0</mul3chance>
+  <mul5chance>0</mul5chance>
+  <neutralchance>0</neutralchance>
+  
+  
+</player>
