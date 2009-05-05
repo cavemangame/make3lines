@@ -164,7 +164,7 @@ namespace XnaTetris.Algorithms
 
     public string LevelString
     {
-      get { return String.Format("Level:  {0}", Number); }
+      get { return String.Format("Уровень:  {0}", Number); }
     }
 
     public BlockFactory.BlockType GetNewRandomBlock(ref int multiplier)

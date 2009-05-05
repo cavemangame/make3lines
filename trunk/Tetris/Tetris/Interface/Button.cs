@@ -9,14 +9,11 @@ namespace XnaTetris.Interface
 	{
 		ButtonGeneral,
 		ButtonHilight,
-		ButtonPressed,
 	}
 
-	public class Button : DrawableGameComponent
+	public class Button : LinesControl
 	{
 		#region Variables
-
-		private readonly Rectangle rect;
 
 		private readonly SpriteHelper generalSprite;
 		private readonly SpriteHelper hilightSptite;
@@ -27,7 +24,7 @@ namespace XnaTetris.Interface
 
 		#endregion
 
-		#region Constructor
+		#region Constructors
 
 		public Button(Microsoft.Xna.Framework.Game setGame, Rectangle setRect, SpriteHelper setGeneralSprite)
       : this(setGame, setRect, setGeneralSprite, setGeneralSprite)
@@ -36,9 +33,8 @@ namespace XnaTetris.Interface
 
     public Button(Microsoft.Xna.Framework.Game setGame, Rectangle setRect,
       SpriteHelper setGeneralSprite, SpriteHelper setHilightedSprite)
-      : base(setGame)
+      : base(setGame, setRect)
     {
-      rect = setRect;
       generalSprite = setGeneralSprite;
       hilightSptite = setHilightedSprite;
     }
@@ -53,12 +49,12 @@ namespace XnaTetris.Interface
 			{
 				case ButtonState.ButtonGeneral:
 					{
-						generalSprite.Render(rect);
+						generalSprite.Render(BoundingRect);
 						break;
 					}
 				case ButtonState.ButtonHilight:
 					{
-						hilightSptite.Render(rect);
+            hilightSptite.Render(BoundingRect);
 						break;
 					}
 				default:
@@ -70,24 +66,9 @@ namespace XnaTetris.Interface
 
 		#endregion
 
-		#region Update
+    #region Events
 
-		public override void Update(GameTime gameTime)
-		{
-			if (Input.MouseLeftButtonJustPressed)
-			{
-				if (Serv.PointInRectangle(Input.MousePos, rect))
-					HandleMouseClick();
-			}
-			else 
-      {
-        HandleMouseOver(Serv.PointInRectangle(Input.MousePos, rect));
-      }
-
-			base.Update(gameTime);
-		}
-
-		private void HandleMouseOver(bool isOver)
+    protected override void HandleMouseOver(bool isOver)
 		{
       if (isOver)
       {
@@ -101,11 +82,12 @@ namespace XnaTetris.Interface
       }
 		}
 
-		private void HandleMouseClick()
+    protected override void HandleMouseClick()
 		{
 			ButtonAction(this, EventArgs.Empty);
-		}
+    }
 
-		#endregion
-	}
+    #endregion
+
+  }
 }

@@ -79,6 +79,9 @@ namespace XnaTetris.Game
           sprites.Add("WhiteBackground", new SpriteHelper(content.Load<Texture2D>("WhiteBackground"), null));
           sprites.Add("GrayBackground", new SpriteHelper(content.Load<Texture2D>("GrayBackground"), null));
 
+          sprites.Add("Caret", new SpriteHelper(content.Load<Texture2D>("Caret"), null));
+          sprites.Add("TextBackground", new SpriteHelper(content.Load<Texture2D>("TextBackground"), null));
+
           // add fonts
           fonts.Add("NormalFont", content.Load<SpriteFont>("normalfont"));
           fonts.Add("BigFont", content.Load<SpriteFont>("bigfont"));

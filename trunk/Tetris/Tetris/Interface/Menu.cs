@@ -10,6 +10,7 @@ namespace XnaTetris.Interface
 		#region Variables
 		private readonly Rectangle backgroundRect;
 		private Button btnStart, btnExit, btnHelp, btnHiScores, btnAuthors;
+	  private TextBox textBox;
 		#endregion
 
     #region Properties
@@ -50,7 +51,10 @@ namespace XnaTetris.Interface
         ContentSpace.GetSprite("MenuHiButtonExit"));
       btnExit.ButtonAction += btnExit_ButtonAction;
       Components.Add(btnExit);
-		}
+
+      textBox = new TextBox(setGame, new Rectangle(100, 500, 200, 50), ContentSpace.GetSprite("TextBackground"));
+	    Components.Add(textBox);
+    }
 		#endregion
 
 		#region Draw
