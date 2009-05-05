@@ -67,7 +67,7 @@ namespace XnaTetris
       graphics.ApplyChanges();
       content = new ContentManager(Services) {RootDirectory = "Content"};
       Score = new Scores();
-      Player = new Player();
+      //Player = new Player();
     }
     #endregion
 

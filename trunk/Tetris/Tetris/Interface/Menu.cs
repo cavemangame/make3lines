@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Game;
 
 
@@ -52,8 +53,12 @@ namespace XnaTetris.Interface
       btnExit.ButtonAction += btnExit_ButtonAction;
       Components.Add(btnExit);
 
-      textBox = new TextBox(setGame, new Rectangle(100, 500, 200, 50), ContentSpace.GetSprite("TextBackground"));
+      textBox = new TextBox(setGame, new Rectangle(100, 500, 200, 50), ContentSpace.GetSprite("TextBackground"),
+        Color.WhiteSmoke, 1.5f);
+      textBox.EnterKeyPressed += textBox_EnterKeyPressed;
 	    Components.Add(textBox);
+
+		  EnableButtons(false);
     }
 		#endregion
 
@@ -93,6 +98,18 @@ namespace XnaTetris.Interface
     {
       //throw new NotImplementedException();
     }
+
+    private void textBox_EnterKeyPressed(object sender, EventArgs e)
+    {
+      LinesGame.Player = new Player(textBox.Text);
+      textBox.Hide();
+      EnableButtons(true);
+    }
     #endregion
+
+    private void EnableButtons(bool isEnable)
+    {
+      btnStart.Enabled = btnExit.Enabled = btnHelp.Enabled = btnAuthors.Enabled = btnHiScores.Enabled = isEnable;
+    }
   }
 }

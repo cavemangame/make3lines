@@ -423,7 +423,7 @@ namespace XnaTetris.Helpers
       get
       {
         return keyboardState.IsKeyDown(Keys.Left) &&
-          keysPressedLastFrame.Contains(Keys.Left) == false;
+          !keysPressedLastFrame.Contains(Keys.Left);
       }
     }
 
@@ -432,7 +432,7 @@ namespace XnaTetris.Helpers
       get
       {
         return keyboardState.IsKeyDown(Keys.Right) &&
-          keysPressedLastFrame.Contains(Keys.Right) == false;
+          !keysPressedLastFrame.Contains(Keys.Right);
       }
     }
 
@@ -449,6 +449,14 @@ namespace XnaTetris.Helpers
       get
       {
         return keyboardState.IsKeyDown(Keys.Down) && !keysPressedLastFrame.Contains(Keys.Down);
+      }
+    }
+
+    public static bool KeyboardEnterJustPressed
+    {
+      get
+      {
+        return keyboardState.IsKeyDown(Keys.Enter) && !keysPressedLastFrame.Contains(Keys.Enter);
       }
     }
 
@@ -481,6 +489,14 @@ namespace XnaTetris.Helpers
       get
       {
         return keyboardState.IsKeyDown(Keys.Down);
+      }
+    }
+
+    public static bool KeyboardEnterPressed
+    {
+      get
+      {
+        return keyboardState.IsKeyDown(Keys.Enter);
       }
     }
     #endregion
