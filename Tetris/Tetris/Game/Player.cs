@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using XnaTetris.Algorithms;
 using XnaTetris.Blocks;
@@ -9,7 +10,18 @@ namespace XnaTetris.Game
 {
   public class Player
   {
-    private const string PlayerFileName = @"Content/player.xml";
+    public string PlayerFileName 
+    {
+      get { return String.Format(@"Content/{0}.xml", playerName); }
+    }
+
+    public string DefaultPlayerFileName
+    {
+      get { return String.Format(@"Content/player.xml"); }
+    }
+
+    private string playerName = String.Empty;
+
     public Dictionary<BlockFactory.BlockType, float> blockChances;
 
     // chances for super block
@@ -21,8 +33,9 @@ namespace XnaTetris.Game
     public Scores PlayerScore { get; private set; }
     public int PlayerLevel { get; private set; }
 
-    public Player()
+    public Player(string name)
     {
+      playerName = name;
       PlayerScore = new Scores();
       InitChances();
       Load();
@@ -44,7 +57,11 @@ namespace XnaTetris.Game
     private void Load()
     {
       XmlDocument doc = new XmlDocument();
-      doc.Load(PlayerFileName);
+      if (File.Exists(PlayerFileName))
+        doc.Load(PlayerFileName);
+      else
+        doc.Load(DefaultPlayerFileName);
+        
       XmlNode levelNode = doc.SelectSingleNode(String.Format("/player"));
       foreach (XmlNode childNode in levelNode.ChildNodes)
       {
