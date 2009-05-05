@@ -47,9 +47,9 @@ with.
         <End>&#126;</End>
       </CharacterRegion>
       <CharacterRegion>
-		<Start>&#x00B0;</Start>
-		<End>&#x00FF;</End>
-	  </CharacterRegion>		
+        <Start>&#x0410;</Start>
+        <End>&#x0450;</End>
+      </CharacterRegion>
     </CharacterRegions>
   </Asset>
 </XnaContent>

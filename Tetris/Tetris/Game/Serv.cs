@@ -45,7 +45,7 @@ namespace XnaTetris.Game
 		{
 			long min = time/(60*1000);
 			long sec = (time/1000) % 60;
-			return String.Format("Time:  {0}:{1:D2}", min, sec);
+			return String.Format("Время:  {0}:{1:D2}", min, sec);
 		}
 
 		public static bool PointInRectangle(Point point, Rectangle rect)

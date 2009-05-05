@@ -50,11 +50,11 @@ namespace XnaTetris.Interface
       ContentSpace.GetSprite("BackgroundSmallBox").Render(new Rectangle(10, 10, 240, 512));
 
       TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"), 
-        String.Format("Score: {0}", LinesGame.Score.OverallScore), 20, 20, Color.White);
+        String.Format("Очков: {0}", LinesGame.Score.OverallScore), 20, 20, Color.White);
       TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"),
-        String.Format("Level Score: {0}", LinesGame.LevelScore), 20, 60, Color.WhiteSmoke);
+        String.Format("За уровень: {0}", LinesGame.LevelScore), 20, 60, Color.WhiteSmoke);
       TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"),
-        String.Format("Remain: {0}", Math.Max(LinesGame.CurrentLevel.LevelScore - LinesGame.LevelScore, 0)), 
+        String.Format("Осталось: {0}", Math.Max(LinesGame.CurrentLevel.LevelScore - LinesGame.LevelScore, 0)), 
         20, 100, Color.WhiteSmoke);
       TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"),
          LinesGame.CurrentLevel.LevelString, 20, 140, Color.LightCoral);
@@ -64,7 +64,7 @@ namespace XnaTetris.Interface
       DrawScores();
       
       if (Paused)
-        TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"), "PAUSE", 340, 280, Color.LightPink);
+        TextHelper.DrawShadowedText(ContentSpace.GetFont("BigFont"), "ПАУЗА", 340, 280, Color.LightPink);
 
       base.Draw(gameTime);
     }
