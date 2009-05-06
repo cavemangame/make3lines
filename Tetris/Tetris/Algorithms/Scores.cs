@@ -20,5 +20,16 @@
       GrayScore = 0;
       OverallScore = 0;
     }
+
+    public void Copy(Scores other)
+    {
+      RedScore = other.RedScore;
+      GreenScore = other.GreenScore;
+      BlueScore = other.BlueScore;
+      WhiteScore = other.WhiteScore;
+      YellowScore = other.YellowScore;
+      GrayScore = other.YellowScore;
+      OverallScore = other.OverallScore;
+    }
   }
 }

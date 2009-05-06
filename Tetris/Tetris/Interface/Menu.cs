@@ -102,6 +102,7 @@ namespace XnaTetris.Interface
     private void textBox_EnterKeyPressed(object sender, EventArgs e)
     {
       LinesGame.Player = new Player(textBox.Text);
+      LinesGame.Score.Copy( LinesGame.Player.PlayerScore);
       textBox.Hide();
       EnableButtons(true);
     }

@@ -45,7 +45,7 @@ namespace XnaTetris
     public int LevelScore { get; set; }
     public Serv.GameState GameState { get; private set; }
     public Level CurrentLevel { get; private set; }
-    public Scores Score { get; private set; }
+    public Scores Score { get; set; }
     public double ElapsedGameMs { get; private set; }
 
     /// <summary>
@@ -165,6 +165,7 @@ namespace XnaTetris
         else
         {
           GameState = Serv.GameState.GameStateLevelEnd;
+          Player.PlayerScore.Copy(Score);
           Player.PlayerLevel++;
           ShowLevelDialog();
         }
@@ -195,8 +196,8 @@ namespace XnaTetris
     public void Start()
     {
       GameState = Serv.GameState.GameStateRunning;
-      Score.Reset();
-
+      //Score.Reset();
+      Score.Copy(Player.PlayerScore);
       ShowLevelDialog();
     }
 

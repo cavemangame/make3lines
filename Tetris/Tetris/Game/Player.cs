@@ -4,7 +4,6 @@ using System.IO;
 using System.Xml;
 using XnaTetris.Algorithms;
 using XnaTetris.Blocks;
-using XnaTetris.Interface;
 
 namespace XnaTetris.Game
 {
@@ -31,7 +30,7 @@ namespace XnaTetris.Game
     public float Mul5Chance { get; private set; }
     public float NeutralChance { get; private set; }
 
-    public Scores PlayerScore { get; private set; }
+    public Scores PlayerScore { get; set; }
     public int PlayerLevel { get; set; }
 
     public Player(string name)
