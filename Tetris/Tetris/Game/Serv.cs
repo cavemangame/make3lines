@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using System.Xml;
 using Microsoft.Xna.Framework;
 using XnaTetris.Blocks;
 
@@ -64,5 +66,46 @@ namespace XnaTetris.Game
 	    }
 	    return result;
  	  }
+
+    private static string playerName = String.Empty;
+	  private static string confPath = @"Content/config.xml";
+    public static string PlayerName
+    {
+      get
+      {
+        if (playerName.Length > 0)
+          return playerName;
+
+        XmlDocument doc = new XmlDocument();
+        if (File.Exists(confPath))
+        {
+          doc.Load(confPath);
+          XmlNode node = doc.SelectSingleNode(String.Format("/config/PlayerName"));
+          if (node != null)
+          {
+            return node.InnerText;
+          }
+        }
+        return String.Empty;
+      }
+      set
+      {
+        if (value.Length == 0)
+          return;
+
+        playerName = value;
+        XmlDocument doc = new XmlDocument();
+        if (File.Exists(confPath))
+        {
+          doc.Load(confPath);
+          XmlNode node = doc.SelectSingleNode(String.Format("/config/PlayerName"));
+          if (node != null)
+          {
+            node.InnerText = value;
+          }
+          doc.Save(confPath);
+        }
+      }
+    }
 	}
 }

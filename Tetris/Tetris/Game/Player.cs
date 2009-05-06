@@ -11,7 +11,7 @@ namespace XnaTetris.Game
   {
     public string PlayerFileName 
     {
-      get { return String.Format(@"Content/{0}.xml", playerName); }
+      get { return String.Format(@"Content/{0}.xml", PlayerName); }
     }
 
     public string DefaultPlayerFileName
@@ -33,9 +33,15 @@ namespace XnaTetris.Game
     public Scores PlayerScore { get; set; }
     public int PlayerLevel { get; set; }
 
+    public string PlayerName
+    {
+      get { return playerName; }
+      set { playerName = value; }
+    }
+
     public Player(string name)
     {
-      playerName = name;
+      PlayerName = name;
       PlayerScore = new Scores();
       InitChances();
       Load();

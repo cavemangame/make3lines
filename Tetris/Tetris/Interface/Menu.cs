@@ -55,7 +55,7 @@ namespace XnaTetris.Interface
       btnExit.ButtonAction += btnExit_ButtonAction;
       Components.Add(btnExit);
 
-      label = new StaticLabel(setGame, new Rectangle(200, 300, 400, 50), "Necr", null,
+      label = new StaticLabel(setGame, new Rectangle(200, 300, 400, 50), Serv.PlayerName, null,
         Color.WhiteSmoke, 1.5f);
       label.MousePressed += label_MousePressed;
 
@@ -90,6 +90,7 @@ namespace XnaTetris.Interface
 
     private void btnExit_ButtonAction(object sender, EventArgs e)
     {
+      Serv.PlayerName = LinesGame.Player.PlayerName;
       Game.Exit();
     }
 
