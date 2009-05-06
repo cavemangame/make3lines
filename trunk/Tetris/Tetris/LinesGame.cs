@@ -32,7 +32,6 @@ namespace XnaTetris
 
     public Player Player { get; set;}
     
-    private int curLevelNumber;
     #endregion
 
     #region Properties
@@ -211,7 +210,6 @@ namespace XnaTetris
     {
       GameState = Serv.GameState.GameStateMenu;
       Timer = 0;
-      curLevelNumber = 0;
       menu.Show();
     }
     #endregion

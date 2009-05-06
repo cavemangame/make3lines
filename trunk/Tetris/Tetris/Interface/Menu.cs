@@ -11,7 +11,8 @@ namespace XnaTetris.Interface
 		#region Variables
 		private readonly Rectangle backgroundRect;
 		private Button btnStart, btnExit, btnHelp, btnHiScores, btnAuthors;
-	  private TextBox textBox, textBox2;
+	  private TextBox textBox;
+	  private StaticLabel label;
 	  private ListControls profiles;
 		#endregion
 
@@ -54,16 +55,16 @@ namespace XnaTetris.Interface
       btnExit.ButtonAction += btnExit_ButtonAction;
       Components.Add(btnExit);
 
-      textBox = new TextBox(setGame, new Rectangle(200, 300, 400, 50), null,
+      label = new StaticLabel(setGame, new Rectangle(200, 300, 400, 50), "Necr", null,
+        Color.WhiteSmoke, 1.5f);
+      label.MousePressed += label_MousePressed;
+
+      textBox = new TextBox(setGame, new Rectangle(200, 300, 400, 50), null, null,
         Color.WhiteSmoke, 1.5f);
       textBox.EnterKeyPressed += textBox_EnterKeyPressed;
 
-      textBox2 = new TextBox(setGame, new Rectangle(200, 300, 400, 50), null,
-        Color.WhiteSmoke, 1.5f);
-      textBox2.EnterKeyPressed += textBox_EnterKeyPressed;
-
       profiles = new ListControls(setGame, new Vector2(200, 300));
-		  profiles.Add(textBox).Add(textBox2);
+      profiles.Add(label).Add(textBox);
       profiles.Show();
 	    Components.Add(profiles);
       
@@ -112,6 +113,14 @@ namespace XnaTetris.Interface
     {
       LinesGame.Player = new Player(textBox.Text);
       LinesGame.Score.Copy( LinesGame.Player.PlayerScore);
+      profiles.Hide();
+      EnableButtons(true);
+    }
+
+    private void label_MousePressed(object sender, EventArgs e)
+    {
+      LinesGame.Player = new Player(label.Text);
+      LinesGame.Score.Copy(LinesGame.Player.PlayerScore);
       profiles.Hide();
       EnableButtons(true);
     }
