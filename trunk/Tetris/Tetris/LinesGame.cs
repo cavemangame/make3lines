@@ -115,6 +115,8 @@ namespace XnaTetris
 
       if (Input.KeyboardEscapeJustPressed || Input.GamePadBackJustPressed)
       {
+        if (Player != null)
+          Serv.PlayerName = Player.PlayerName;
         Exit();
       }
 
@@ -195,7 +197,6 @@ namespace XnaTetris
     public void Start()
     {
       GameState = Serv.GameState.GameStateRunning;
-      //Score.Reset();
       Score.Copy(Player.PlayerScore);
       ShowLevelDialog();
     }
