@@ -165,6 +165,7 @@ namespace XnaTetris
         else
         {
           GameState = Serv.GameState.GameStateLevelEnd;
+          Player.PlayerLevel++;
           ShowLevelDialog();
         }
       }
@@ -172,7 +173,7 @@ namespace XnaTetris
 
     private void ShowLevelDialog()
     {
-      CurrentLevel = new Level(++curLevelNumber, this);
+      CurrentLevel = new Level(Player.PlayerLevel, this);
       Components.Add(CurrentLevel.StartWindow);
       CurrentLevel.StartWindow.Show();
     }

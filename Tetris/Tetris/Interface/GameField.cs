@@ -98,6 +98,7 @@ namespace XnaTetris.Interface
     void btnExit_ButtonAction(object sender, EventArgs e)
     {
       Hide();
+      LinesGame.Player.Save();
       LinesGame.ShowMenu();
     }
 

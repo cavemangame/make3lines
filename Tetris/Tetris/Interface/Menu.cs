@@ -53,7 +53,7 @@ namespace XnaTetris.Interface
       btnExit.ButtonAction += btnExit_ButtonAction;
       Components.Add(btnExit);
 
-      textBox = new TextBox(setGame, new Rectangle(100, 500, 200, 50), ContentSpace.GetSprite("TextBackground"),
+      textBox = new TextBox(setGame, new Rectangle(200, 300, 400, 50), null,
         Color.WhiteSmoke, 1.5f);
       textBox.EnterKeyPressed += textBox_EnterKeyPressed;
 	    Components.Add(textBox);
