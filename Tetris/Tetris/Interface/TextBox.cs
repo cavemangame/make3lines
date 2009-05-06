@@ -30,30 +30,24 @@ namespace XnaTetris.Interface
 
     #region Constructor
 
-    public TextBox(Microsoft.Xna.Framework.Game game, Rectangle setRect, SpriteHelper bgSprite)
+    public TextBox(Microsoft.Xna.Framework.Game game, Rectangle setRect, SpriteHelper bgSprite, SpriteFont font)
       : base(game, setRect)
     {
       this.bgSprite = bgSprite;
+      this.textFont = font;
       LoadOtherDataIfNeeded();
     }
 
-    public TextBox(Microsoft.Xna.Framework.Game game, Rectangle setRect, SpriteHelper bgSprite, Color color)
-      : this(game, setRect, bgSprite)
+    public TextBox(Microsoft.Xna.Framework.Game game, Rectangle setRect, SpriteHelper bgSprite, SpriteFont font, Color color)
+      : this(game, setRect, bgSprite, font)
     {
       textColor = color;
     }
 
-    public TextBox(Microsoft.Xna.Framework.Game game, Rectangle setRect, SpriteHelper bgSprite, Color color, float scale)
-      : this(game, setRect, bgSprite)
+    public TextBox(Microsoft.Xna.Framework.Game game, Rectangle setRect, SpriteHelper bgSprite, SpriteFont font, Color color, float scale)
+      : this(game, setRect, bgSprite, font, color)
     {
       textScale = scale;
-    }
-
-    public TextBox(Microsoft.Xna.Framework.Game game, Rectangle setRect, SpriteHelper bgSprite, Color color, 
-      float scale, SpriteFont font)
-      : this(game, setRect, bgSprite, color, scale)
-    {
-      textFont = font;
     }
 
     #endregion
