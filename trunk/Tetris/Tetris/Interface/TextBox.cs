@@ -11,11 +11,12 @@ namespace XnaTetris.Interface
     #region Variables
 
     private bool IsWriteState;
-    private readonly SpriteHelper bgSprite;
+    private SpriteHelper bgSprite;
     private int caretPosition = 2;
     private string text = String.Empty;
     private float textScale = 1.0f;
     private Color textColor = Color.White;
+    private SpriteFont textFont;
 
     public event EventHandler EnterKeyPressed;
 
@@ -33,6 +34,7 @@ namespace XnaTetris.Interface
       : base(game, setRect)
     {
       this.bgSprite = bgSprite;
+      LoadOtherDataIfNeeded();
     }
 
     public TextBox(Microsoft.Xna.Framework.Game game, Rectangle setRect, SpriteHelper bgSprite, Color color)
@@ -47,14 +49,35 @@ namespace XnaTetris.Interface
       textScale = scale;
     }
 
+    public TextBox(Microsoft.Xna.Framework.Game game, Rectangle setRect, SpriteHelper bgSprite, Color color, 
+      float scale, SpriteFont font)
+      : this(game, setRect, bgSprite, color, scale)
+    {
+      textFont = font;
+    }
+
     #endregion
+
+    protected void LoadOtherDataIfNeeded()
+    {
+      if (textFont == null)
+        textFont = ContentSpace.GetFont("NormalFont");
+      if (bgSprite == null) //создадим спрайт ручками
+      {
+        Texture2D backgroundTexture = new Texture2D(Game.GraphicsDevice, 1, 1, 1,
+                            TextureUsage.Linear, SurfaceFormat.Color);
+        backgroundTexture.SetData(new[] { ColorHelper.HalfAlphaBlack });
+        bgSprite = new SpriteHelper(backgroundTexture, BoundingRect);
+      }
+
+    }
 
     #region Draw
     public override void Draw(GameTime gameTime)
     {
       bgSprite.Render(BoundingRect);
 
-      TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"), text, BoundingRect.X + 2,
+      TextHelper.DrawShadowedText(textFont, text, BoundingRect.X + 2,
                                   BoundingRect.Y + 1, textColor, textScale);
 
       if (IsWriteState)
@@ -79,7 +102,7 @@ namespace XnaTetris.Interface
           HandleEnterKey();
         }
         Input.HandleKeyboardInput(ref text);
-        caretPosition = (int)(ContentSpace.GetFont("NormalFont").MeasureString(text).X*textScale + 2);
+        caretPosition = (int)(textFont.MeasureString(text).X*textScale + 2);
       }
       base.Update(gameTime);
     }

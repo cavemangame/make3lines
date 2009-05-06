@@ -21,6 +21,7 @@ namespace XnaTetris.Game
     }
 
     private string playerName = String.Empty;
+    private XmlDocument doc; //будем тут хранить загруженную инфу, чтоб не создавать руками при сейве
 
     public Dictionary<BlockFactory.BlockType, float> blockChances;
 
@@ -31,7 +32,7 @@ namespace XnaTetris.Game
     public float NeutralChance { get; private set; }
 
     public Scores PlayerScore { get; private set; }
-    public int PlayerLevel { get; private set; }
+    public int PlayerLevel { get; set; }
 
     public Player(string name)
     {
@@ -54,16 +55,16 @@ namespace XnaTetris.Game
                        };
     }
 
-    private void Load()
+    public void Load()
     {
-      XmlDocument doc = new XmlDocument();
+      doc = new XmlDocument();
       if (File.Exists(PlayerFileName))
         doc.Load(PlayerFileName);
       else
         doc.Load(DefaultPlayerFileName);
         
-      XmlNode levelNode = doc.SelectSingleNode(String.Format("/player"));
-      foreach (XmlNode childNode in levelNode.ChildNodes)
+      XmlNode playerNode = doc.SelectSingleNode(String.Format("/player"));
+      foreach (XmlNode childNode in playerNode.ChildNodes)
       {
         switch (childNode.Name)
         {
@@ -167,9 +168,117 @@ namespace XnaTetris.Game
       // doc = null;
     }
 
-    private void Save()
+    private void SetNodeValue(XmlNode node, object o)
     {
-      
+      node.InnerText = o.ToString();
+    }
+
+    public void Save()
+    {
+      XmlNode playerNode = doc.SelectSingleNode(String.Format("/player"));
+
+      foreach (XmlNode childNode in playerNode.ChildNodes)
+      {
+        switch (childNode.Name)
+        {
+          case "mul2chance":
+            {
+              SetNodeValue(childNode, Mul2Chance);
+              break;
+            }
+          case "mul3chance":
+            {
+              SetNodeValue(childNode, Mul3Chance);
+              break;
+            }
+          case "mul5chance":
+            {
+              SetNodeValue(childNode, Mul5Chance);
+              break;
+            }
+          case "neutralchance":
+            {
+              SetNodeValue(childNode, NeutralChance);
+              break;
+            }
+          case "RedChance":
+            {
+              SetNodeValue(childNode, blockChances[BlockFactory.BlockType.Red]);
+              break;
+            }
+          case "BlueChance":
+            {
+              SetNodeValue(childNode, blockChances[BlockFactory.BlockType.Blue]);
+              break;
+            }
+          case "GreenChance":
+            {
+              SetNodeValue(childNode, blockChances[BlockFactory.BlockType.Green]);
+              break;
+            }
+          case "YellowChance":
+            {
+              SetNodeValue(childNode, blockChances[BlockFactory.BlockType.Yellow]);
+              break;
+            }
+          case "WhiteChance":
+            {
+              SetNodeValue(childNode, blockChances[BlockFactory.BlockType.White]);
+              break;
+            }
+          case "GrayChance":
+            {
+              SetNodeValue(childNode, blockChances[BlockFactory.BlockType.Gray]);
+              break;
+            }
+
+          case "BlueScore":
+            {
+              SetNodeValue(childNode, PlayerScore.BlueScore);
+              break;
+            }
+          case "RedScore":
+            {
+              SetNodeValue(childNode, PlayerScore.RedScore);
+              break;
+            }
+          case "GreenScore":
+            {
+              SetNodeValue(childNode, PlayerScore.GreenScore);
+              break;
+            }
+          case "YellowScore":
+            {
+              SetNodeValue(childNode, PlayerScore.YellowScore);
+              break;
+            }
+          case "WhiteScore":
+            {
+              SetNodeValue(childNode, PlayerScore.WhiteScore);
+              break;
+            }
+          case "GrayScore":
+            {
+              SetNodeValue(childNode, PlayerScore.GrayScore);
+              break;
+            }
+          case "AllScore":
+            {
+              SetNodeValue(childNode, PlayerScore.OverallScore);
+              break;
+            }
+
+          case "Level":
+            {
+              SetNodeValue(childNode, PlayerLevel);
+              break;
+            }
+
+          default:
+            break;
+        }
+      }
+      doc.Save(PlayerFileName);
     }
   }
 }
