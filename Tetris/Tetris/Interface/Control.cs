@@ -9,7 +9,7 @@ namespace XnaTetris.Interface
   {
     #region Properties
 
-    public Rectangle BoundingRect { get; private set; }
+    public Rectangle BoundingRect { get; set; }
     public LinesGame LinesGame { get { return Game as LinesGame; } }
 
     #endregion

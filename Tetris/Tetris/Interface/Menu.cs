@@ -11,7 +11,8 @@ namespace XnaTetris.Interface
 		#region Variables
 		private readonly Rectangle backgroundRect;
 		private Button btnStart, btnExit, btnHelp, btnHiScores, btnAuthors;
-	  private TextBox textBox;
+	  private TextBox textBox, textBox2;
+	  private ListControls profiles;
 		#endregion
 
     #region Properties
@@ -56,8 +57,16 @@ namespace XnaTetris.Interface
       textBox = new TextBox(setGame, new Rectangle(200, 300, 400, 50), null,
         Color.WhiteSmoke, 1.5f);
       textBox.EnterKeyPressed += textBox_EnterKeyPressed;
-	    Components.Add(textBox);
 
+      textBox2 = new TextBox(setGame, new Rectangle(200, 300, 400, 50), null,
+        Color.WhiteSmoke, 1.5f);
+      textBox2.EnterKeyPressed += textBox_EnterKeyPressed;
+
+      profiles = new ListControls(setGame, new Vector2(200, 300));
+		  profiles.Add(textBox).Add(textBox2);
+      profiles.Show();
+	    Components.Add(profiles);
+      
 		  EnableButtons(false);
     }
 		#endregion
@@ -103,7 +112,7 @@ namespace XnaTetris.Interface
     {
       LinesGame.Player = new Player(textBox.Text);
       LinesGame.Score.Copy( LinesGame.Player.PlayerScore);
-      textBox.Hide();
+      profiles.Hide();
       EnableButtons(true);
     }
     #endregion
