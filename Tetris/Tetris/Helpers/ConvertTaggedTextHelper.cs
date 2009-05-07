@@ -48,7 +48,7 @@ namespace XnaTetris.Helpers
 
     private const string textName = "text";
     private const string imageName = "image";
-    private const int elememtVertSpan = 20; // расстояние м/у "строками"
+    private const int elememtVertSpan = 10; // расстояние м/у "строками"
     private const int elememtLeftSpan = 20; // расстояние м/у элементами, в частности, отступ от левого края
     private const int defaultWidth = 64;
     private const int defaultHeight = 64;
@@ -135,7 +135,8 @@ namespace XnaTetris.Helpers
             }
           case "color":
             {
-              //color = Color.White;//(Color)EnumHelper.SearchEnumerator(typeof(Color), attr.Value);
+              
+              color = ColorHelper.ColorFromString(attr.Value);
               break;
             }
           case "left":
@@ -179,7 +180,8 @@ namespace XnaTetris.Helpers
 
       while (curPos < textLen)
       {
-        if (font.MeasureString(text.Substring(0, ++curPos)).Length() * scale + curX > boundingRect.Right)
+        if (font.MeasureString(text.Substring(0, ++curPos)).Length() * scale + curX > 
+          boundingRect.Right-elememtLeftSpan)
         {
           Texts.Add(new TextToRender(font, new Vector2(curX, curY), scale, color, text.Substring(0, curPos)));
           curX = elememtLeftSpan;
@@ -254,7 +256,7 @@ namespace XnaTetris.Helpers
       }
 
       // коли картинка не влезает, либо так задумано - переносим ее на следующую строку
-      if (wrap || (curX + rect.Width > boundingRect.Right)) 
+      if (wrap || (curX + rect.Width > boundingRect.Right - elememtLeftSpan)) 
       {
         curX = rect.X = elememtLeftSpan;
         curY = rect.Y = (maxY + elememtVertSpan);

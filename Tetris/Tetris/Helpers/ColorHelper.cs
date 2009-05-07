@@ -1,4 +1,7 @@
 #region Using directives
+
+using System;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
@@ -136,6 +139,19 @@ namespace XnaTetris.Helpers
         (byte)(col.B * newAlpha),
         (byte)(newAlpha * 255.0f));
     }
+    #endregion
+
+    #region Color From string
+
+    internal static Color ColorFromString(string color)
+    {
+      Type colorType = typeof (Color);
+      if (colorType.GetProperty(color) == null)
+        return Color.White;
+      // так как все проперти статические, то вызываем со вторым нуллом
+      return (Color)colorType.InvokeMember(color, BindingFlags.GetProperty, null, null, null);
+    }
+
     #endregion
   }
 }
