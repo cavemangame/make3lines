@@ -4,7 +4,29 @@
 		<time>50</time>
 		<score>2000</score>
 		<background>SkyBackground</background>
-    <dialog></dialog>
+    <dialog>
+      <text left='250' scale ='2' color='WhiteSmoke' font='NormalFont'>Уровень 1</text>
+      <text>Собирайте три и более фишек одинаковых цветов в ряд. За каждую тройку получите очки.</text>
+      <text>Ваши начальные расценки:</text>
+      <text color='Blue'>3 x</text> <image wrap='false' width='32' height='32'>BlueBlock</image>
+      <text color='Blue' wrap='false'> = 40 очков</text>
+      <text color='Red' wrap='false' left ='50'>3 x</text>
+      <image wrap='false' width='32' height='32'>RedBlock</image>
+      <text color='Red' wrap='false'> = 60 очков</text>
+      <text color='Green'>3 x</text>
+      <image wrap='false' width='32' height='32'>GreenBlock</image>
+      <text color='Green' wrap='false'> = 30 очков</text>
+      <text color='Yellow' wrap='false' left ='50'>3 x</text>
+      <image wrap='false' width='32' height='32'>YellowBlock</image>
+      <text color='Yellow' wrap='false'> = 40 очков</text>
+      <text color='White'>3 x</text>
+      <image wrap='false' width='32' height='32'>WhiteBlock</image>
+      <text color='White' wrap='false'> = 50 очков</text>
+      <text color='Gray' wrap='false' left ='50'>3 x</text>
+      <image wrap='false' width='32' height='32'>GrayBlock</image>
+      <text color='Gray' wrap='false'> = 20 очков</text>
+      <text color ='Orange' scale ='1,2' left ='200'>Удачи в первой попытке!</text>
+    </dialog>
 	</level>
 	<level number='2'>
 		<time>50</time>
