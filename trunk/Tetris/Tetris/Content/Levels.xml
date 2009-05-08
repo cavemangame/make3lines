@@ -32,7 +32,31 @@
 		<time>50</time>
 		<score>2500</score>
 		<background>SkyBackground</background>
-    <dialog></dialog>
+    <dialog>
+      <text left='250' scale ='2' color='WhiteSmoke' font='NormalFont'>Уровень 2</text>
+      <text>За собранные четверки и пятерки дают больше очков,         причем иногда существенно</text>
+      <text>Ваши начальные расценки за 4ки:</text>
+      <text color='Blue'>4 x</text>
+      <image wrap='false' width='32' height='32'>BlueBlock</image>
+      <text color='Blue' wrap='false'> = 110 очков</text>
+      <text color='Red' wrap='false' left ='50'>4 x</text>
+      <image wrap='false' width='32' height='32'>RedBlock</image>
+      <text color='Red' wrap='false'> = 120 очков</text>
+      <text color='Green'>4 x</text>
+      <image wrap='false' width='32' height='32'>GreenBlock</image>
+      <text color='Green' wrap='false'> = 100 очков</text>
+      <text color='Yellow' wrap='false' left ='50'>4 x</text>
+      <image wrap='false' width='32' height='32'>YellowBlock</image>
+      <text color='Yellow' wrap='false'> = 140 очков</text>
+      <text color='White'>4 x</text>
+      <image wrap='false' width='32' height='32'>WhiteBlock</image>
+      <text color='White' wrap='false'> = 100 очков</text>
+      <text color='Gray' wrap='false' left ='50'>4 x</text>
+      <image wrap='false' width='32' height='32'>GrayBlock</image>
+      <text color='Gray' wrap='false'> = 120 очков</text>
+      <text color ='Orange'>Часто, чтобы пройти уровень, нужно стараться собирать 4ки и 5ки</text>
+
+    </dialog>
 	</level>
   
   <level number='3'>
