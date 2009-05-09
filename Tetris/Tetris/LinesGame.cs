@@ -52,6 +52,9 @@ namespace XnaTetris
     /// </summary>
     public bool IsRemoveProcess { get; set; }
     public bool IsRestartProcess { get; set; }
+
+    public string CurrentPlayerName { get; set; }
+
     #endregion
 
     #region Constructor
@@ -66,7 +69,7 @@ namespace XnaTetris
       graphics.ApplyChanges();
       content = new ContentManager(Services) {RootDirectory = "Content"};
       Score = new Scores();
-      //Player = new Player();
+      CurrentPlayerName = Serv.PlayerName;
     }
     #endregion
 
@@ -213,6 +216,12 @@ namespace XnaTetris
       Timer = 0;
       menu.Show();
     }
+
+    public void ShowHelp()
+    {
+      //throw new System.NotImplementedException();
+    }
+
     #endregion
 
     #region Start game

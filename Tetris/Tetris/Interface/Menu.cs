@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Game;
+using XnaTetris.Helpers;
 
 
 namespace XnaTetris.Interface
@@ -12,8 +13,7 @@ namespace XnaTetris.Interface
 		private readonly Rectangle backgroundRect;
 		private Button btnNew, btnExit, btnContinue, btnHiScores, btnHelp;
 	  private TextBox textBox;
-	  private StaticLabel label;
-	  private ListControls profiles;
+	  private SpriteFont helloFont;
 		#endregion
 
     #region Properties
@@ -26,6 +26,9 @@ namespace XnaTetris.Interface
 		{
 			backgroundRect = setRect;
 			InitButtons(setGame);
+      helloFont = ContentSpace.GetFont("SmallFont");
+      if (LinesGame.CurrentPlayerName.Length == 0)
+        btnContinue.Enabled = false;
 		}
 
 		private void InitButtons(Microsoft.Xna.Framework.Game setGame)
@@ -55,20 +58,11 @@ namespace XnaTetris.Interface
       btnExit.ButtonAction += btnExit_ButtonAction;
       Components.Add(btnExit);
 
-      label = new StaticLabel(setGame, new Rectangle(200, 300, 400, 50), Serv.PlayerName, null,
-        Color.WhiteSmoke, 1.5f);
-      label.MousePressed += label_MousePressed;
-
       textBox = new TextBox(setGame, new Rectangle(200, 300, 400, 50), null, null,
         Color.WhiteSmoke, 1.5f);
       textBox.EnterKeyPressed += textBox_EnterKeyPressed;
-
-      profiles = new ListControls(setGame, new Vector2(200, 300));
-      profiles.Add(label).Add(textBox);
-      profiles.Show();
-	    Components.Add(profiles);
-      
-		  EnableButtons(false);
+      Components.Add(textBox);
+      textBox.Hide();
     }
 		#endregion
 
@@ -76,6 +70,15 @@ namespace XnaTetris.Interface
 		public override void Draw(GameTime gameTime)
 		{
       ContentSpace.GetSprite("MenuBackground").Render(backgroundRect);
+      if (LinesGame.CurrentPlayerName.Length > 0)
+      {
+        String hello = String.Format("Добро пожаловать, {0}", LinesGame.CurrentPlayerName);
+        int len = (int)helloFont.MeasureString(hello).X;
+
+        TextHelper.DrawShadowedText(ContentSpace.GetFont("SmallFont"),
+          hello,
+          400 - len/2, 100, Color.LightCoral);  
+      }
 
 			base.Draw(gameTime);
 		}
@@ -84,19 +87,23 @@ namespace XnaTetris.Interface
     #region Events
     private void btnNew_ButtonAction(object sender, EventArgs e)
     {
-      Hide();
-      LinesGame.Start();
+      EnableButtons(false);
+      textBox.Show();
     }
 
     private void btnExit_ButtonAction(object sender, EventArgs e)
     {
-      Serv.PlayerName = LinesGame.Player.PlayerName;
+      if (LinesGame.CurrentPlayerName.Length > 0)
+        Serv.PlayerName = LinesGame.CurrentPlayerName;
       Game.Exit();
     }
 
     private void btnContinue_ButtonAction(object sender, EventArgs e)
     {
-      //throw new NotImplementedException();
+      LinesGame.Player = new Player(LinesGame.CurrentPlayerName);
+      LinesGame.Score.Copy(LinesGame.Player.PlayerScore);
+      Hide();
+      LinesGame.Start();
     }
 
     private void btnHiScore_ButtonAction(object sender, EventArgs e)
@@ -107,24 +114,24 @@ namespace XnaTetris.Interface
 
     private void btnHelp_ButtonAction(object sender, EventArgs e)
     {
-      //throw new NotImplementedException();
+     /* Hide();
+      LinesGame.ShowHelp();*/
     }
 
     private void textBox_EnterKeyPressed(object sender, EventArgs e)
     {
-      LinesGame.Player = new Player(textBox.Text);
-      LinesGame.Score.Copy( LinesGame.Player.PlayerScore);
-      profiles.Hide();
-      EnableButtons(true);
+      if (textBox.Text.Length > 0)
+      {
+        LinesGame.Player = new Player(textBox.Text);
+        LinesGame.CurrentPlayerName = textBox.Text;
+        LinesGame.Score.Copy(LinesGame.Player.PlayerScore);
+        EnableButtons(true);
+        textBox.Hide();
+        Hide();
+        LinesGame.Start();
+      }
     }
 
-    private void label_MousePressed(object sender, EventArgs e)
-    {
-      LinesGame.Player = new Player(label.Text);
-      LinesGame.Score.Copy(LinesGame.Player.PlayerScore);
-      profiles.Hide();
-      EnableButtons(true);
-    }
     #endregion
 
     private void EnableButtons(bool isEnable)
