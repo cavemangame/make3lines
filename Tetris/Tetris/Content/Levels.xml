@@ -34,7 +34,8 @@
 		<background>SkyBackground</background>
     <dialog>
       <text left='250' scale ='2' color='WhiteSmoke' font='NormalFont'>Уровень 2</text>
-      <text>За собранные четверки и пятерки дают больше очков,         причем иногда существенно</text>
+      <text>За собранные четверки и пятерки дают больше очков,</text>
+      <text>причем иногда существенно</text>
       <text>Ваши начальные расценки за 4ки:</text>
       <text color='Blue'>4 x</text>
       <image wrap='false' width='32' height='32'>BlueBlock</image>
@@ -55,7 +56,6 @@
       <image wrap='false' width='32' height='32'>GrayBlock</image>
       <text color='Gray' wrap='false'> = 120 очков</text>
       <text color ='Orange'>Часто, чтобы пройти уровень, нужно стараться собирать 4ки и 5ки</text>
-
     </dialog>
 	</level>
   
@@ -63,7 +63,12 @@
     <time>30</time>
     <score>1700</score>
     <background>BlueBackground</background>
-    <dialog></dialog>
+    <dialog>
+      <text left='250' scale ='2' color='WhiteSmoke' font='NormalFont'>Уровень 3</text>
+      <text>Это владения Митры, Бога мудрости. </text>
+      <text>Шансы выпадения синих и зеленых блоков увеличены,</text>
+      <text>а красных - уменьшены</text>
+    </dialog>
     <BlueChance>1,2</BlueChance>
     <RedChance>0,8</RedChance>
     <GreenChance>1,1</GreenChance>
@@ -72,21 +77,29 @@
     <time>40</time>
     <score>2200</score>
     <background>BlueBackground</background>
-    <dialog></dialog>
+    <dialog>
+      <text left='250' scale ='2' color='WhiteSmoke' font='NormalFont'>Уровень 4</text>
+      <text>Митра, в отличие от Арха, предпочитает пользоваться магией, </text>
+      <text>вообще Он - изобретатель Магии.</text>
+      <text>В его владениях не найдешь науки!</text>
+      <text>Шанс выпадения белых блоков уменьшен.</text>
+    </dialog>
     <BlueChance>1,5</BlueChance>
     <RedChance>0,6</RedChance>
     <GreenChance>1,2</GreenChance>
-    <WhiteChance>1,1</WhiteChance>
+    <WhiteChance>0,7</WhiteChance>
   </level>
   <level number='5'>
     <time>50</time>
     <score>3000</score>
     <background>BlueBackground</background>
-    <dialog></dialog>
+    <text left='250' scale ='2' color='WhiteSmoke' font='NormalFont'>Уровень 5</text>
+    <text>На этом уровне могут встретиться блоки, которые при</text>
+    <text>сборке в ряд с блоками его цвета умножают очки на 2</text>
     <BlueChance>1,8</BlueChance>
     <RedChance>0,4</RedChance>
     <GreenChance>1,2</GreenChance>
-    <WhiteChance>1,2</WhiteChance>
+    <WhiteChance>0,5</WhiteChance>
     <GrayChance>0,8</GrayChance>
     <mul2chance>0,05</mul2chance>
   </level>

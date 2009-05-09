@@ -10,7 +10,7 @@ namespace XnaTetris.Interface
 	{
 		#region Variables
 		private readonly Rectangle backgroundRect;
-		private Button btnStart, btnExit, btnHelp, btnHiScores, btnAuthors;
+		private Button btnNew, btnExit, btnContinue, btnHiScores, btnHelp;
 	  private TextBox textBox;
 	  private StaticLabel label;
 	  private ListControls profiles;
@@ -30,25 +30,25 @@ namespace XnaTetris.Interface
 
 		private void InitButtons(Microsoft.Xna.Framework.Game setGame)
 		{
-			btnStart = new Button(setGame, new Rectangle(300, 150, 200, 50), ContentSpace.GetSprite("MenuButtonStart"),
-        ContentSpace.GetSprite("MenuHiButtonStart"));
-			btnStart.ButtonAction += btnStart_ButtonAction;
-			Components.Add(btnStart);
+			btnNew = new Button(setGame, new Rectangle(300, 150, 200, 50), ContentSpace.GetSprite("MenuButtonNew"),
+        ContentSpace.GetSprite("MenuHiButtonNew"));
+			btnNew.ButtonAction += btnNew_ButtonAction;
+			Components.Add(btnNew);
 
-      btnHelp = new Button(setGame, new Rectangle(300, 220, 200, 50), ContentSpace.GetSprite("MenuButtonHelp"),
-        ContentSpace.GetSprite("MenuHiButtonHelp"));
-      btnHelp.ButtonAction += btnHelp_ButtonAction;
-      Components.Add(btnHelp);
+      btnContinue = new Button(setGame, new Rectangle(300, 220, 200, 50), ContentSpace.GetSprite("MenuButtonContinue"),
+        ContentSpace.GetSprite("MenuHiButtonContinue"));
+      btnContinue.ButtonAction += btnContinue_ButtonAction;
+      Components.Add(btnContinue);
 
       btnHiScores = new Button(setGame, new Rectangle(300, 290, 200, 50), ContentSpace.GetSprite("MenuButtonHiScore"),
         ContentSpace.GetSprite("MenuHiButtonHiScore"));
       btnHiScores.ButtonAction += btnHiScore_ButtonAction;
       Components.Add(btnHiScores);
 
-      btnAuthors = new Button(setGame, new Rectangle(300, 360, 200, 50), ContentSpace.GetSprite("MenuButtonAuthors"),
-        ContentSpace.GetSprite("MenuHiButtonAuthors"));
-      btnAuthors.ButtonAction += btnAuthors_ButtonAction;
-      Components.Add(btnAuthors);
+      btnHelp = new Button(setGame, new Rectangle(300, 360, 200, 50), ContentSpace.GetSprite("MenuButtonHelp"),
+        ContentSpace.GetSprite("MenuHiButtonHelp"));
+      btnHelp.ButtonAction += btnHelp_ButtonAction;
+      Components.Add(btnHelp);
 
       btnExit = new Button(setGame, new Rectangle(300, 430, 200, 50), ContentSpace.GetSprite("MenuButtonExit"),
         ContentSpace.GetSprite("MenuHiButtonExit"));
@@ -82,7 +82,7 @@ namespace XnaTetris.Interface
 		#endregion
 
     #region Events
-    private void btnStart_ButtonAction(object sender, EventArgs e)
+    private void btnNew_ButtonAction(object sender, EventArgs e)
     {
       Hide();
       LinesGame.Start();
@@ -94,7 +94,7 @@ namespace XnaTetris.Interface
       Game.Exit();
     }
 
-    private void btnHelp_ButtonAction(object sender, EventArgs e)
+    private void btnContinue_ButtonAction(object sender, EventArgs e)
     {
       //throw new NotImplementedException();
     }
@@ -105,7 +105,7 @@ namespace XnaTetris.Interface
       LinesGame.ShowHiScores();
     }
 
-    private void btnAuthors_ButtonAction(object sender, EventArgs e)
+    private void btnHelp_ButtonAction(object sender, EventArgs e)
     {
       //throw new NotImplementedException();
     }
@@ -129,7 +129,7 @@ namespace XnaTetris.Interface
 
     private void EnableButtons(bool isEnable)
     {
-      btnStart.Enabled = btnExit.Enabled = btnHelp.Enabled = btnAuthors.Enabled = btnHiScores.Enabled = isEnable;
+      btnNew.Enabled = btnExit.Enabled = btnContinue.Enabled = btnHelp.Enabled = btnHiScores.Enabled = isEnable;
     }
   }
 }
