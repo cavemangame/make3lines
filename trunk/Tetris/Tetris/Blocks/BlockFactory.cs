@@ -75,7 +75,7 @@ namespace XnaTetris.Blocks
     internal BlockType GetRandomBlockType(ref int multiplier)
     {
       // без нейтральных
-      return game.CurrentLevel.GetNewRandomBlock(ref multiplier);
+      return game.GameField.CurrentLevel.GetNewRandomBlock(ref multiplier);
     }
   }
 }

@@ -5,27 +5,28 @@
 		<score>2000</score>
 		<background>SkyBackground</background>
     <dialog>
-      <text left='250' scale ='2' color='WhiteSmoke' font='NormalFont'>Уровень 1</text>
-      <text>Собирайте три и более фишек одинаковых цветов в ряд. За каждую тройку получите очки.</text>
-      <text>Ваши начальные расценки:</text>
-      <text color='Blue'>3 x</text> <image wrap='false' width='32' height='32'>BlueBlock</image>
+      <text left='200' scale ='2' color='Black' font='SmallFont'>Уровень 1</text>
+      <text color='Black'>Собирайте три и более фишек одинаковых цветов в ряд. За</text>
+      <text color='Black'>каждую тройку получите очки.</text>
+      <text color='Black'>Ваши начальные расценки:</text>
+      <text color='Blue'>3 x</text> <image wrap='false' width='24' height='24'>BlueBlock</image>
       <text color='Blue' wrap='false'> = 40 очков</text>
       <text color='Red' wrap='false' left ='50'>3 x</text>
-      <image wrap='false' width='32' height='32'>RedBlock</image>
+      <image wrap='false' width='24' height='24'>RedBlock</image>
       <text color='Red' wrap='false'> = 60 очков</text>
       <text color='Green'>3 x</text>
-      <image wrap='false' width='32' height='32'>GreenBlock</image>
+      <image wrap='false' width='24' height='24'>GreenBlock</image>
       <text color='Green' wrap='false'> = 30 очков</text>
       <text color='Yellow' wrap='false' left ='50'>3 x</text>
-      <image wrap='false' width='32' height='32'>YellowBlock</image>
+      <image wrap='false' width='24' height='24'>YellowBlock</image>
       <text color='Yellow' wrap='false'> = 40 очков</text>
       <text color='White'>3 x</text>
-      <image wrap='false' width='32' height='32'>WhiteBlock</image>
+      <image wrap='false' width='24' height='24'>WhiteBlock</image>
       <text color='White' wrap='false'> = 50 очков</text>
       <text color='Gray' wrap='false' left ='50'>3 x</text>
-      <image wrap='false' width='32' height='32'>GrayBlock</image>
+      <image wrap='false' width='24' height='24'>GrayBlock</image>
       <text color='Gray' wrap='false'> = 20 очков</text>
-      <text color ='Orange' scale ='1,2' left ='200'>Удачи в первой попытке!</text>
+      <text color ='Orange' scale ='1,2' left ='150'>Удачи в первой попытке!</text>
     </dialog>
 	</level>
 	<level number='2'>
@@ -33,27 +34,27 @@
 		<score>2500</score>
 		<background>SkyBackground</background>
     <dialog>
-      <text left='250' scale ='2' color='WhiteSmoke' font='NormalFont'>Уровень 2</text>
-      <text>За собранные четверки и пятерки дают больше очков,</text>
-      <text>причем иногда существенно</text>
-      <text>Ваши начальные расценки за 4ки:</text>
+      <text left='200' scale ='2' color='Black' font='SmallFont'>Уровень 2</text>
+      <text color='Black'>За собранные четверки и пятерки дают больше очков, причем</text>
+      <text color='Black'>иногда существенно</text>
+      <text color='Black'>Ваши начальные расценки за 4ки:</text>
       <text color='Blue'>4 x</text>
-      <image wrap='false' width='32' height='32'>BlueBlock</image>
+      <image wrap='false' width='24' height='24'>BlueBlock</image>
       <text color='Blue' wrap='false'> = 110 очков</text>
       <text color='Red' wrap='false' left ='50'>4 x</text>
-      <image wrap='false' width='32' height='32'>RedBlock</image>
+      <image wrap='false' width='24' height='24'>RedBlock</image>
       <text color='Red' wrap='false'> = 120 очков</text>
       <text color='Green'>4 x</text>
-      <image wrap='false' width='32' height='32'>GreenBlock</image>
+      <image wrap='false' width='24' height='24'>GreenBlock</image>
       <text color='Green' wrap='false'> = 100 очков</text>
       <text color='Yellow' wrap='false' left ='50'>4 x</text>
-      <image wrap='false' width='32' height='32'>YellowBlock</image>
+      <image wrap='false' width='24' height='24'>YellowBlock</image>
       <text color='Yellow' wrap='false'> = 140 очков</text>
       <text color='White'>4 x</text>
-      <image wrap='false' width='32' height='32'>WhiteBlock</image>
+      <image wrap='false' width='24' height='24'>WhiteBlock</image>
       <text color='White' wrap='false'> = 100 очков</text>
       <text color='Gray' wrap='false' left ='50'>4 x</text>
-      <image wrap='false' width='32' height='32'>GrayBlock</image>
+      <image wrap='false' width='24' height='24'>GrayBlock</image>
       <text color='Gray' wrap='false'> = 120 очков</text>
       <text color ='Orange'>Часто, чтобы пройти уровень, нужно стараться собирать 4ки и 5ки</text>
     </dialog>
@@ -64,10 +65,10 @@
     <score>1700</score>
     <background>BlueBackground</background>
     <dialog>
-      <text left='250' scale ='2' color='WhiteSmoke' font='NormalFont'>Уровень 3</text>
-      <text>Это владения Митры, Бога мудрости. </text>
-      <text>Шансы выпадения синих и зеленых блоков увеличены,</text>
-      <text>а красных - уменьшены</text>
+      <text left='200' scale ='2' color='DarkBlue' font='SmallFont'>Уровень 3</text>
+      <text color='DarkBlue'>Это владения Митры, Бога мудрости. </text>
+      <text color='DarkBlue'>Шансы выпадения синих и зеленых блоков увеличены,</text>
+      <text color='DarkBlue'>а красных - уменьшены</text>
     </dialog>
     <BlueChance>1,2</BlueChance>
     <RedChance>0,8</RedChance>
@@ -78,11 +79,11 @@
     <score>2200</score>
     <background>BlueBackground</background>
     <dialog>
-      <text left='250' scale ='2' color='WhiteSmoke' font='NormalFont'>Уровень 4</text>
-      <text>Митра, в отличие от Арха, предпочитает пользоваться магией, </text>
-      <text>вообще Он - изобретатель Магии.</text>
-      <text>В его владениях не найдешь науки!</text>
-      <text>Шанс выпадения белых блоков уменьшен.</text>
+      <text left='200' scale ='2' color='DarkBlue' font='SmallFont'>Уровень 4</text>
+      <text color='DarkBlue'>Митра, в отличие от Арха, предпочитает пользоваться магией, </text>
+      <text color='DarkBlue'>вообще Он - изобретатель Магии.</text>
+      <text color='DarkBlue'>В его владениях не найдешь науки!</text>
+      <text color='DarkBlue'>Шанс выпадения белых блоков уменьшен.</text>
     </dialog>
     <BlueChance>1,5</BlueChance>
     <RedChance>0,6</RedChance>
@@ -93,9 +94,9 @@
     <time>50</time>
     <score>3000</score>
     <background>BlueBackground</background>
-    <text left='250' scale ='2' color='WhiteSmoke' font='NormalFont'>Уровень 5</text>
-    <text>На этом уровне могут встретиться блоки, которые при</text>
-    <text>сборке в ряд с блоками его цвета умножают очки на 2</text>
+    <text left='200' scale ='2' color='DarkBlue' font='SmallFont'>Уровень 5</text>
+    <text color='DarkBlue'>На этом уровне могут встретиться блоки, которые при</text>
+    <text color='DarkBlue'>сборке в ряд с блоками его цвета умножают очки на 2</text>
     <BlueChance>1,8</BlueChance>
     <RedChance>0,4</RedChance>
     <GreenChance>1,2</GreenChance>

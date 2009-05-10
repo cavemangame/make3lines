@@ -39,6 +39,7 @@ namespace XnaTetris.Blocks
 	  public override void AddScore(int N)
 	  {
 	    LinesGame.Score.BlueScore += N;
-	  }
+      LinesGame.GameField.LevelScore.BlueScore += N;
+    }
 	}
 }

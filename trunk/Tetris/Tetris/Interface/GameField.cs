@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using XnaTetris.Algorithms;
 using XnaTetris.Game;
 using XnaTetris.Helpers;
 
@@ -19,11 +20,17 @@ namespace XnaTetris.Interface
     private readonly Button btnPause;
     private readonly Button btnExit;
 
+    private LevelWindow startWindow, endWindow;
+    public Level CurrentLevel { get; private set; }
+    public Scores LevelScore  = new Scores();
+
     #region Properties
     public LinesGame LinesGame { get { return Game as LinesGame; } }
     public BlocksGrid BlockGrid { get; private set; }
     public bool Paused { get; private set; }
     #endregion
+
+    #region Constructor
 
     public GameField(Microsoft.Xna.Framework.Game game)
       : base(game)
@@ -42,29 +49,38 @@ namespace XnaTetris.Interface
       Components.Add(btnExit);
     }
 
+    #endregion
+
+    #region Draw
+
     public override void Draw(GameTime gameTime) 
     {
-      LinesGame.CurrentLevel.BackgroundSprite.Render(new Rectangle(0, 0, LinesGame.Width, LinesGame.Height));
+      CurrentLevel.BackgroundSprite.Render(new Rectangle(0, 0, LinesGame.Width, LinesGame.Height));
       // Draw background boxes for all the components
       ContentSpace.GetSprite("BackgroundBigBox").Render(new Rectangle(270, 10, 512, 512));
       ContentSpace.GetSprite("BackgroundSmallBox").Render(new Rectangle(10, 10, 240, 512));
 
-      TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"), 
-        String.Format("Очков: {0}", LinesGame.Score.OverallScore), 20, 20, Color.White);
-      TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"),
-        String.Format("За уровень: {0}", LinesGame.LevelScore), 20, 60, Color.WhiteSmoke);
-      TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"),
-        String.Format("Осталось: {0}", Math.Max(LinesGame.CurrentLevel.LevelScore - LinesGame.LevelScore, 0)), 
-        20, 100, Color.WhiteSmoke);
-      TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"),
-         LinesGame.CurrentLevel.LevelString, 20, 140, Color.LightCoral);
-      TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"),
-         Serv.GetTimeString(LinesGame.Timer), 20, 180, Color.LightPink);
+      if (LinesGame.GameState == Serv.GameState.GameStateRunning)
+      {
+        TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"),
+                                    CurrentLevel.LevelString, 60, 20, Color.LightCoral);
+        TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"),
+                                    Serv.GetTimeString(LinesGame.Timer), 30, 60, Color.LightPink);
 
-      DrawScores();
-      
-      if (Paused)
-        TextHelper.DrawShadowedText(ContentSpace.GetFont("BigFont"), "ПАУЗА", 340, 280, Color.LightPink);
+        TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"),
+                                    String.Format("Очков: {0}", LinesGame.Score.OverallScore), 30, 120, Color.White);
+        TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"),
+                                    String.Format("За уровень: {0}", LinesGame.LevelScore), 30, 160, Color.WhiteSmoke);
+        TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"),
+                                    String.Format("Осталось: {0}",
+                                                  Math.Max(CurrentLevel.LevelScore - LinesGame.LevelScore, 0)),
+                                    30, 200, Color.WhiteSmoke);
+
+        DrawScores();
+
+        if (Paused)
+          TextHelper.DrawShadowedText(ContentSpace.GetFont("BigFont"), "ПАУЗА", 340, 280, Color.LightPink);
+      }
 
       base.Draw(gameTime);
     }
@@ -95,14 +111,70 @@ namespace XnaTetris.Interface
         rect.Right + 8, rect.Top + 5, col);
     }
 
-    void btnExit_ButtonAction(object sender, EventArgs e)
+    #endregion
+
+    #region Start and End Level Events
+
+    public void StartNewGame()
+    {
+      CurrentLevel = new Level(LinesGame.Player.PlayerLevel, LinesGame);
+
+      startWindow = CurrentLevel.StartWindow;
+      startWindow.BtnOkClick += startWindow_BtnOkClick;
+      Components.Add(startWindow);
+      startWindow.Show();
+
+      LinesGame.LevelScore = 0;
+      LinesGame.GameState = Serv.GameState.GameStateBetweenLevel;
+      LinesGame.Timer = CurrentLevel.Time * 1000;
+
+      BlockGrid.Enabled = false;
+      Show();
+    }
+
+    public void StartLevel()
+    {
+      CurrentLevel = new Level(++LinesGame.Player.PlayerLevel, LinesGame);
+      startWindow = CurrentLevel.StartWindow;
+      startWindow.BtnOkClick += startWindow_BtnOkClick;
+      startWindow.Show();
+    }
+
+    public void EndLevel()
+    {
+      endWindow = new LevelWindow(LinesGame, new Rectangle(200, 200, 300, 150), CreateEndDialog());
+      endWindow.BtnOkClick += endWindow_BtnOkClick;
+      Components.Add(endWindow);
+      endWindow.Show();
+    }
+
+    private void startWindow_BtnOkClick(object sender, EventArgs e)
+    {
+      startWindow.Hide();
+      LevelScore.Reset();
+      BlockGrid.Enabled = true;
+      BlockGrid.Restart();
+      LinesGame.GameState = Serv.GameState.GameStateRunning;
+    }
+
+    private void endWindow_BtnOkClick(object sender, EventArgs e)
+    {
+      endWindow.Hide();
+      StartLevel();
+    }
+
+    #endregion
+
+    #region Button Events
+
+    private void btnExit_ButtonAction(object sender, EventArgs e)
     {
       Hide();
       LinesGame.Player.Save();
       LinesGame.ShowMenu();
     }
 
-    void btnPause_ButtonAction(object sender, EventArgs e)
+    private void btnPause_ButtonAction(object sender, EventArgs e)
     {
       PauseAction();
     }
@@ -111,6 +183,15 @@ namespace XnaTetris.Interface
     {
       Paused = !Paused;
       BlockGrid.Enabled = !Paused;
+    }
+
+    #endregion 
+
+    private ConvertTaggedTextHelper CreateEndDialog()
+    {
+      var helper = new ConvertTaggedTextHelper(new Rectangle(100, 200, 400, 200));
+
+      return helper;
     }
   }
 }

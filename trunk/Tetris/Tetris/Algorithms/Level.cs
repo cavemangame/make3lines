@@ -21,7 +21,7 @@ namespace XnaTetris.Algorithms
     public long Time { get; set;}
     public int Number { get; set; }
     public int LevelScore { get; set;}
-    public StartLevelWindow  StartWindow { get; set;}
+    public LevelWindow  StartWindow { get; set;}
     public SpriteHelper BackgroundSprite { get; set; }
     public LinesGame LinesGame { get; private set;}
 
@@ -90,7 +90,7 @@ namespace XnaTetris.Algorithms
             } 
           case "dialog":
             {
-              StartWindow = new StartLevelWindow(LinesGame, childNode);
+              StartWindow = new LevelWindow(LinesGame, childNode);
               break;
             }
           case "mul2chance":

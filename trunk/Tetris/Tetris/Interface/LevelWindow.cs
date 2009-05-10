@@ -7,12 +7,14 @@ using System.Xml;
 
 namespace XnaTetris.Interface
 {
-  public class StartLevelWindow : GameScene
+  public class LevelWindow : GameScene
   {
     #region Variables
     private readonly Rectangle backgroundRect;
     private Button btnOk;
     private readonly ConvertTaggedTextHelper helper;
+
+    public event EventHandler BtnOkClick;
     #endregion
 
     #region Properties
@@ -20,17 +22,27 @@ namespace XnaTetris.Interface
     #endregion
 
     #region Constructor
-    public StartLevelWindow(Microsoft.Xna.Framework.Game setGame, XmlNode loadNode)
+    public LevelWindow(Microsoft.Xna.Framework.Game setGame, XmlNode loadNode)
 			: base(setGame)
 		{
-      backgroundRect = new Rectangle(0, 0, LinesGame.Width, LinesGame.Height);
+      backgroundRect = new Rectangle(100, 100, 600, 400);
       InitButtons();
       helper = new ConvertTaggedTextHelper(backgroundRect, loadNode);
     }
 
+    public LevelWindow(Microsoft.Xna.Framework.Game setGame, Rectangle setRect, ConvertTaggedTextHelper helper)
+      : base(setGame)
+    {
+      backgroundRect = setRect;
+      InitButtons();
+      this.helper = helper;
+    }
+
     private void InitButtons()
     {
-      btnOk = new Button(LinesGame, new Rectangle(360, 550, 80, 40), ContentSpace.GetSprite("OkButton"),
+      var btnOkPos = new Rectangle(backgroundRect.X + backgroundRect.Width/2 - 40, 
+        backgroundRect.Bottom - 50, 80, 40);
+      btnOk = new Button(LinesGame, btnOkPos, ContentSpace.GetSprite("OkButton"),
                             ContentSpace.GetSprite("HiOkButton"));
       btnOk.ButtonAction += btnOk_ButtonAction;
       Components.Add(btnOk);
@@ -70,7 +82,7 @@ namespace XnaTetris.Interface
     private void btnOk_ButtonAction(object sender, EventArgs e)
     {
       Hide();
-      LinesGame.StartNextLevel();
+      BtnOkClick(this, e);
     }
   }
 }
