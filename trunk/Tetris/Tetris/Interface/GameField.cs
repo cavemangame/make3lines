@@ -164,6 +164,13 @@ namespace XnaTetris.Interface
       startWindow = CurrentLevel.StartWindow;
       startWindow.BtnOkClick += startWindow_BtnOkClick;
       startWindow.Show();
+
+      LinesGame.LevelScore = 0;
+      LinesGame.GameState = Serv.GameState.GameStateBetweenLevel;
+      LinesGame.Timer = CurrentLevel.Time * 1000;
+      BlockGrid.Enabled = false;
+      Show();
+
     }
 
     public void EndLevel()

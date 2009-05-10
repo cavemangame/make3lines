@@ -158,8 +158,9 @@ namespace XnaTetris
     #region Loose and win level
     private void CheckForLoose()
     {
-      if (Timer <= 0)
+      if (Timer <= 0 && GameState == Serv.GameState.GameStateRunning)
       {
+        GameState = Serv.GameState.GameStateBetweenLevel;
         if (LevelScore <= GameField.CurrentLevel.LevelScore)
         {
           //ShowLooseDialog();
