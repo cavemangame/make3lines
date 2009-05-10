@@ -197,19 +197,22 @@ namespace XnaTetris
     #region render
     public override void Draw(GameTime gameTime)
     {
-      for (int x = 0; x < GRID_WIDTH; x++)
-        for (int y = 0; y < GRID_HEIGHT; y++)
+      if (LinesGame.GameState == Serv.GameState.GameStateRunning)
+      {
+        for (int x = 0; x < GRID_WIDTH; x++)
+          for (int y = 0; y < GRID_HEIGHT; y++)
+          {
+            Grid[x, y].Draw(gameTime);
+          }
+
+        foreach (PopupText popupText in popupTexts)
         {
-          Grid[x, y].Draw(gameTime);
+          popupText.Draw(gameTime);
         }
 
-      foreach (PopupText popupText in popupTexts)
-      {
-        popupText.Draw(gameTime);
+        if (LinesGame.IsBoardInStableState() && LinesGame.ElapsedGameMs - StartIdleTime >= IDLE_TIME)
+          FindAndShowHelp();
       }
-
-      if (LinesGame.IsBoardInStableState() && LinesGame.ElapsedGameMs - StartIdleTime >= IDLE_TIME)
-        FindAndShowHelp();
     }
 
     #endregion

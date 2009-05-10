@@ -49,7 +49,7 @@ namespace XnaTetris.Helpers
     private const string textName = "text";
     private const string imageName = "image";
     private const int elememtVertSpan = 10; // расстояние м/у "строками"
-    private const int elememtLeftSpan = 20; // расстояние м/у элементами, в частности, отступ от левого края
+    private const int elememtLeftSpan = 10; // расстояние м/у элементами, в частности, отступ от левого края
     private const int defaultWidth = 64;
     private const int defaultHeight = 64;
 
@@ -61,8 +61,8 @@ namespace XnaTetris.Helpers
 
     private int curX, curY, maxY; // текущая позиция "курсора"
 
-    public List<SpriteToRender> Sprites { get; private set;}
-    public List<TextToRender> Texts { get; private set; }
+    public List<SpriteToRender> Sprites { get; set;}
+    public List<TextToRender> Texts { get; set; }
 
     #endregion
 
@@ -71,14 +71,24 @@ namespace XnaTetris.Helpers
     public ConvertTaggedTextHelper(Rectangle setRect, XmlNode node)
     {
       boundingRect = setRect;
+      curX = boundingRect.X;
+      curY = boundingRect.Y;
+      maxY = curY;
       Sprites = new List<SpriteToRender>();
       Texts = new List<TextToRender>();
       ConvertTaggedText(node);
     }
 
+    public ConvertTaggedTextHelper(Rectangle setRect)
+    {
+      boundingRect = setRect;
+      Sprites = new List<SpriteToRender>();
+      Texts = new List<TextToRender>();
+    }
+
     #endregion
 
-    public void ConvertTaggedText(XmlNode loadNode)
+    private void ConvertTaggedText(XmlNode loadNode)
     {
       Sprites.Clear();
       Texts.Clear();
@@ -164,7 +174,7 @@ namespace XnaTetris.Helpers
       //TODO: сделать перенос строк
       if (wrap)
       {
-        pos.X = elememtLeftSpan;
+        pos.X = elememtLeftSpan + boundingRect.X;
         curX = (int)pos.X;
         pos.Y = maxY + elememtVertSpan;
         curY = (int)pos.Y;
@@ -176,7 +186,7 @@ namespace XnaTetris.Helpers
       int curPos = 0;
       int textLen = text.Length;
       if (font == null)
-        font = ContentSpace.GetFont("NormalFont");
+        font = ContentSpace.GetFont("SmallFont");
 
       while (curPos < textLen)
       {
@@ -184,7 +194,7 @@ namespace XnaTetris.Helpers
           boundingRect.Right-elememtLeftSpan)
         {
           Texts.Add(new TextToRender(font, new Vector2(curX, curY), scale, color, text.Substring(0, curPos)));
-          curX = elememtLeftSpan;
+          curX = elememtLeftSpan + boundingRect.X;
           if (curY + (int) (font.MeasureString("A").Y * scale) > maxY)
             maxY = curY + (int) (font.MeasureString("A").Y * scale);
           curY = maxY + elememtVertSpan;
@@ -258,7 +268,7 @@ namespace XnaTetris.Helpers
       // коли картинка не влезает, либо так задумано - переносим ее на следующую строку
       if (wrap || (curX + rect.Width > boundingRect.Right - elememtLeftSpan)) 
       {
-        curX = rect.X = elememtLeftSpan;
+        curX = rect.X = elememtLeftSpan + boundingRect.X;
         curY = rect.Y = (maxY + elememtVertSpan);
       }
 

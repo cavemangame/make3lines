@@ -23,7 +23,7 @@ namespace XnaTetris.Game
 			GameStateMenu,
 			GameStatePause,
 			GameStateRunning,
-			GameStateLevelEnd
+			GameStateBetweenLevel
 		}
 
     public class BlockLocation

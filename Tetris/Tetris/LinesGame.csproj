@@ -122,7 +122,7 @@
     <Compile Include="Interface\ListControls.cs" />
     <Compile Include="Interface\Menu.cs" />
     <Compile Include="Interface\PopupText.cs" />
-    <Compile Include="Interface\StartLevelWindow.cs" />
+    <Compile Include="Interface\LevelWindow.cs" />
     <Compile Include="Interface\StaticLabel.cs" />
     <Compile Include="Interface\TextBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

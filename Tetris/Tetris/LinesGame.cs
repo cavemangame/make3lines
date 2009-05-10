@@ -27,7 +27,6 @@ namespace XnaTetris
 
     // components
     private GameScene menu;
-    private GameField gameField;
     private GameScene hiScores;
 
     public Player Player { get; set;}
@@ -42,10 +41,10 @@ namespace XnaTetris
     public static int Height { get; private set; }
     public long Timer { get; set; }
     public int LevelScore { get; set; }
-    public Serv.GameState GameState { get; private set; }
-    public Level CurrentLevel { get; private set; }
+    public Serv.GameState GameState { get; set; }
     public Scores Score { get; set; }
     public double ElapsedGameMs { get; private set; }
+    public GameField GameField { get; private set; }
 
     /// <summary>
     /// true if the game has just found lines
@@ -91,8 +90,8 @@ namespace XnaTetris
 
       menu = new Menu(this, new Rectangle(0, 0, Width, Height));
       Components.Add(menu);
-      gameField = new GameField(this);
-      Components.Add(gameField);
+      GameField = new GameField(this);
+      Components.Add(GameField);
       hiScores = new HiScores(this);
       Components.Add(hiScores);
 
@@ -123,16 +122,16 @@ namespace XnaTetris
         Exit();
       }
 
-      if (gameField.Enabled && IsBoardInStableState())
+      if (GameField.Enabled && IsBoardInStableState())
       {
         long frameMs = (long)gameTime.ElapsedGameTime.TotalMilliseconds;
 
         if (Input.KeyboardSpaceJustPressed)
         {
-            gameField.PauseAction();
+            GameField.PauseAction();
         }
 
-        if (!gameField.Paused)
+        if (!GameField.Paused)
         {
           Timer -= frameMs;
           CheckForLoose();
@@ -161,47 +160,31 @@ namespace XnaTetris
     {
       if (Timer <= 0)
       {
-        gameField.Hide();
-        if (LevelScore <= CurrentLevel.LevelScore)
+        GameField.Hide();
+        if (LevelScore <= GameField.CurrentLevel.LevelScore)
         {
+          //ShowLooseDialog();
           ShowMenu();
         }
         else
         {
-          GameState = Serv.GameState.GameStateLevelEnd;
+          GameState = Serv.GameState.GameStateBetweenLevel;
           Player.PlayerScore.Copy(Score);
-          Player.PlayerLevel++;
-          ShowLevelDialog();
+          //Player.PlayerLevel++;
+          //ShowLevelDialog();
+          GameField.EndLevel();
         }
       }
-    }
-
-    private void ShowLevelDialog()
-    {
-      CurrentLevel = new Level(Player.PlayerLevel, this);
-      Components.Add(CurrentLevel.StartWindow);
-      CurrentLevel.StartWindow.Show();
-    }
-
-    public void StartNextLevel()
-    {
-      LevelScore = 0;
-      GameState = Serv.GameState.GameStateRunning;
-      Timer = CurrentLevel.Time * 1000;
-
-      Components.Remove(CurrentLevel.StartWindow);
-
-      gameField.Show();
-      gameField.BlockGrid.Restart();
     }
     #endregion
 
     #region Interface Events
+
     public void Start()
     {
       GameState = Serv.GameState.GameStateRunning;
       Score.Copy(Player.PlayerScore);
-      ShowLevelDialog();
+      GameField.StartNewGame();
     }
 
     public void ShowHiScores()
@@ -241,7 +224,7 @@ namespace XnaTetris
     /// <returns>true if there are no moving blocks</returns>
     public bool IsBoardInStableState()
     {
-      return gameField.BlockGrid.ActiveBlocks == 0 && !IsRemoveProcess && !IsRestartProcess;
+      return GameField.BlockGrid.ActiveBlocks == 0 && !IsRemoveProcess && !IsRestartProcess;
     }
 
     /// <summary>
@@ -253,12 +236,12 @@ namespace XnaTetris
       if (IsRemoveProcess)
       {
         IsRemoveProcess = false;
-        gameField.BlockGrid.RemoveLines(gameTime);
+        GameField.BlockGrid.RemoveLines(gameTime);
       }
       if (IsRestartProcess)
       {
         IsRestartProcess = false;
-        gameField.BlockGrid.ReadyToRestart();
+        GameField.BlockGrid.ReadyToRestart();
       }
     }
     #endregion
