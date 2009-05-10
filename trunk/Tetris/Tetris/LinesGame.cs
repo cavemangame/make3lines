@@ -122,7 +122,7 @@ namespace XnaTetris
         Exit();
       }
 
-      if (GameField.Enabled && IsBoardInStableState())
+      if (GameField.Enabled && IsBoardInStableState() && GameState == Serv.GameState.GameStateRunning)
       {
         long frameMs = (long)gameTime.ElapsedGameTime.TotalMilliseconds;
 
