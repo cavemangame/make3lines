@@ -83,6 +83,16 @@ namespace XnaTetris.Interface
       }
 
       base.Draw(gameTime);
+
+      if (startWindow != null && startWindow.Visible)
+      {
+        startWindow.Draw(gameTime);
+      }
+      if (endWindow != null && endWindow.Visible)
+      {
+        endWindow.Draw(gameTime);
+      }
+
     }
 
     private void DrawScores()
@@ -113,6 +123,22 @@ namespace XnaTetris.Interface
 
     #endregion
 
+    #region Update
+
+    public override void Update(GameTime gameTime)
+    {
+      base.Update(gameTime);
+      if (startWindow != null && startWindow.Enabled)
+      {
+        startWindow.Update(gameTime);
+      }
+      if (endWindow != null && endWindow.Enabled)
+      {
+        endWindow.Update(gameTime);
+      }
+    }
+    #endregion
+
     #region Start and End Level Events
 
     public void StartNewGame()
@@ -121,7 +147,6 @@ namespace XnaTetris.Interface
 
       startWindow = CurrentLevel.StartWindow;
       startWindow.BtnOkClick += startWindow_BtnOkClick;
-      Components.Add(startWindow);
       startWindow.Show();
 
       LinesGame.LevelScore = 0;
@@ -144,7 +169,7 @@ namespace XnaTetris.Interface
     {
       endWindow = new LevelWindow(LinesGame, new Rectangle(200, 200, 300, 150), CreateEndDialog());
       endWindow.BtnOkClick += endWindow_BtnOkClick;
-      Components.Add(endWindow);
+      BlockGrid.Enabled = false;
       endWindow.Show();
     }
 
@@ -190,6 +215,27 @@ namespace XnaTetris.Interface
     private ConvertTaggedTextHelper CreateEndDialog()
     {
       var helper = new ConvertTaggedTextHelper(new Rectangle(100, 200, 400, 200));
+      SpriteFont font = ContentSpace.GetFont("SmallFont");
+      helper.Texts.Add(new TextToRender(font, new Vector2(110, 210), 1.5f, Color.Red, 
+        String.Format("Результаты уровня {0}:", LinesGame.Player.PlayerLevel)));
+
+      helper.Texts.Add(new TextToRender(font, new Vector2(110, 240), 1f, Color.Black,
+        String.Format("Очков набрано {0}:", LevelScore.OverallScore)));
+      helper.Texts.Add(new TextToRender(font, new Vector2(110, 270), 1f, Color.Black,
+        String.Format("Блоков убито:")));
+
+      helper.Texts.Add(new TextToRender(font, new Vector2(110, 300), 1f, Color.Blue,
+        String.Format("Синих: {0}", LevelScore.BlueScore)));
+      helper.Texts.Add(new TextToRender(font, new Vector2(310, 300), 1f, Color.Red,
+        String.Format("Красных: {0}", LevelScore.RedScore)));
+      helper.Texts.Add(new TextToRender(font, new Vector2(110, 330), 1f, Color.Green,
+        String.Format("Зеленых: {0}", LevelScore.GreenScore)));
+      helper.Texts.Add(new TextToRender(font, new Vector2(310, 330), 1f, Color.Yellow,
+        String.Format("Желтых: {0}", LevelScore.YellowScore)));
+      helper.Texts.Add(new TextToRender(font, new Vector2(110, 360), 1f, Color.White,
+        String.Format("Белых: {0}", LevelScore.WhiteScore)));
+      helper.Texts.Add(new TextToRender(font, new Vector2(310, 360), 1f, Color.Gray,
+        String.Format("Серых: {0}", LevelScore.GrayScore)));
 
       return helper;
     }

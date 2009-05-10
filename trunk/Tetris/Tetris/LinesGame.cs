@@ -160,7 +160,6 @@ namespace XnaTetris
     {
       if (Timer <= 0)
       {
-        GameField.Hide();
         if (LevelScore <= GameField.CurrentLevel.LevelScore)
         {
           //ShowLooseDialog();
