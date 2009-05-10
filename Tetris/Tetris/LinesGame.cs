@@ -163,15 +163,12 @@ namespace XnaTetris
         GameState = Serv.GameState.GameStateBetweenLevel;
         if (LevelScore <= GameField.CurrentLevel.LevelScore)
         {
-          //ShowLooseDialog();
-          ShowMenu();
+          GameField.GameOver();
         }
         else
         {
           GameState = Serv.GameState.GameStateBetweenLevel;
           Player.PlayerScore.Copy(Score);
-          //Player.PlayerLevel++;
-          //ShowLevelDialog();
           GameField.EndLevel();
         }
       }

@@ -21,7 +21,7 @@ namespace XnaTetris.Interface
     private readonly Button btnPause;
     private readonly Button btnExit;
 
-    private LevelWindow startWindow, endWindow;
+    private LevelWindow startWindow, endWindow, gameoverWindow;
     public Level CurrentLevel { get; private set; }
     public Scores LevelScore  = new Scores();
 
@@ -93,6 +93,10 @@ namespace XnaTetris.Interface
       {
         endWindow.Draw(gameTime);
       }
+      if (gameoverWindow != null && gameoverWindow.Visible)
+      {
+        gameoverWindow.Draw(gameTime);
+      }
 
     }
 
@@ -137,6 +141,10 @@ namespace XnaTetris.Interface
       {
         endWindow.Update(gameTime);
       }
+      if (gameoverWindow != null && gameoverWindow.Enabled)
+      {
+        gameoverWindow.Update(gameTime);
+      }
     }
     #endregion
 
@@ -170,7 +178,6 @@ namespace XnaTetris.Interface
       LinesGame.Timer = CurrentLevel.Time * 1000;
       BlockGrid.Enabled = false;
       Show();
-
     }
 
     public void EndLevel()
@@ -179,6 +186,14 @@ namespace XnaTetris.Interface
       endWindow.BtnOkClick += endWindow_BtnOkClick;
       BlockGrid.Enabled = false;
       endWindow.Show();
+    }
+
+    public void GameOver()
+    {
+      gameoverWindow = new LevelWindow(LinesGame, rectEndDialog, CreateGameOverDialog());
+      gameoverWindow.BtnOkClick += gameoverWindow_BtnOkClick;
+      BlockGrid.Enabled = false;
+      gameoverWindow.Show();
     }
 
     private void startWindow_BtnOkClick(object sender, EventArgs e)
@@ -194,6 +209,13 @@ namespace XnaTetris.Interface
     {
       endWindow.Hide();
       StartLevel();
+    }
+
+    private void gameoverWindow_BtnOkClick(object sender, EventArgs e)
+    {
+      gameoverWindow.Hide();
+      Hide();
+      LinesGame.ShowMenu();
     }
 
     #endregion
@@ -220,10 +242,12 @@ namespace XnaTetris.Interface
 
     #endregion 
 
+    #region Dialogs Text
+
     private ConvertTaggedTextHelper CreateEndDialog()
     {
       var helper = new ConvertTaggedTextHelper(rectEndDialog);
-      SpriteFont font = ContentSpace.GetFont("SmallFont");
+      var font = ContentSpace.GetFont("SmallFont");
       helper.Texts.Add(new TextToRender(font, new Vector2(210, 205), 1.5f, Color.Red, 
         String.Format("Результаты уровня {0}:", LinesGame.Player.PlayerLevel)));
 
@@ -247,5 +271,23 @@ namespace XnaTetris.Interface
 
       return helper;
     }
+
+    private ConvertTaggedTextHelper CreateGameOverDialog()
+    {
+      var helper = new ConvertTaggedTextHelper(rectEndDialog);
+      var font = ContentSpace.GetFont("SmallFont");
+
+      helper.Texts.Add(new TextToRender(font, new Vector2(310, 205), 1.5f, Color.Red,
+        String.Format("Вы проиграли!")));
+
+      helper.Texts.Add(new TextToRender(font, new Vector2(210, 240), 1f, Color.Red,
+         String.Format("Вы проиграли, просрали или ")));
+       helper.Texts.Add(new TextToRender(font, new Vector2(210, 260), 1f, Color.Red,
+         String.Format("другим образом соснули хуйца!")));
+
+      return helper;
+    }
+
+    #endregion
   }
 }
