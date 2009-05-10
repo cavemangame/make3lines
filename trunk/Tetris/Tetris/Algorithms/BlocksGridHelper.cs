@@ -216,6 +216,7 @@ namespace XnaTetris.Algorithms
           int score = blocksGrid.Grid[x, y].GetScore(blocksForScoreCount);
           blocksGrid.LinesGame.Score.OverallScore += score;
           blocksGrid.LinesGame.LevelScore += score;
+          blocksGrid.LinesGame.GameField.LevelScore.OverallScore += score;
           blocksGrid.Grid[x, y].AddScore(blocksForScoreCount);
           if (blocksForScoreCount > 0)
           {

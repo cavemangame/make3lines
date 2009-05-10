@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <levels>
 	<level number='1'>
-		<time>10</time>
-		<score>10</score>
+		<time>50</time>
+		<score>2000</score>
 		<background>SkyBackground</background>
     <dialog>
       <text left='200' scale ='2' color='Black' font='SmallFont'>Уровень 1</text>

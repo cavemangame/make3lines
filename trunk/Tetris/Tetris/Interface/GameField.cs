@@ -16,6 +16,7 @@ namespace XnaTetris.Interface
     public const int GRID_RECTANGLE_WIDTH = 512;
     private readonly Rectangle rectPauseButton = new Rectangle(40, 400, 180, 50);
     private readonly Rectangle rectExitButton = new Rectangle(40, 450, 180, 50);
+    private readonly Rectangle rectEndDialog = new Rectangle(200, 200, 400, 200);
 
     private readonly Button btnPause;
     private readonly Button btnExit;
@@ -167,7 +168,7 @@ namespace XnaTetris.Interface
 
     public void EndLevel()
     {
-      endWindow = new LevelWindow(LinesGame, new Rectangle(200, 200, 300, 150), CreateEndDialog());
+      endWindow = new LevelWindow(LinesGame, rectEndDialog, CreateEndDialog());
       endWindow.BtnOkClick += endWindow_BtnOkClick;
       BlockGrid.Enabled = false;
       endWindow.Show();
@@ -214,27 +215,27 @@ namespace XnaTetris.Interface
 
     private ConvertTaggedTextHelper CreateEndDialog()
     {
-      var helper = new ConvertTaggedTextHelper(new Rectangle(100, 200, 400, 200));
+      var helper = new ConvertTaggedTextHelper(rectEndDialog);
       SpriteFont font = ContentSpace.GetFont("SmallFont");
-      helper.Texts.Add(new TextToRender(font, new Vector2(110, 210), 1.5f, Color.Red, 
+      helper.Texts.Add(new TextToRender(font, new Vector2(210, 205), 1.5f, Color.Red, 
         String.Format("Результаты уровня {0}:", LinesGame.Player.PlayerLevel)));
 
-      helper.Texts.Add(new TextToRender(font, new Vector2(110, 240), 1f, Color.Black,
+      helper.Texts.Add(new TextToRender(font, new Vector2(210, 240), 1f, Color.Black,
         String.Format("Очков набрано {0}:", LevelScore.OverallScore)));
-      helper.Texts.Add(new TextToRender(font, new Vector2(110, 270), 1f, Color.Black,
+      helper.Texts.Add(new TextToRender(font, new Vector2(210, 260), 1f, Color.Black,
         String.Format("Блоков убито:")));
 
-      helper.Texts.Add(new TextToRender(font, new Vector2(110, 300), 1f, Color.Blue,
+      helper.Texts.Add(new TextToRender(font, new Vector2(210, 280), 1f, Color.Blue,
         String.Format("Синих: {0}", LevelScore.BlueScore)));
-      helper.Texts.Add(new TextToRender(font, new Vector2(310, 300), 1f, Color.Red,
+      helper.Texts.Add(new TextToRender(font, new Vector2(410, 280), 1f, Color.Red,
         String.Format("Красных: {0}", LevelScore.RedScore)));
-      helper.Texts.Add(new TextToRender(font, new Vector2(110, 330), 1f, Color.Green,
+      helper.Texts.Add(new TextToRender(font, new Vector2(210, 300), 1f, Color.Green,
         String.Format("Зеленых: {0}", LevelScore.GreenScore)));
-      helper.Texts.Add(new TextToRender(font, new Vector2(310, 330), 1f, Color.Yellow,
+      helper.Texts.Add(new TextToRender(font, new Vector2(410, 300), 1f, Color.Yellow,
         String.Format("Желтых: {0}", LevelScore.YellowScore)));
-      helper.Texts.Add(new TextToRender(font, new Vector2(110, 360), 1f, Color.White,
+      helper.Texts.Add(new TextToRender(font, new Vector2(210, 320), 1f, Color.White,
         String.Format("Белых: {0}", LevelScore.WhiteScore)));
-      helper.Texts.Add(new TextToRender(font, new Vector2(310, 360), 1f, Color.Gray,
+      helper.Texts.Add(new TextToRender(font, new Vector2(410, 320), 1f, Color.Gray,
         String.Format("Серых: {0}", LevelScore.GrayScore)));
 
       return helper;
