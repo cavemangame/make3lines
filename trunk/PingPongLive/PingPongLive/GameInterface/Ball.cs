@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PingPongLive.Helpers;
 
 namespace PingPongLive.GameInterface
 {
@@ -12,6 +13,8 @@ namespace PingPongLive.GameInterface
     private Texture2D tex;
     private Rectangle spriteRect;
     private Rectangle boundRect;
+    private readonly NetworkHelper networkHelper;
+
     #endregion
 
     #region Properties
@@ -33,12 +36,25 @@ namespace PingPongLive.GameInterface
                                 Game.Window.ClientBounds.Height);
       SpeedVector = new Vector2(0.5f, 0.5f);
       Speed = 5;
+
+      networkHelper = (NetworkHelper)Game.Services.GetService(typeof(NetworkHelper));
     }
 
     public override void Draw(GameTime gameTime)
     {
       spriteBatch.Draw(tex, Position, spriteRect, Color.White);
       base.Draw(gameTime);
+    }
+
+    public void UpdateNetworkData()
+    {
+      if ((networkHelper.NetworkGameSession == null) || (networkHelper.NetworkGameSession.IsHost))
+      {
+        networkHelper.ServerPacketWriter.Write('L');
+        networkHelper.ServerPacketWriter.Write(Position);
+        networkHelper.ServerPacketWriter.Write(Speed);
+        networkHelper.ServerPacketWriter.Write(SpeedVector);
+      }
     }
 
     public void MoveBall()

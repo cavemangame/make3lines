@@ -15,7 +15,6 @@ namespace PingPongLive
     GraphicsDeviceManager graphics;
     SpriteBatch spriteBatch;
     SpriteFont Arial, ArialBig;
-    private int lineHeight = 20;
 
     // for network game
     private readonly NetworkHelper networkHelper;
@@ -65,7 +64,7 @@ namespace PingPongLive
       Components.Add(menuScene);
       menuScene.Show();
 
-      actionScene = new ActionScene(this, actionBackgroundTexture, gameTexture);
+      actionScene = new ActionScene(this, actionBackgroundTexture, gameTexture, ArialBig);
       Components.Add(actionScene);
       actionScene.Hide();
 
@@ -88,6 +87,52 @@ namespace PingPongLive
     {
       if (!Guide.IsVisible)
         HandleScenesInput();
+
+      if (networkHelper.NetworkGameSession != null)
+      {
+        // Только отправляем, если мы не сервер.
+        // Нет никакого смысла отправлять пакеты самому себе, поскольку мы уже знаем, что они будут содержать!
+        if (!networkHelper.NetworkGameSession.IsHost)
+        {
+          networkHelper.SendClientData();
+        }
+        else
+        {
+          // Если мы сервер, передаем состояние игры
+          networkHelper.SendServerData();
+        }
+
+        // Проталкиваем данные
+        networkHelper.NetworkGameSession.Update();
+
+        // Читаем любые входящие сетевые пакеты
+        foreach (LocalNetworkGamer gamer in networkHelper.NetworkGameSession.LocalGamers)
+        {
+          // Продолжаем чтение, пока есть входящие пакеты.
+          while (gamer.IsDataAvailable)
+          {
+            NetworkGamer sender;
+
+            if (gamer.IsHost)
+            {
+              sender = networkHelper.ReadClientData(gamer);
+              if (!sender.IsLocal)
+              {
+                actionScene.HandleClientData();
+              }
+            }
+            else
+            {
+              sender = networkHelper.ReadServerData(gamer);
+              if (!sender.IsLocal)
+              {
+                actionScene.HandleServerData();
+              }
+            }
+          }
+        }
+      }
+
       base.Update(gameTime);
     }
 
@@ -221,10 +266,8 @@ namespace PingPongLive
 
     private void HookSessionEvents()
     {
-      networkHelper.NetworkGameSession.GamerJoined +=
-                                   GamerJoinedEventHandler;
-      networkHelper.NetworkGameSession.SessionEnded +=
-                                  SessionEndedEventHandler;
+      networkHelper.NetworkGameSession.GamerJoined += GamerJoinedEventHandler;
+      networkHelper.NetworkGameSession.SessionEnded += SessionEndedEventHandler;
     }
 
     private void SessionEndedEventHandler(object sender, NetworkSessionEndedEventArgs e)
@@ -261,6 +304,42 @@ namespace PingPongLive
       {
         ShowScene(menuScene);
       }
+      else if (CheckKey(Keys.Space))
+      {
+        actionScene.Paused = !actionScene.Paused;
+
+        // Отправляем команду паузы другому игроку
+        if (networkHelper.NetworkGameSession != null)
+        {
+          // Если мы сервер, отправляем используя пакеты сервера
+          if (networkHelper.NetworkGameSession.IsHost)
+          {
+            networkHelper.ServerPacketWriter.Write('P');
+            networkHelper.ServerPacketWriter.Write(actionScene.Paused);
+          }
+          else
+          {
+            networkHelper.ClientPacketWriter.Write('P');
+            networkHelper.ClientPacketWriter.Write(actionScene.Paused);
+          }
+        }
+      }
+
+      if (CheckKey(Keys.Back))
+      {
+        if (networkHelper.NetworkGameSession != null)
+        {
+          CloseSession();
+          networkScene.State = NetworkGameState.Idle;
+          networkScene.Message = "";
+          ShowScene(networkScene);
+        }
+        else
+        {
+          ShowScene(menuScene);
+        }
+      }
+
     }
 
     private void HandleMenuSceneInput()
@@ -299,8 +378,17 @@ namespace PingPongLive
     {
       KeyboardState keyboardState = Keyboard.GetState();
 
-      bool result = (oldKeyboardState.IsKeyDown(Keys.Enter) &&
-                    (keyboardState.IsKeyUp(Keys.Enter)));
+      bool result = (oldKeyboardState.IsKeyDown(Keys.Enter) && (keyboardState.IsKeyUp(Keys.Enter)));
+
+      oldKeyboardState = keyboardState;
+      return result;
+    }
+
+    private bool CheckKey(Keys key)
+    {
+      KeyboardState keyboardState = Keyboard.GetState();
+
+      bool result = (oldKeyboardState.IsKeyDown(key) && (keyboardState.IsKeyUp(key)));
 
       oldKeyboardState = keyboardState;
       return result;
