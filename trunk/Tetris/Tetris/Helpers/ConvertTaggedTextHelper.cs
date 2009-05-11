@@ -39,9 +39,6 @@ namespace XnaTetris.Helpers
     }
   }
 
-  /// <summary>
-  /// Convert tagged xml text to SpriteBatch
-  /// </summary>
   public class ConvertTaggedTextHelper
   {
     #region Constants

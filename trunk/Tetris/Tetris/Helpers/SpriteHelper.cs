@@ -45,6 +45,8 @@ namespace XnaTetris.Helpers
     public Rectangle GfxRect { get; private set; }
     #endregion
 
+    public static SpriteBatch SpriteBatch { get { return spriteBatch; } }
+
     #region Constructor
     public SpriteHelper(Texture2D setTexture, Rectangle? setGfxRect)
     {
