@@ -21,7 +21,7 @@ namespace XnaTetris.Interface
     private readonly Button btnPause;
     private readonly Button btnExit;
 
-    private LevelWindow startWindow, endWindow, gameoverWindow;
+    private LevelWindow startWindow, endWindow, gameoverWindow, gamewinWindow;
     public Level CurrentLevel { get; private set; }
     public Scores LevelScore  = new Scores();
 
@@ -97,6 +97,10 @@ namespace XnaTetris.Interface
       {
         gameoverWindow.Draw(gameTime);
       }
+      if (gamewinWindow != null && gamewinWindow.Visible)
+      {
+        gamewinWindow.Draw(gameTime);
+      }
 
     }
 
@@ -144,6 +148,10 @@ namespace XnaTetris.Interface
       if (gameoverWindow != null && gameoverWindow.Enabled)
       {
         gameoverWindow.Update(gameTime);
+      }
+      if (gamewinWindow != null && gamewinWindow.Enabled)
+      {
+        gamewinWindow.Update(gameTime);
       }
     }
     #endregion
@@ -196,6 +204,14 @@ namespace XnaTetris.Interface
       gameoverWindow.Show();
     }
 
+    public void GameWin()
+    {
+      gamewinWindow = new LevelWindow(LinesGame, rectEndDialog, CreateGameWinDialog());
+      gamewinWindow.BtnOkClick += gamewinWindow_BtnOkClick;
+      BlockGrid.Enabled = false;
+      gamewinWindow.Show();
+    }
+
     private void startWindow_BtnOkClick(object sender, EventArgs e)
     {
       startWindow.Hide();
@@ -214,6 +230,13 @@ namespace XnaTetris.Interface
     private void gameoverWindow_BtnOkClick(object sender, EventArgs e)
     {
       gameoverWindow.Hide();
+      Hide();
+      LinesGame.ShowMenu();
+    }
+
+    private void gamewinWindow_BtnOkClick(object sender, EventArgs e)
+    {
+      gamewinWindow.Hide();
       Hide();
       LinesGame.ShowMenu();
     }
@@ -284,6 +307,40 @@ namespace XnaTetris.Interface
          String.Format("Вы проиграли, просрали или ")));
        helper.Texts.Add(new TextToRender(font, new Vector2(210, 260), 1f, Color.Red,
          String.Format("другим образом соснули хуйца!")));
+
+      return helper;
+    }
+
+    private ConvertTaggedTextHelper CreateGameWinDialog()
+    {
+      var helper = new ConvertTaggedTextHelper(rectEndDialog);
+      var font = ContentSpace.GetFont("SmallFont");
+
+      helper.Texts.Add(new TextToRender(font, new Vector2(210, 205), 1.5f, Color.Silver,
+        String.Format(" Вы прошли все испытания!")));
+
+      helper.Texts.Add(new TextToRender(font, new Vector2(210, 240), 1f, Color.Silver,
+         String.Format(" По результатам испытаний вы получаете")));
+      helper.Texts.Add(new TextToRender(font, new Vector2(210, 260), 1f, Color.Silver,
+        String.Format("звание   {0}.", Title.GetTitle(LinesGame.Score.OverallScore))));
+
+      bool HasWonCompetition = (LinesGame.Score.OverallScore >= 70000);
+      helper.Texts.Add(new TextToRender(font, new Vector2(210, 280), 1f, Color.Silver,
+        String.Format(" Боги посовещались и решили, что")));
+
+      if (!HasWonCompetition)
+      {
+        helper.Texts.Add(new TextToRender(font, new Vector2(210, 300), 1f, Color.Red,
+          String.Format("Ты не подходишь никому :(")));
+      }
+      else
+      {
+        helper.Texts.Add(new TextToRender(font, new Vector2(210, 300), 1f, Color.Gold,
+          String.Format("Тебя берет в помощники   {0}", Serv.GetGodNameByScore(LinesGame.Score))));
+       /* helper.Texts.Add(new TextToRender(font, new Vector2(210, 320), 1.5f, Color.Gold,
+          String.Format("ПОЗДРАВЛЯЕМ!!!")));*/
+
+      }
 
       return helper;
     }

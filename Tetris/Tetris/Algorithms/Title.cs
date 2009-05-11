@@ -2,7 +2,7 @@
 {
   public class Title
   {
-    public static string GetTitle(int score)
+    public static string GetTitle(long score)
     {
       if (score < 2500)
         return "Неизвестный";

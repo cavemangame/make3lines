@@ -107,5 +107,43 @@ namespace XnaTetris.Game
         }
       }
     }
-	}
+
+    public static string GetGodNameByScore(Algorithms.Scores scores)
+    {
+      string godName = String.Empty;
+      long maxScore = 0;
+      if (scores.BlueScore > maxScore)
+      {
+        maxScore = scores.BlueScore;
+        godName = "Митра";
+      }
+      if (scores.RedScore > maxScore)
+      {
+        maxScore = scores.RedScore;
+        godName = "Ворган";
+      }
+      if (scores.GreenScore > maxScore)
+      {
+        maxScore = scores.GreenScore;
+        godName = "Аниэль";
+      }
+      if (scores.YellowScore > maxScore)
+      {
+        maxScore = scores.YellowScore;
+        godName = "Дамарх";
+      }
+      if (scores.WhiteScore > maxScore)
+      {
+        maxScore = scores.WhiteScore;
+        godName = "Арх";
+      }
+      if (scores.GrayScore > maxScore)
+      {
+        maxScore = scores.GrayScore;
+        godName = "Ом";
+      }
+
+      return godName;
+    }
+  }
 }
