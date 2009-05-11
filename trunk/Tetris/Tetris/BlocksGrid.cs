@@ -59,7 +59,7 @@ namespace XnaTetris
     /// <summary>
     /// how much blocks are moving now
     /// </summary>
-    public int ActiveBlocks { get; private set; }
+    public int ActiveBlocks { get; set; }
     #endregion
 
     #region Constructor

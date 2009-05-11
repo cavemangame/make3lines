@@ -217,6 +217,7 @@ namespace XnaTetris.Interface
       startWindow.Hide();
       LevelScore.Reset();
       BlockGrid.Enabled = true;
+      BlockGrid.ActiveBlocks = 0;
       BlockGrid.Restart();
       LinesGame.GameState = Serv.GameState.GameStateRunning;
     }
