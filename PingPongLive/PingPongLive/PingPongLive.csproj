@@ -91,6 +91,7 @@
     <Compile Include="GameInterface\GameScene.cs" />
     <Compile Include="GameInterface\ImageComponent.cs" />
     <Compile Include="GameInterface\MenuScene.cs" />
+    <Compile Include="GameInterface\NetworkScene.cs" />
     <Compile Include="GameInterface\Player.cs" />
     <Compile Include="GameInterface\TextMenuComponent.cs" />
     <Compile Include="Helpers\NetworkHelper.cs" />

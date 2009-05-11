@@ -49,13 +49,13 @@ namespace PingPongLive.GameInterface
       base.Draw(gameTime);
     }
 
-    public void Show()
+    public virtual void Show()
     {
       Visible = true;
       Enabled = true;
     }
 
-    public void Hide()
+    public virtual void Hide()
     {
       Visible = false;
       Enabled = false;

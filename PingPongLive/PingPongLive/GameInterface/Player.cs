@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Net;
 
 namespace PingPongLive.GameInterface
 {
@@ -10,11 +11,12 @@ namespace PingPongLive.GameInterface
 
     private Texture2D tex;
     protected PlayerIndex playerIndex;
-    public Rectangle SpriteRect { get; private set;}
-
     protected int score;
     protected int speed = 4;
     protected Rectangle screenBounds;
+
+    public Rectangle SpriteRect { get; private set; }
+    public NetworkGamer Gamer { get; set; }
 
     #endregion
 
