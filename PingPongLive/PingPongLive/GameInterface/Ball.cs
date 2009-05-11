@@ -1,14 +1,26 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace PingPongLive.GameInterface
 {
   class Ball : DrawableGameComponent
   {
-    public Vector2 Position { get; set; }
+    #region Variables
+
     private SpriteBatch spriteBatch;
     private Texture2D tex;
     private Rectangle spriteRect;
+    private Rectangle boundRect;
+    #endregion
+
+    #region Properties
+
+    public Vector2 Position;
+    public float Speed { get; set; }
+    public Vector2 SpeedVector;
+
+    #endregion
 
     public Ball(Game game, Texture2D tex, Vector2 pos, Rectangle rect)
       : base(game)
@@ -17,12 +29,50 @@ namespace PingPongLive.GameInterface
       this.tex = tex;
       Position = pos;
       spriteRect = rect;
+      boundRect = new Rectangle(0, 0, Game.Window.ClientBounds.Width,
+                                Game.Window.ClientBounds.Height);
+      SpeedVector = new Vector2(0.5f, 0.5f);
+      Speed = 5;
     }
 
     public override void Draw(GameTime gameTime)
     {
       spriteBatch.Draw(tex, Position, spriteRect, Color.White);
       base.Draw(gameTime);
+    }
+
+    public void MoveBall()
+    {
+      Position.X += Speed*SpeedVector.X;
+      Position.Y += Speed*SpeedVector.Y;
+    }
+
+    public void HandleBoundField()
+    {
+      if (Position.Y >= boundRect.Bottom - 40 || Position.Y <= 10)
+      {
+        SpeedVector.Y = -SpeedVector.Y;
+      }
+    }
+
+    public bool HandleLoose()
+    {
+      if (Position.X <= 0 || Position.X >= boundRect.Right)
+        return true;
+      return false;
+    }
+
+    public void HandleBoundPaddle(Player player)
+    {
+      Rectangle bbBall = new Rectangle((int)Position.X, (int)Position.Y, spriteRect.Width, spriteRect.Height);
+      Rectangle bbPaddle = new Rectangle((int)player.Position.X, (int)player.Position.Y, 
+        player.SpriteRect.Width, player.SpriteRect.Height);
+
+      if (bbBall.Intersects(bbPaddle))
+      {
+        SpeedVector.X = -SpeedVector.X;
+        Speed += 0.05f;
+      }
     }
   }
 }

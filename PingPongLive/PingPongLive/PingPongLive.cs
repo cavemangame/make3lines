@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -87,7 +88,15 @@ namespace PingPongLive
       // Обработка ввода для сцены игры
       else if (activeScene == actionScene)
       {
-        //HandleActionInput();
+        HandleActionInput();
+      }
+    }
+
+    private void HandleActionInput()
+    {
+      if (actionScene.IsGameOver)
+      {
+        ShowScene(menuScene);
       }
     }
 

@@ -10,7 +10,7 @@ namespace PingPongLive.GameInterface
 
     private Texture2D tex;
     protected PlayerIndex playerIndex;
-    private Rectangle spriteRect;
+    public Rectangle SpriteRect { get; private set;}
 
     protected int score;
     protected int speed = 4;
@@ -40,7 +40,7 @@ namespace PingPongLive.GameInterface
       Position = new Vector2();
       playerIndex = playerID;
       tex = texture;
-      spriteRect = rect;
+      SpriteRect = rect;
       screenBounds = new Rectangle(0, 0, Game.Window.ClientBounds.Width,
                   Game.Window.ClientBounds.Height);
     }
@@ -55,7 +55,7 @@ namespace PingPongLive.GameInterface
       {
         Position.X = screenBounds.Right - 40;
       }
-      Position.Y = screenBounds.Height - spriteRect.Height;
+      Position.Y = screenBounds.Height - SpriteRect.Height;
       score = 0;
     }
 
@@ -86,25 +86,23 @@ namespace PingPongLive.GameInterface
       {
         Position.Y = screenBounds.Top;
       }
-      if (Position.Y > screenBounds.Height - spriteRect.Height)
+      if (Position.Y > screenBounds.Height - SpriteRect.Height)
       {
-        Position.Y = screenBounds.Height - spriteRect.Height;
+        Position.Y = screenBounds.Height - SpriteRect.Height;
       }
     }
 
     public Rectangle GetBounds()
     {
       return new Rectangle((int)Position.X, (int)Position.Y,
-                           spriteRect.Width, spriteRect.Height);
+                           SpriteRect.Width, SpriteRect.Height);
     }
 
     public override void Draw(GameTime gameTime)
     {
-      // Получаем текущий spritebatch
       SpriteBatch sBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
 
-      // Рисуем корабль
-      sBatch.Draw(tex, Position, spriteRect, Color.White);
+      sBatch.Draw(tex, Position, SpriteRect, Color.White);
 
       base.Draw(gameTime);
     }
