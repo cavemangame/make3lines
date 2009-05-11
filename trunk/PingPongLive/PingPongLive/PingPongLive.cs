@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Net;
+using PingPongLive.GameInterface;
 using PingPongLive.Helpers;
 
 namespace PingPongLive
@@ -11,9 +12,17 @@ namespace PingPongLive
   {
     GraphicsDeviceManager graphics;
     SpriteBatch spriteBatch;
-    SpriteFont Arial;
+    SpriteFont Arial, ArialBig;
     private int lineHeight = 20;
     private NetworkHelper networkHelper;
+
+    private GameScene activeScene;
+    private MenuScene menuScene;
+    private ActionScene actionScene;
+
+    private KeyboardState oldKeyboardState;
+
+    private Texture2D startBackgroundTexture, actionBackgroundTexture, gameTexture;
 
 
     public PingPongLive()
@@ -23,8 +32,6 @@ namespace PingPongLive
 
       Components.Add(new GamerServicesComponent(this));
       networkHelper = new NetworkHelper();
-
-
 
       IsMouseVisible = true;
     }
@@ -39,8 +46,24 @@ namespace PingPongLive
     protected override void LoadContent()
     {
       spriteBatch = new SpriteBatch(GraphicsDevice);
-      Arial = Content.Load<SpriteFont>("Arial");
+      Services.AddService(typeof(SpriteBatch), spriteBatch);
 
+      Arial = Content.Load<SpriteFont>("Arial");
+      ArialBig = Content.Load<SpriteFont>("ArialBig");
+
+      startBackgroundTexture = Content.Load<Texture2D>("startbackground");
+      actionBackgroundTexture = Content.Load<Texture2D>("spacebackground");
+      gameTexture = Content.Load<Texture2D>("PongGame");
+
+      menuScene = new MenuScene(this, Arial, ArialBig, startBackgroundTexture);
+      Components.Add(menuScene);
+      menuScene.Show();
+
+      actionScene = new ActionScene(this, actionBackgroundTexture, gameTexture);
+      Components.Add(actionScene);
+      actionScene.Hide();
+
+      activeScene = menuScene;
     }
 
     protected override void UnloadContent()
@@ -49,59 +72,76 @@ namespace PingPongLive
 
     protected override void Update(GameTime gameTime)
     {
-      if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-        this.Exit();
-
-      // регилка
-      if (Keyboard.GetState().IsKeyDown(Keys.F1))
-        networkHelper.SignInGamer();
-
-      // Создание сессии
-      if (Keyboard.GetState().IsKeyDown(Keys.F2))
-        networkHelper.CreateSession();
-
-      // СИнхронный поиск сессии
-      if (Keyboard.GetState().IsKeyDown(Keys.F3))
-        networkHelper.FindSession();
-
-      // Асинхронный поиск сессии
-      if (Keyboard.GetState().IsKeyDown(Keys.F4))
-        networkHelper.AsyncFindSession();
-
-      if (networkHelper.SessionState == NetworkSessionState.Playing)
-      {
-        // Отправляем нажатые клавиши удаленному игроку
-        foreach (Keys key in Keyboard.GetState().GetPressedKeys())
-          networkHelper.SendMessage(key.ToString());
-
-        // Получаем клавиши от удаленного игрока
-        networkHelper.ReceiveMessage();
-      }
-
-      networkHelper.Update();
-
+      HandleScenesInput();
       base.Update(gameTime);
     }
+
+    private void HandleScenesInput()
+    {
+      // Обработка ввода начальной сцены
+      if (activeScene == menuScene)
+      {
+        HandleMenuSceneInput();
+      }
+
+      // Обработка ввода для сцены игры
+      else if (activeScene == actionScene)
+      {
+        //HandleActionInput();
+      }
+    }
+
+    private void HandleMenuSceneInput()
+    {
+      if (CheckEnter())
+      {
+        switch (menuScene.SelectedMenuIndex)
+        {
+          case 0:
+            ShowScene(actionScene);
+            break;
+          case 1:
+            ShowScene(actionScene);
+            break;
+          case 2:
+            //ShowScene(helpScene);
+            break;
+          case 3:
+            // net
+            break;
+          case 4:
+            Exit();
+            break;
+        }
+      }
+    }
+
+    protected void ShowScene(GameScene scene)
+    {
+      activeScene.Hide();
+      activeScene = scene;
+      scene.Show();
+    }
+
+    private bool CheckEnter()
+    {
+      KeyboardState keyboardState = Keyboard.GetState();
+
+      bool result = (oldKeyboardState.IsKeyDown(Keys.Enter) &&
+                    (keyboardState.IsKeyUp(Keys.Enter)));
+
+      oldKeyboardState = keyboardState;
+      return result;
+    }
+
 
     protected override void Draw(GameTime gameTime)
     {
       GraphicsDevice.Clear(Color.CornflowerBlue);
 
       spriteBatch.Begin();
-
-      spriteBatch.DrawString(Arial, "Game State: " + networkHelper.Message, new Vector2(20, 20), Color.Yellow);
-      spriteBatch.DrawString(Arial, "Press:", new Vector2(20, 100), Color.Snow);
-      spriteBatch.DrawString(Arial, " - F1 to sign in", new Vector2(20, 120), Color.Snow);
-      spriteBatch.DrawString(Arial, " - F2 to create a session", new Vector2(20, 140), Color.Snow);
-      spriteBatch.DrawString(Arial, " - F3 to find a session", new Vector2(20, 160), Color.Snow);
-      spriteBatch.DrawString(Arial, " - F4 to asynchronously find a session",
-        new Vector2(20, 180), Color.Snow);
-      spriteBatch.DrawString(Arial, @"After the game starts, press other keys to send messages", 
-        new Vector2(20, 220), Color.Snow);
-
-      spriteBatch.End();
-
       base.Draw(gameTime);
+      spriteBatch.End();
     }
   }
 }

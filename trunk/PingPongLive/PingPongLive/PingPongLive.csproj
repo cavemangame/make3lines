@@ -71,6 +71,8 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -84,7 +86,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameInterface\ActionScene.cs" />
+    <Compile Include="GameInterface\Ball.cs" />
+    <Compile Include="GameInterface\GameScene.cs" />
+    <Compile Include="GameInterface\ImageComponent.cs" />
+    <Compile Include="GameInterface\MenuScene.cs" />
+    <Compile Include="GameInterface\Player.cs" />
+    <Compile Include="GameInterface\TextMenuComponent.cs" />
     <Compile Include="Helpers\NetworkHelper.cs" />
+    <Compile Include="Helpers\SpriteHelper.cs" />
+    <Compile Include="Helpers\TextHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="PingPongLive.cs" />
