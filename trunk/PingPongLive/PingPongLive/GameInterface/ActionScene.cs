@@ -9,12 +9,12 @@ namespace PingPongLive.GameInterface
     #region Variables 
 
     private ImageComponent background;
-    private Player player1, player2;
     private Ball ball;
     private TimeSpan elapsedTime = TimeSpan.Zero;
 
     public bool IsGameOver { get; set; }
-
+    public Player Player1 { get; set; }
+    public Player Player2 { get; set; }
     #endregion
 
     #region Constructor
@@ -24,13 +24,13 @@ namespace PingPongLive.GameInterface
       background = new ImageComponent(game, bgTexture, DrawMode.Stretch, null);
       Components.Add(background);
 
-      player1 = new Player(game, gameTex, new Rectangle(23, 0, 22, 92), PlayerIndex.One);
-      player1.Reset();
-      Components.Add(player1);
+      Player1 = new Player(game, gameTex, new Rectangle(23, 0, 22, 92), PlayerIndex.One);
+      Player1.Reset();
+      Components.Add(Player1);
 
-      player2 = new Player(game, gameTex, new Rectangle(0, 0, 22, 92), PlayerIndex.Two);
-      player2.Reset();
-      Components.Add(player2);
+      Player2 = new Player(game, gameTex, new Rectangle(0, 0, 22, 92), PlayerIndex.Two);
+      Player2.Reset();
+      Components.Add(Player2);
 
       ball = new Ball(game, gameTex, new Vector2(400, 300), new Rectangle(1, 94, 33, 33));
       Components.Add(ball);
@@ -47,8 +47,8 @@ namespace PingPongLive.GameInterface
       {
         ball.MoveBall();
         ball.HandleBoundField();
-        ball.HandleBoundPaddle(player1);
-        ball.HandleBoundPaddle(player2);
+        ball.HandleBoundPaddle(Player1);
+        ball.HandleBoundPaddle(Player2);
 
         if (ball.HandleLoose())
           IsGameOver = true;

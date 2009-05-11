@@ -19,7 +19,7 @@ namespace PingPongLive.GameInterface
       // Создаем меню
       string[] items = { "One Player", "Two Players", "Network Game", "Help", "Quit" };
       menu = new TextMenuComponent(game, smallFont, largeFont);
-      menu.Position = new Vector2(400, 300);
+      menu.Position = new Vector2((Game.Window.ClientBounds.Width - menu.Width) / 2, 330);
       menu.SetMenuItems(items);
       Components.Add(menu);
 
