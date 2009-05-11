@@ -60,19 +60,11 @@ namespace XnaTetris.Interface
           stor.Sprite.Render(stor.Rect);
         }
 
-        SpriteBatch spriteBatch = new SpriteBatch(LinesGame.GraphicsDevice);
-        spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
-
         foreach (TextToRender ttor in helper.Texts)
         {
-          spriteBatch.DrawString(ttor.Font, ttor.Text,
-            new Vector2(ttor.Pos.X, ttor.Pos.Y), 
-            ttor.TextColor, 0f,
-            new Vector2(0, 0), ttor.Scale,
-            SpriteEffects.None, 0);
-
+          TextHelper.DrawShadowedText(ttor.Font, ttor.Text, (int)ttor.Pos.X, (int)ttor.Pos.Y, 
+            ttor.TextColor, ttor.Scale);
         }
-        spriteBatch.End();
       }
 
       base.Draw(gameTime);

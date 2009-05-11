@@ -31,8 +31,6 @@ namespace XnaTetris.Interface
 
     private readonly string text;
 
-    private SpriteBatch spriteBatch;
-
     // вспомогательные переменные
     private Vector2 currentPos;
     private float currentScale;
@@ -61,7 +59,6 @@ namespace XnaTetris.Interface
       color = setColor;
       currentOpacity = beginOpacity = setBeginOpacity;
       endOpacity = setEndOpacity;
-      spriteBatch = new SpriteBatch(Game.GraphicsDevice);
     }
 
     public PopupText(Microsoft.Xna.Framework.Game setGame, long setStartTime, string setText, long setPopupTime, Vector2 setBeginPos,
@@ -79,13 +76,7 @@ namespace XnaTetris.Interface
     {
       if (!IsPopupEnded(gameTime))
       {
-        spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
-
-        spriteBatch.DrawString(font, text, currentPos, GetCurrentColor(), 0f,
-                               new Vector2(0, 0), currentScale,
-                               SpriteEffects.None, 0);
-
-        spriteBatch.End();
+        TextHelper.DrawShadowedText(font, text, (int)currentPos.X, (int)currentPos.Y, GetCurrentColor(), currentScale);
       }
       base.Draw(gameTime);
     }
