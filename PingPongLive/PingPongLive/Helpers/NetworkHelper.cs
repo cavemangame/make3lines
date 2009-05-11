@@ -10,7 +10,7 @@ namespace PingPongLive.Helpers
 
     private NetworkSession session; // Игровая сессия
     private const int maximumGamers = 2;
-    private const int maximumLocalPlayers = 1;
+    private const int maximumLocalPlayers = 2;
     private IAsyncResult AsyncSessionFind; //асинхронный финдер для сессии
 
     PacketWriter packetWriter = new PacketWriter();
@@ -62,7 +62,7 @@ namespace PingPongLive.Helpers
         session.AllowHostMigration = true;
 
         // Игрокам НЕ разрешено подключаться в ходе игры
-        session.AllowJoinInProgress = false;
+        session.AllowJoinInProgress = true;
 
         session.GamerJoined +=
               new EventHandler<GamerJoinedEventArgs>(session_GamerJoined);
