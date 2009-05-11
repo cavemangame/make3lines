@@ -9,8 +9,8 @@ namespace PingPongLive.Helpers
     #region Variables
 
     private NetworkSession session; // Игровая сессия
-    private const int maximumGamers = 2;
-    private const int maximumLocalPlayers = 2;
+    private const int maximumGamers = 4;
+    private const int maximumLocalPlayers = 4;
     private IAsyncResult AsyncSessionFind; //асинхронный финдер для сессии
 
     PacketWriter packetWriter = new PacketWriter();
@@ -170,6 +170,7 @@ namespace PingPongLive.Helpers
         Message = "Gamer " + e.Gamer.Tag + " joined the session!";
 
         // Другой игрок присоединился, начинаем игру
+        SetPlayerReady();
         session.StartGame();
       }
 
