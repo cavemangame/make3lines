@@ -14,12 +14,12 @@ with.
 	from http://www.getfreefonts.info/free_font.bluehighway.html
     -->
     <FontName>Arial</FontName>
-
-	  <!--
+    
+	<!--
     Size is a float value, measured in points. Modify this value to change
     the size of the font.
     -->
-    <Size>16</Size>
+    <Size>22</Size>
 
     <!--
     Spacing is a float value, measured in pixels. Modify this value to change
