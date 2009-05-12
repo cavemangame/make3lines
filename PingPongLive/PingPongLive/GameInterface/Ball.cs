@@ -50,7 +50,7 @@ namespace PingPongLive.GameInterface
     {
       if ((networkHelper.NetworkGameSession == null) || (networkHelper.NetworkGameSession.IsHost))
       {
-        networkHelper.ServerPacketWriter.Write('L');
+        networkHelper.ServerPacketWriter.Write('B');
         networkHelper.ServerPacketWriter.Write(Position);
         networkHelper.ServerPacketWriter.Write(Speed);
         networkHelper.ServerPacketWriter.Write(SpeedVector);
