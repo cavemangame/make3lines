@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Win32;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.GamerServices;
@@ -38,10 +39,21 @@ namespace PingPongLive
       graphics = new GraphicsDeviceManager(this);
       Content.RootDirectory = "Content";
 
+      if (GraphicsAdapter.DefaultAdapter.GetCapabilities(DeviceType.Hardware).MaxPixelShaderProfile < ShaderProfile.PS_2_0)
+
+        graphics.PreparingDeviceSettings += new EventHandler<PreparingDeviceSettingsEventArgs>(SetToReference);
+
       Components.Add(new GamerServicesComponent(this));
 
       networkHelper = new NetworkHelper();
       Services.AddService(typeof(NetworkHelper), networkHelper);
+    }
+
+    void SetToReference(object sender, PreparingDeviceSettingsEventArgs eventargs)
+    {
+      //eventargs.GraphicsDeviceInformation.PresentationParameters.PresentOptions.CreationOptions = CreateOptions.SoftwareVertexProcessing;
+      eventargs.GraphicsDeviceInformation.DeviceType = DeviceType.Reference;
+      eventargs.GraphicsDeviceInformation.PresentationParameters.MultiSampleType = MultiSampleType.None;
     }
 
     #endregion
