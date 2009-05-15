@@ -2,6 +2,7 @@
 using System.Net.Mime;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Net;
 using PingPongLive.Helpers;
 
 namespace PingPongLive.GameInterface
@@ -88,55 +89,49 @@ namespace PingPongLive.GameInterface
 
     public void HandleClientData()
     {
-      try
-      {
-        while (networkHelper.ClientPacketReader.PeekChar() != -1)
-        {
-          char header = networkHelper.ClientPacketReader.ReadChar();
+      PacketReader reader = networkHelper.ClientPacketReader;
 
-          switch (header)
-          {
-            case 'P':
-              Paused = networkHelper.ClientPacketReader.ReadBoolean();
-              break;
-            case 'S':
-              Player2.Position = networkHelper.ClientPacketReader.ReadVector2();
-              break;
-          }
+      while (reader.Position < reader.Length)
+      {
+
+        char header = reader.ReadChar();
+
+        switch (header)
+        {
+          case 'P':
+            Paused = reader.ReadBoolean();
+            break;
+          case 'S':
+            Player2.Position = reader.ReadVector2();
+            break;
         }
       }
-      catch(Exception)
-      {}
     }
 
     public void HandleServerData()
     {
-      try
+      PacketReader reader = networkHelper.ServerPacketReader;
+
+      while (reader.Position < reader.Length)
       {
+        char header = reader.ReadChar();
 
-        while (networkHelper.ServerPacketReader.PeekChar() != -1)
+        switch (header)
         {
-          char header = networkHelper.ServerPacketReader.ReadChar();
+          case 'P':
+            Paused = reader.ReadBoolean();
+            break;
+          case 'S':
+            Player1.Position = reader.ReadVector2();
+            break;
+          case 'B':
+            ball.Position = reader.ReadVector2();
+            ball.Speed = reader.ReadInt32();
+            ball.SpeedVector = reader.ReadVector2();
+            break;
 
-          switch (header)
-          {
-            case 'P':
-              Paused = networkHelper.ServerPacketReader.ReadBoolean();
-              break;
-            case 'S':
-              Player1.Position = networkHelper.ServerPacketReader.ReadVector2();
-              break;
-            case 'B':
-              ball.Position = networkHelper.ServerPacketReader.ReadVector2();
-              ball.Speed = networkHelper.ServerPacketReader.ReadInt32();
-              ball.SpeedVector = networkHelper.ServerPacketReader.ReadVector2();
-              break;
-
-          }
         }
       }
-      catch(Exception)
-      {}
     }
 
 
