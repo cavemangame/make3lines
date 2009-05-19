@@ -209,6 +209,7 @@ namespace XnaTetris.Interface
       gamewinWindow = new LevelWindow(LinesGame, rectEndDialog, CreateGameWinDialog());
       gamewinWindow.BtnOkClick += gamewinWindow_BtnOkClick;
       BlockGrid.Enabled = false;
+      Serv.SaveHiScoreIfNeeded(LinesGame.Score);
       gamewinWindow.Show();
     }
 

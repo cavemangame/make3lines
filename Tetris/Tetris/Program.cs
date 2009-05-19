@@ -1,4 +1,6 @@
-﻿namespace XnaTetris
+﻿using XnaTetris.Game;
+
+namespace XnaTetris
 {
   static class Program
   {
