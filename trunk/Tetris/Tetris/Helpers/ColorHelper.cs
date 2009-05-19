@@ -29,6 +29,8 @@ namespace XnaTetris.Helpers
     /// Half alpha color helper. Just white with 50% alpha.
     /// </summary>
     public static readonly Color HalfAlphaBlack = new Color(0, 0, 0, 128);
+
+    public static readonly Color SmallAlphaBlack = new Color(0, 0, 0, 32);
     #endregion
 
     #region Convert Color to Vector4

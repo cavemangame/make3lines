@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hiscores>
+  <hiscore id="1" text="Рейстлин, полубог" score="200000" color="Gray"/>
+  <hiscore id="2" text="Тор, старейший" score="145000" color="Red"/>
+  <hiscore id="3" text="Тангарн, старейший" score="115500"  color="White"/>
+  <hiscore id="4" text="Элендар, старейший" score="102000"  color="Green"/>
+  <hiscore id="5" text="Мистикус, повелитель стихий" score="98550"  color="Blue"/>
+  <hiscore id="6" text="Амоен, повелитель стихий" score="92000"  color="Yellow"/>
+  <hiscore id="7" text="Варг, повелитель стихий" score="89000"  color="Red"/>
+  <hiscore id="8" text="Аперон, повелитель стихий" score="75000"  color="White"/>
+  <hiscore id="9" text="Флагх, мастер" score="69000"  color="Green"/>
+  <hiscore id="10" text="Крондар, мастер" score="68750"  color="Blue"/>
+</hiscores>
