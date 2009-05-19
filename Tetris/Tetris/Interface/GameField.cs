@@ -302,12 +302,14 @@ namespace XnaTetris.Interface
       var font = ContentSpace.GetFont("SmallFont");
 
       helper.Texts.Add(new TextToRender(font, new Vector2(310, 205), 1.5f, Color.Red,
-        String.Format("Вы проиграли!")));
+                                        String.Format("Вы проиграли!")));
 
       helper.Texts.Add(new TextToRender(font, new Vector2(210, 240), 1f, Color.Red,
-         String.Format("Вы проиграли, просрали или ")));
-       helper.Texts.Add(new TextToRender(font, new Vector2(210, 260), 1f, Color.Red,
-         String.Format("другим образом соснули хуйца!")));
+                                        String.Format("Вы проиграли, но ваш результат")));
+      helper.Texts.Add(new TextToRender(font, new Vector2(210, 260), 1f, Color.Red,
+                                        String.Format("до этого уровня сохранен.")));
+      helper.Texts.Add(new TextToRender(font, new Vector2(210, 280), 1f, Color.Red,
+                                        String.Format("Попробуйте еще раз.")));
 
       return helper;
     }

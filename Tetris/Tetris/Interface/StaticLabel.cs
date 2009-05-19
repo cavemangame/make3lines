@@ -66,14 +66,14 @@ namespace XnaTetris.Interface
       {
         Texture2D backgroundTexture = new Texture2D(Game.GraphicsDevice, 1, 1, 1,
                             TextureUsage.Linear, SurfaceFormat.Color);
-        backgroundTexture.SetData(new[] { ColorHelper.HalfAlphaBlack });
+        backgroundTexture.SetData(new[] { ColorHelper.SmallAlphaBlack });
         bgSprite = new SpriteHelper(backgroundTexture, BoundingRect);
       }
       if (bgHiSprite == null) //создадим спрайт ручками
       {
         Texture2D backgroundHiTexture = new Texture2D(Game.GraphicsDevice, 1, 1, 1,
                             TextureUsage.Linear, SurfaceFormat.Color);
-        backgroundHiTexture.SetData(new[] { ColorHelper.HalfAlpha });
+        backgroundHiTexture.SetData(new[] { ColorHelper.SmallAlphaBlack });
         bgHiSprite = new SpriteHelper(backgroundHiTexture, BoundingRect);
       }
     }
@@ -99,12 +99,12 @@ namespace XnaTetris.Interface
 
     protected override void HandleMouseClick()
     {
-      MousePressed(this, EventArgs.Empty);
+      //MousePressed(this, EventArgs.Empty);
     }
 
      protected override void HandleMouseOver(bool isOver)
      {
-       IsMouseOver = isOver;
+       //IsMouseOver = isOver;
      }
 
     #endregion
