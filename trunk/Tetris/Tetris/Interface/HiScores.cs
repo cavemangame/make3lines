@@ -72,6 +72,7 @@ namespace XnaTetris.Interface
          ColorHelper.ColorFromString(n.Attributes["color"].Value), 1.4f));
         y += 50;
       }
+
       hiscores.Show();
       Components.Add(hiscores);
     }

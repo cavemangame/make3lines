@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using Microsoft.Xna.Framework;
+using XnaTetris.Algorithms;
 using XnaTetris.Blocks;
 
 namespace XnaTetris.Game
@@ -108,7 +109,7 @@ namespace XnaTetris.Game
       }
     }
 
-    public static string GetGodNameByScore(Algorithms.Scores scores)
+    public static string GetGodNameByScore(Scores scores)
     {
       string godName = String.Empty;
       long maxScore = 0;
@@ -144,6 +145,73 @@ namespace XnaTetris.Game
       }
 
       return godName;
+    }
+
+    public static string GetGodColorByScore(Scores scores)
+    {
+      string colorName = String.Empty;
+      long maxScore = 0;
+      if (scores.BlueScore > maxScore)
+      {
+        maxScore = scores.BlueScore;
+        colorName = "Blue";
+      }
+      if (scores.RedScore > maxScore)
+      {
+        maxScore = scores.RedScore;
+        colorName = "Red";
+      }
+      if (scores.GreenScore > maxScore)
+      {
+        maxScore = scores.GreenScore;
+        colorName = "Green";
+      }
+      if (scores.YellowScore > maxScore)
+      {
+        maxScore = scores.YellowScore;
+        colorName = "Yellow";
+      }
+      if (scores.WhiteScore > maxScore)
+      {
+        maxScore = scores.WhiteScore;
+        colorName = "White";
+      }
+      if (scores.GrayScore > maxScore)
+      {
+        maxScore = scores.GrayScore;
+        colorName = "Gray";
+      }
+
+      return colorName;
+    }
+
+    public static void SaveHiScoreIfNeeded(Algorithms.Scores scores)
+    {
+      XmlDocument doc = new XmlDocument();
+      doc.Load("Content/hiscores.xml");
+      XmlNode node = doc.SelectSingleNode(String.Format("/hiscores"));
+      foreach (XmlNode n in node.ChildNodes)
+      {
+        // считаем, что всегда рекорды упорядочены по убыванию
+        if (scores.OverallScore >= Convert.ToInt32(n.Attributes["score"].Value))
+        {
+          n.Attributes["score"].Value = scores.OverallScore.ToString();
+          n.Attributes["text"].Value = String.Format("{0}, {1}", playerName,
+                                                        Title.GetTitle(scores.OverallScore));
+          n.Attributes["color"].Value = GetGodColorByScore(scores);
+          break;
+        }
+      }
+      doc.Save("Content/hiscores.xml");
+    }
+
+    public static void TestHiScoresSave()
+    {
+      playerName = "NECROMANT";
+      Scores sc = new Scores();
+      sc.BlueScore = 8;
+      sc.OverallScore = 110000;
+      SaveHiScoreIfNeeded(sc);
     }
   }
 }
