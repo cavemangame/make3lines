@@ -177,8 +177,12 @@ namespace XnaTetris.Algorithms
         for (int x = 0; x < BlocksGrid.GRID_WIDTH; ++x)
         {
           Block block = blocksGrid.Grid[x, y];
-          int blocksForScoreCount = 0;
+
+          int blockHorizCount = 0;
+          int blockVertCount = 0;
+
           bool isHorizontalLine = false;
+          bool isVerticalLine = false;
 
           // can this block be rightmost?
           if (x == BlocksGrid.GRID_WIDTH - 1 || !block.Type.Equals(blocksGrid.Grid[x + 1, y].Type))
@@ -188,7 +192,7 @@ namespace XnaTetris.Algorithms
             if (sameTypeLeftBlocksCount >= 2)
             {
               result = true;
-              blocksForScoreCount += sameTypeLeftBlocksCount + 1;
+              blockHorizCount += sameTypeLeftBlocksCount + 1;
               for (int i = 0; i <= sameTypeLeftBlocksCount; ++ i)
               {
                 blocksGrid.Grid[x - i, y].IsDestroyed = true;
@@ -205,26 +209,38 @@ namespace XnaTetris.Algorithms
             if (sameTypeUpBlocksCount >= 2)
             {
               result = true;
-              blocksForScoreCount += sameTypeUpBlocksCount + 1;
+              blockVertCount += sameTypeUpBlocksCount + 1;
+
               for (int i = 0; i <= sameTypeUpBlocksCount; ++ i)
               {
                 blocksGrid.Grid[x, y - i].IsDestroyed = true;
               }
+              isVerticalLine = true;
             }
           }
 
-          int score = blocksGrid.Grid[x, y].GetScore(blocksForScoreCount);
-          blocksGrid.LinesGame.Score.OverallScore += score;
-          blocksGrid.LinesGame.LevelScore += score;
-          blocksGrid.LinesGame.GameField.LevelScore.OverallScore += score;
-          blocksGrid.Grid[x, y].AddScore(blocksForScoreCount);
-          if (blocksForScoreCount > 0)
+          if (isHorizontalLine)
           {
-            GeneratePopupScore(x, y, blocksForScoreCount, isHorizontalLine);
+            AddScore(x, y, blockHorizCount);
+            GeneratePopupScore(x, y, blockHorizCount, true);
+          }
+          if (isVerticalLine)
+          {
+            AddScore(x, y, blockVertCount);
+            GeneratePopupScore(x, y, blockVertCount, false);
           }
         }
       }
       return result;
+    }
+
+    private void AddScore(int x, int y, int blockCount)
+    {
+      int score = blocksGrid.Grid[x, y].GetScore(blockCount);
+      blocksGrid.LinesGame.Score.OverallScore += score;
+      blocksGrid.LinesGame.LevelScore += score;
+      blocksGrid.LinesGame.GameField.LevelScore.OverallScore += score;
+      blocksGrid.Grid[x, y].AddScore(blockCount);
     }
 
     /// <summary>
