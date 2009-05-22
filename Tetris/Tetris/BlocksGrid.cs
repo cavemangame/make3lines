@@ -47,6 +47,10 @@ namespace XnaTetris
     /// </summary>
     private bool isShowingHelp;
 
+    private bool needShowHelp;
+
+    private TimeSpan elapsedTime = TimeSpan.Zero;
+
     #endregion
 
     #region Properties
@@ -132,10 +136,24 @@ namespace XnaTetris
         if (isShowingHelp)
         {
           isShowingHelp = false;
+          needShowHelp = false;
+          elapsedTime = TimeSpan.Zero;
           CleanHelpedStates();
         }
         UpdateClickedBlock(Input.MousePos, gameTime);
       }
+
+      if (LinesGame.GameState == Serv.GameState.GameStateRunning && LinesGame.IsBoardInStableState()
+        && !needShowHelp)
+      {
+        elapsedTime += gameTime.ElapsedGameTime;
+
+        if (elapsedTime > TimeSpan.FromMilliseconds(IDLE_TIME))
+        {
+          needShowHelp = true;
+        }
+      }
+
       foreach (Block block in Grid)
       {
         block.Update(gameTime);
@@ -210,7 +228,7 @@ namespace XnaTetris
           popupText.Draw(gameTime);
         }
 
-        if (LinesGame.IsBoardInStableState() && LinesGame.ElapsedGameMs - StartIdleTime >= IDLE_TIME)
+        if (LinesGame.IsBoardInStableState() && needShowHelp)
           FindAndShowHelp();
       }
     }
