@@ -111,10 +111,10 @@ namespace XnaTetris.Blocks
         ContentSpace.GetSprite("SelectionBlock").Render(BlockRectangle);
       }
 
-      if (Multiplier > 1)
+      if (Multiplier > 1 && !IsDestroyed)
       {
         TextHelper.DrawShadowedText(ContentSpace.GetFont("NormalFont"), 
-          String.Format("x{0}", Multiplier), BlockRectangle.X + 15, BlockRectangle.Y + 10, Color.White, 1.25f);
+          String.Format("x{0}", Multiplier), BlockRectangle.X + 15, BlockRectangle.Y + 10, ScoreColor, 1.25f);
       }
 
       if (IsHelped)
