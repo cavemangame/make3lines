@@ -28,6 +28,7 @@ namespace XnaTetris
     // components
     private GameScene menu;
     private GameScene hiScores;
+    private GameScene help;
 
     public Player Player { get; set;}
     
@@ -94,6 +95,8 @@ namespace XnaTetris
       Components.Add(GameField);
       hiScores = new HiScores(this);
       Components.Add(hiScores);
+      help = new HelpWindow(this);
+      Components.Add(help);
 
       base.LoadContent();
 
@@ -186,7 +189,7 @@ namespace XnaTetris
 
     public void ShowHiScores()
     {
-      GameState = Serv.GameState.GameStateRunning;
+      GameState = Serv.GameState.GameStateMenu;
       hiScores.Show();
     }
 
@@ -199,7 +202,8 @@ namespace XnaTetris
 
     public void ShowHelp()
     {
-      //throw new System.NotImplementedException();
+      GameState = Serv.GameState.GameStateMenu;
+      help.Show();
     }
 
     #endregion
