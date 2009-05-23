@@ -79,6 +79,7 @@ namespace XnaTetris.Game
           sprites.Add("YellowBackground", new SpriteHelper(content.Load<Texture2D>("YellowBackground"), null));
           sprites.Add("WhiteBackground", new SpriteHelper(content.Load<Texture2D>("WhiteBackground"), null));
           sprites.Add("GrayBackground", new SpriteHelper(content.Load<Texture2D>("GrayBackground"), null));
+          sprites.Add("HelpBackground", new SpriteHelper(content.Load<Texture2D>("HelpBackground"), null));
 
           sprites.Add("Caret", new SpriteHelper(content.Load<Texture2D>("Caret"), null));
           sprites.Add("TextBackground", new SpriteHelper(content.Load<Texture2D>("TextBackground"), null));

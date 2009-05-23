@@ -118,6 +118,7 @@
     <Compile Include="Interface\Button.cs" />
     <Compile Include="Interface\Control.cs" />
     <Compile Include="Interface\GameField.cs" />
+    <Compile Include="Interface\HelpWindow.cs" />
     <Compile Include="Interface\HiScores.cs" />
     <Compile Include="Interface\ListControls.cs" />
     <Compile Include="Interface\Menu.cs" />

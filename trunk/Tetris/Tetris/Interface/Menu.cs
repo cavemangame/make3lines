@@ -114,8 +114,8 @@ namespace XnaTetris.Interface
 
     private void btnHelp_ButtonAction(object sender, EventArgs e)
     {
-     /* Hide();
-      LinesGame.ShowHelp();*/
+      Hide();
+      LinesGame.ShowHelp();
     }
 
     private void textBox_EnterKeyPressed(object sender, EventArgs e)
