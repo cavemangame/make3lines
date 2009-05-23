@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using XnaTetris.Blocks;
 using XnaTetris.Game;
@@ -181,6 +182,9 @@ namespace XnaTetris.Algorithms
           int blockHorizCount = 0;
           int blockVertCount = 0;
 
+          int horizMultiplier = 1;
+          int vertMultiplier = 1;
+
           bool isHorizontalLine = false;
           bool isVerticalLine = false;
 
@@ -196,6 +200,7 @@ namespace XnaTetris.Algorithms
               for (int i = 0; i <= sameTypeLeftBlocksCount; ++ i)
               {
                 blocksGrid.Grid[x - i, y].IsDestroyed = true;
+                horizMultiplier *= blocksGrid.Grid[x - i, y].Multiplier;
               }
               isHorizontalLine = true;
             }
@@ -214,6 +219,7 @@ namespace XnaTetris.Algorithms
               for (int i = 0; i <= sameTypeUpBlocksCount; ++ i)
               {
                 blocksGrid.Grid[x, y - i].IsDestroyed = true;
+                vertMultiplier *= blocksGrid.Grid[x, y - i].Multiplier;
               }
               isVerticalLine = true;
             }
@@ -221,22 +227,22 @@ namespace XnaTetris.Algorithms
 
           if (isHorizontalLine)
           {
-            AddScore(x, y, blockHorizCount);
-            GeneratePopupScore(x, y, blockHorizCount, true);
+            AddScore(x, y, blockHorizCount, horizMultiplier);
+            GeneratePopupScore(x, y, blockHorizCount, horizMultiplier, true);
           }
           if (isVerticalLine)
           {
-            AddScore(x, y, blockVertCount);
-            GeneratePopupScore(x, y, blockVertCount, false);
+            AddScore(x, y, blockVertCount, vertMultiplier);
+            GeneratePopupScore(x, y, blockVertCount, vertMultiplier, false);
           }
         }
       }
       return result;
     }
 
-    private void AddScore(int x, int y, int blockCount)
+    private void AddScore(int x, int y, int blockCount, int multiplier)
     {
-      int score = blocksGrid.Grid[x, y].GetScore(blockCount);
+      int score = blocksGrid.Grid[x, y].GetScore(blockCount) * multiplier;
       blocksGrid.LinesGame.Score.OverallScore += score;
       blocksGrid.LinesGame.LevelScore += score;
       blocksGrid.LinesGame.GameField.LevelScore.OverallScore += score;
@@ -250,7 +256,7 @@ namespace XnaTetris.Algorithms
     /// <param name="y">Y - крайнего блока</param>
     /// <param name="blocksForScoreCount">число прибитых блоков в линии</param>
     /// <param name="isHorizontalLine"></param>
-    private void GeneratePopupScore(int x, int y, int blocksForScoreCount, bool isHorizontalLine)
+    private void GeneratePopupScore(int x, int y, int blocksForScoreCount, int multiplier, bool isHorizontalLine)
     {
       // find popup text position == center of center of destroyed blocks line
       int xx, yy;
@@ -266,10 +272,13 @@ namespace XnaTetris.Algorithms
         yy = (GetRectangle(x, y).Bottom - GetRectangle(x, y - blocksForScoreCount + 1).Top) / 2
           + GetRectangle(x, y - blocksForScoreCount + 1).Top;
       }
-      // позицию необходимо сжать по размерам экрана
+
+      string text = blocksGrid.Grid[x, y].GetScore(blocksForScoreCount).ToString();
+      if (multiplier > 1) 
+        text += String.Format("x{0}", multiplier);
       Point p = new Point(xx, yy);
       blocksGrid.AddDestroyPopupText(new Vector2(p.X, p.Y),
-                                     blocksGrid.Grid[x, y].GetScore(blocksForScoreCount).ToString(),
+                                     text,
                                      blocksGrid.Grid[x, y].ScoreColor);
     }
 
