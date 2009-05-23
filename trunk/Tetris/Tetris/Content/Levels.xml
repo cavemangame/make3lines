@@ -57,7 +57,7 @@
       <text color='Gray' wrap='false'> = 120 очков</text>
       <text color ='Orange'>Часто, чтобы пройти уровень, нужно стараться собирать 4ки и 5ки</text>
     </dialog>
-	</level>
+  </level>
   
   <level number='3'>
     <time>30</time>
@@ -101,7 +101,7 @@
     <GreenChance>1,2</GreenChance>
     <WhiteChance>0,5</WhiteChance>
     <GrayChance>0,8</GrayChance>
-    <mul2chance>0,05</mul2chance>
+    <mul2chance>0,005</mul2chance>
   </level>
   
   
@@ -150,8 +150,8 @@
     <BlueChance>0,5</BlueChance>
     <RedChance>1,6</RedChance>
     <YellowChance>1,2</YellowChance>
-    <mul2chance>0,02</mul2chance>
-    <mul3chance>0,007</mul3chance>
+    <mul2chance>0,01</mul2chance>
+    <mul3chance>0,002</mul3chance>
   </level>
   <level number='8'>
     <time>55</time>
@@ -166,8 +166,8 @@
     <RedChance>1,8</RedChance>
     <YellowChance>1,2</YellowChance>
     <WhiteChance>0,9</WhiteChance>
-    <mul2chance>0,03</mul2chance>
-    <mul3chance>0,01</mul3chance>
+    <mul2chance>0,02</mul2chance>
+    <mul3chance>0,006</mul3chance>
   </level>
   
   <level number='9'>
