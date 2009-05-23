@@ -255,6 +255,7 @@ namespace XnaTetris.Algorithms
     /// <param name="x">X - крайнего блока</param>
     /// <param name="y">Y - крайнего блока</param>
     /// <param name="blocksForScoreCount">число прибитых блоков в линии</param>
+    /// <param name="multiplier">Мультипликатор</param>
     /// <param name="isHorizontalLine"></param>
     private void GeneratePopupScore(int x, int y, int blocksForScoreCount, int multiplier, bool isHorizontalLine)
     {
@@ -276,8 +277,7 @@ namespace XnaTetris.Algorithms
       string text = blocksGrid.Grid[x, y].GetScore(blocksForScoreCount).ToString();
       if (multiplier > 1) 
         text += String.Format("x{0}", multiplier);
-      Point p = new Point(xx, yy);
-      blocksGrid.AddDestroyPopupText(new Vector2(p.X, p.Y),
+      blocksGrid.AddDestroyPopupText(new Vector2(xx, yy),
                                      text,
                                      blocksGrid.Grid[x, y].ScoreColor);
     }
