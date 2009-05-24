@@ -33,27 +33,27 @@ namespace XnaTetris.Interface
 
 		private void InitButtons(Microsoft.Xna.Framework.Game setGame)
 		{
-			btnNew = new Button(setGame, new Rectangle(300, 150, 200, 50), ContentSpace.GetSprite("MenuButtonNew"),
+			btnNew = new Button(setGame, new Rectangle(330, 200, 137, 30), ContentSpace.GetSprite("MenuButtonNew"),
         ContentSpace.GetSprite("MenuHiButtonNew"));
 			btnNew.ButtonAction += btnNew_ButtonAction;
 			Components.Add(btnNew);
 
-      btnContinue = new Button(setGame, new Rectangle(300, 220, 200, 50), ContentSpace.GetSprite("MenuButtonContinue"),
+      btnContinue = new Button(setGame, new Rectangle(260, 240, 287, 30), ContentSpace.GetSprite("MenuButtonContinue"),
         ContentSpace.GetSprite("MenuHiButtonContinue"));
       btnContinue.ButtonAction += btnContinue_ButtonAction;
       Components.Add(btnContinue);
 
-      btnHiScores = new Button(setGame, new Rectangle(300, 290, 200, 50), ContentSpace.GetSprite("MenuButtonHiScore"),
+      btnHiScores = new Button(setGame, new Rectangle(302, 280, 195, 30), ContentSpace.GetSprite("MenuButtonHiScore"),
         ContentSpace.GetSprite("MenuHiButtonHiScore"));
       btnHiScores.ButtonAction += btnHiScore_ButtonAction;
       Components.Add(btnHiScores);
 
-      btnHelp = new Button(setGame, new Rectangle(300, 360, 200, 50), ContentSpace.GetSprite("MenuButtonHelp"),
+      btnHelp = new Button(setGame, new Rectangle(310, 320, 180, 30), ContentSpace.GetSprite("MenuButtonHelp"),
         ContentSpace.GetSprite("MenuHiButtonHelp"));
       btnHelp.ButtonAction += btnHelp_ButtonAction;
       Components.Add(btnHelp);
 
-      btnExit = new Button(setGame, new Rectangle(300, 430, 200, 50), ContentSpace.GetSprite("MenuButtonExit"),
+      btnExit = new Button(setGame, new Rectangle(325, 360, 147, 30), ContentSpace.GetSprite("MenuButtonExit"),
         ContentSpace.GetSprite("MenuHiButtonExit"));
       btnExit.ButtonAction += btnExit_ButtonAction;
       Components.Add(btnExit);
