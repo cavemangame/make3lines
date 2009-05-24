@@ -23,17 +23,38 @@ namespace XnaTetris.Algorithms
     #endregion
 
     #region Finder functions
+
+    // проверяет, стакаются ли блоки (одного цвета, или хотя бы один из них - нейтральный)
+    private bool IsBlockStacked(Block b1, Block b2)
+    {
+      if (b1.Type == BlockFactory.BlockType.Neutral || b2.Type == BlockFactory.BlockType.Neutral)
+        return true;
+      return b1.Type.Equals(b2.Type);
+    }
+
     public int SameTypeLeftBlocksCount(int x, int y)
     {
       Block block = blocksGrid.Grid[x, y];
       int xIndex = x - 1;
       int result = 0;
 
-      while (xIndex >= 0 && block.Type.Equals(blocksGrid.Grid[xIndex, y].Type))
+      if (block.Type != BlockFactory.BlockType.Neutral)
       {
-        ++ result;
-        -- xIndex;
+        while (xIndex >= 0 && IsBlockStacked(block, blocksGrid.Grid[xIndex, y]))
+        {
+          ++result;
+          --xIndex;
+        }
       }
+      else //сравниваем друг за другом
+      {
+        while (xIndex >= 0 && IsBlockStacked(blocksGrid.Grid[xIndex+1, y], blocksGrid.Grid[xIndex, y]))
+        {
+          ++result;
+          --xIndex;
+        }
+      }
+
       return result;
     }
 
@@ -43,10 +64,21 @@ namespace XnaTetris.Algorithms
       int yIndex = y - 1;
       int result = 0;
 
-      while (yIndex >= 0 && block.Type.Equals(blocksGrid.Grid[x, yIndex].Type))
+      if (block.Type != BlockFactory.BlockType.Neutral)
       {
-        ++ result;
-        -- yIndex;
+        while (yIndex >= 0 && IsBlockStacked(block, blocksGrid.Grid[x, yIndex]))
+        {
+          ++result;
+          --yIndex;
+        }
+      }
+      else //сравниваем друг за другом
+      {
+        while (yIndex >= 0 && IsBlockStacked(blocksGrid.Grid[x, yIndex + 1], blocksGrid.Grid[x, yIndex]))
+        {
+          ++result;
+          --yIndex;
+        }
       }
       return result;
     }
@@ -66,7 +98,7 @@ namespace XnaTetris.Algorithms
       int result = 0;
 
       while (rightmostX + 1 < BlocksGrid.GRID_WIDTH &&
-             block.Type.Equals(blocksGrid.Grid[rightmostX + 1, y].Type))
+        IsBlockStacked(block, blocksGrid.Grid[rightmostX + 1, y]))
       {
         ++ rightmostX;
       }
@@ -77,7 +109,7 @@ namespace XnaTetris.Algorithms
       }
 
       while (bottommestY + 1 < BlocksGrid.GRID_HEIGHT &&
-             block.Type.Equals(blocksGrid.Grid[x, bottommestY + 1].Type))
+        IsBlockStacked(block, blocksGrid.Grid[x, bottommestY + 1]))
       {
         ++ bottommestY;
       }
@@ -100,7 +132,7 @@ namespace XnaTetris.Algorithms
     /// <returns>blocks amount</returns>
     private int BlocksFormingLinesAfterSwap(int x1, int y1, int x2, int y2)
     {
-      if (blocksGrid.Grid[x1, y1].Type.Equals(blocksGrid.Grid[x2, y2].Type))
+      if (IsBlockStacked(blocksGrid.Grid[x1, y1], blocksGrid.Grid[x2, y2]))
       {
         return 0;
       }
@@ -189,7 +221,7 @@ namespace XnaTetris.Algorithms
           bool isVerticalLine = false;
 
           // can this block be rightmost?
-          if (x == BlocksGrid.GRID_WIDTH - 1 || !block.Type.Equals(blocksGrid.Grid[x + 1, y].Type))
+          if (x == BlocksGrid.GRID_WIDTH - 1 || !IsBlockStacked(block, blocksGrid.Grid[x + 1, y]))
           {
             int sameTypeLeftBlocksCount = SameTypeLeftBlocksCount(x, y);
 
@@ -207,7 +239,7 @@ namespace XnaTetris.Algorithms
           }
 
           // can this block be bottommost?
-          if (y == BlocksGrid.GRID_HEIGHT - 1 || !block.Type.Equals(blocksGrid.Grid[x, y + 1].Type))
+          if (y == BlocksGrid.GRID_HEIGHT - 1 || !IsBlockStacked(block, blocksGrid.Grid[x, y + 1]))
           {
             int sameTypeUpBlocksCount = SameTypeUpBlocksCount(x, y);
 
