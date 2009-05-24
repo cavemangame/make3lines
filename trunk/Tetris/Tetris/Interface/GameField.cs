@@ -14,8 +14,8 @@ namespace XnaTetris.Interface
     public const int GRID_RECTANGLE_Y_COORDINATE = 10;
     public const int GRID_RECTANGLE_HEIGHT = 512;
     public const int GRID_RECTANGLE_WIDTH = 512;
-    private readonly Rectangle rectPauseButton = new Rectangle(40, 400, 180, 50);
-    private readonly Rectangle rectExitButton = new Rectangle(40, 450, 180, 50);
+    private readonly Rectangle rectPauseButton = new Rectangle(60, 415, 137, 30);
+    private readonly Rectangle rectExitButton = new Rectangle(55, 450, 147, 30);
     private readonly Rectangle rectEndDialog = new Rectangle(200, 200, 400, 200);
 
     private readonly Button btnPause;

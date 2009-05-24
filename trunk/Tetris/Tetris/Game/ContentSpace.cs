@@ -15,7 +15,7 @@ namespace XnaTetris.Game
     private static readonly Rectangle srcMenuBtnHilight = new Rectangle(150, 0, 150, 50);
     private static readonly Rectangle srcLevelWindowGeneral = new Rectangle(0, 0, 80, 40);
     private static readonly Rectangle srcLevelWindowHilight = new Rectangle(80, 0, 80, 40);
-
+	  private static readonly int charVert = 30;
 
 	  private static Dictionary<string, SpriteHelper> sprites = new Dictionary<string, SpriteHelper>();
     private static Dictionary<string, SpriteFont> fonts = new Dictionary<string, SpriteFont>();
@@ -33,21 +33,21 @@ namespace XnaTetris.Game
           sprites.Add("SkyBackground", new SpriteHelper(content.Load<Texture2D>("skybackground"), null));
           sprites.Add("BackgroundSmallBox", new SpriteHelper(content.Load<Texture2D>("BackgroundSmallBox"), null));
           sprites.Add("BackgroundBigBox", new SpriteHelper(content.Load<Texture2D>("BackgroundBigBox"), null));
-          sprites.Add("PauseButton", new SpriteHelper(content.Load<Texture2D>("PauseButton"), srcMenuBtnGeneral));
-          sprites.Add("PauseHiButton", new SpriteHelper(content.Load<Texture2D>("PauseButton"), srcMenuBtnHilight));
-          sprites.Add("ExitButton", new SpriteHelper(content.Load<Texture2D>("ExitButton"), srcMenuBtnGeneral));
-          sprites.Add("ExitHiButton", new SpriteHelper(content.Load<Texture2D>("ExitButton"), srcMenuBtnHilight));
+          sprites.Add("PauseButton", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 290, 137, charVert)));
+          sprites.Add("PauseHiButton", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 320, 137, charVert)));
+          sprites.Add("ExitButton", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 116, 147, charVert)));
+          sprites.Add("ExitHiButton", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 262, 147, charVert)));
 
-          sprites.Add("MenuButtonNew", new SpriteHelper(content.Load<Texture2D>("MenuButtonNew"), srcMenuBtnGeneral));
-          sprites.Add("MenuHiButtonNew", new SpriteHelper(content.Load<Texture2D>("MenuButtonNew"), srcMenuBtnHilight));
-          sprites.Add("MenuButtonExit", new SpriteHelper(content.Load<Texture2D>("MenuButtonExit"), srcMenuBtnGeneral));
-          sprites.Add("MenuHiButtonExit",  new SpriteHelper(content.Load<Texture2D>("MenuButtonExit"), srcMenuBtnHilight));
-          sprites.Add("MenuButtonHelp", new SpriteHelper(content.Load<Texture2D>("MenuButtonHelp"), srcMenuBtnGeneral));
-          sprites.Add("MenuHiButtonHelp", new SpriteHelper(content.Load<Texture2D>("MenuButtonHelp"), srcMenuBtnHilight));
-          sprites.Add("MenuButtonHiScore", new SpriteHelper(content.Load<Texture2D>("MenuButtonHiScore"), srcMenuBtnGeneral));
-          sprites.Add("MenuHiButtonHiScore", new SpriteHelper(content.Load<Texture2D>("MenuButtonHiScore"), srcMenuBtnHilight));
-          sprites.Add("MenuButtonContinue", new SpriteHelper(content.Load<Texture2D>("MenuButtonContinue"), srcMenuBtnGeneral));
-          sprites.Add("MenuHiButtonContinue", new SpriteHelper(content.Load<Texture2D>("MenuButtonContinue"), srcMenuBtnHilight));
+          sprites.Add("MenuButtonNew", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 0, 137, charVert)));
+          sprites.Add("MenuHiButtonNew", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 145, 137, charVert)));
+          sprites.Add("MenuButtonExit", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 117, 147, charVert)));
+          sprites.Add("MenuHiButtonExit", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 262, 147, charVert)));
+          sprites.Add("MenuButtonHelp", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 88, 180, charVert)));
+          sprites.Add("MenuHiButtonHelp", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 233, 180, charVert)));
+          sprites.Add("MenuButtonHiScore", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 58, 195, charVert)));
+          sprites.Add("MenuHiButtonHiScore", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 204, 195, charVert)));
+          sprites.Add("MenuButtonContinue", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 30, 287, charVert)));
+          sprites.Add("MenuHiButtonContinue", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 175, 287, charVert)));
           
           sprites.Add("LevelBackground", new SpriteHelper(content.Load<Texture2D>("LevelBackground"), null));
           sprites.Add("MenuBackground", new SpriteHelper(content.Load<Texture2D>("MenuBackground"), null));
