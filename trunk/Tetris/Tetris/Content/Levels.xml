@@ -93,9 +93,11 @@
     <time>50</time>
     <score>3000</score>
     <background>BlueBackground</background>
-    <text left='200' scale ='2' color='DarkBlue' font='SmallFont'>Уровень 5</text>
-    <text color='DarkBlue'>На этом уровне могут встретиться блоки, которые при</text>
-    <text color='DarkBlue'>сборке в ряд с блоками его цвета умножают очки на 2</text>
+    <dialog>
+      <text left='200' scale ='2' color='DarkBlue' font='SmallFont'>Уровень 5</text>
+      <text color='DarkBlue'>На этом уровне могут встретиться блоки, которые при</text>
+      <text color='DarkBlue'>сборке в ряд с блоками его цвета умножают очки на 2</text>
+    </dialog>
     <BlueChance>1,8</BlueChance>
     <RedChance>0,4</RedChance>
     <GreenChance>1,2</GreenChance>
@@ -289,7 +291,7 @@
     <GrayChance>2</GrayChance>
     <WhiteChance>0,5</WhiteChance>
     <mul2chance>0,015</mul2chance>
-    <neutralchance>0,004</neutralchance>
+    <!--neutralchance>0,004</neutralchance-->
   </level>
   <level number='16'>
     <time>40</time>
@@ -306,7 +308,7 @@
     <WhiteChance>0,5</WhiteChance>
     <mul3chance>0,005</mul3chance>
     <mul5chance>0,005</mul5chance>
-    <neutralchance>0,006</neutralchance>
+    <!--neutralchance>0,006</neutralchance-->
   </level>
   <level number='17'>
     <time>60</time>
@@ -322,7 +324,7 @@
     <BlueChance>1,3</BlueChance>
     <mul3chance>0,009</mul3chance>
     <mul5chance>0,006</mul5chance>
-    <neutralchance>0,01</neutralchance>
+    <!--neutralchance>0,01</neutralchance-->
   </level>
   
   <level number='18'>
@@ -340,7 +342,7 @@
     <mul2chance>0,009</mul2chance>
     <mul3chance>0,006</mul3chance>
     <mul5chance>0,002</mul5chance>
-    <neutralchance>0,005</neutralchance>
+    <!--neutralchance>0,005</neutralchance-->
   </level>
   <level number='19'>
     <time>40</time>
@@ -348,7 +350,7 @@
     <background>WhiteBackground</background>
     <dialog>
       <text left='200' scale ='2' color='Black' font='SmallFont'>Уровень 19</text>
-      <text color='Black'>Бог порядка ненавидит Ома, который</text>
+      <text color='Black'>Арх ненавидит Ома, который</text>
       <text color='Black'>никак не укладывается в упорядоченную</text>
       <text color='Black'>картину мира.</text>
     </dialog>
@@ -358,7 +360,7 @@
     <mul2chance>0,011</mul2chance>
     <mul3chance>0,009</mul3chance>
     <mul5chance>0,005</mul5chance>
-    <neutralchance>0,01</neutralchance>
+    <!--neutralchance>0,01</neutralchance-->
   </level>
   <level number='20'>
     <time>40</time>
@@ -378,7 +380,7 @@
     <mul2chance>0,015</mul2chance>
     <mul3chance>0,01</mul3chance>
     <mul5chance>0,008</mul5chance>
-    <neutralchance>0,012</neutralchance>
+    <!--neutralchance>0,012</neutralchance-->
   </level>
 
   <level number='21'>
@@ -388,12 +390,12 @@
     <dialog>
       <text left='200' scale ='2' color='Black' font='SmallFont'>Уровень 21</text>
       <text color='Black'>Это ваше последнее испытание.</text>
-      <text color='Black'>Покажите пентеону богов, ваши успехи</text>
+      <text color='Black'>Покажите пантеону богов, ваши успехи</text>
       <text color='Black'>в конструировании миров.</text>
     </dialog>
     <mul2chance>0,02</mul2chance>
     <mul3chance>0,015</mul3chance>
     <mul5chance>0,01</mul5chance>
-    <neutralchance>0,016</neutralchance>
+    <!--neutralchance>0,016</neutralchance-->
   </level>
 </levels>

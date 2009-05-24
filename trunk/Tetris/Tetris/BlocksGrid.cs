@@ -125,6 +125,7 @@ namespace XnaTetris
           Grid[x, y].MakeMove(blocksGridHelper.GetRectangle(x, y), x, y);
         }
       }
+      elapsedTime = TimeSpan.Zero;
     }
     #endregion
 
@@ -146,7 +147,7 @@ namespace XnaTetris
       if (LinesGame.GameState == Serv.GameState.GameStateRunning && LinesGame.IsBoardInStableState()
         && !needShowHelp)
       {
-        elapsedTime += gameTime.ElapsedGameTime;
+        elapsedTime += TimeSpan.FromMilliseconds(15); // gameTime.ElapsedGameTime;
 
         if (elapsedTime > TimeSpan.FromMilliseconds(IDLE_TIME))
         {
@@ -159,6 +160,8 @@ namespace XnaTetris
         block.Update(gameTime);
       }
 
+      if (!LinesGame.IsBoardInStableState())
+        elapsedTime = TimeSpan.Zero;
     }
 
     private void UpdateClickedBlock(Point point, GameTime gameTime)
