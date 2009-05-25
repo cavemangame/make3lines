@@ -10,12 +10,9 @@ namespace XnaTetris.Game
 	class ContentSpace
 	{
 	  private static bool IsContentLoaded;
-
-    private static readonly Rectangle srcMenuBtnGeneral = new Rectangle(0, 0, 150, 50);
-    private static readonly Rectangle srcMenuBtnHilight = new Rectangle(150, 0, 150, 50);
     private static readonly Rectangle srcLevelWindowGeneral = new Rectangle(0, 0, 80, 40);
     private static readonly Rectangle srcLevelWindowHilight = new Rectangle(80, 0, 80, 40);
-	  private static readonly int charVert = 30;
+	  private const int charVert = 30;
 
 	  private static Dictionary<string, SpriteHelper> sprites = new Dictionary<string, SpriteHelper>();
     private static Dictionary<string, SpriteFont> fonts = new Dictionary<string, SpriteFont>();
