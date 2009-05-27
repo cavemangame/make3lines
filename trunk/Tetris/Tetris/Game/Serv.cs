@@ -196,7 +196,7 @@ namespace XnaTetris.Game
         if (scores.OverallScore >= Convert.ToInt32(n.Attributes["score"].Value))
         {
           n.Attributes["score"].Value = scores.OverallScore.ToString();
-          n.Attributes["text"].Value = String.Format("{0}, {1}", playerName,
+          n.Attributes["text"].Value = String.Format("{0}, {1}", PlayerName,
                                                         Title.GetTitle(scores.OverallScore));
           n.Attributes["color"].Value = GetGodColorByScore(scores);
           break;

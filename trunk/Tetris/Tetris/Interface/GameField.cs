@@ -17,6 +17,9 @@ namespace XnaTetris.Interface
     private readonly Rectangle rectPauseButton = new Rectangle(60, 415, 137, 30);
     private readonly Rectangle rectExitButton = new Rectangle(55, 450, 147, 30);
     private readonly Rectangle rectEndDialog = new Rectangle(200, 200, 400, 200);
+    private readonly Rectangle rectWinDialog = new Rectangle(100, 100, 600, 400);
+
+    private const int MAX_LEVEL = 21;
 
     private readonly Button btnPause;
     private readonly Button btnExit;
@@ -177,13 +180,14 @@ namespace XnaTetris.Interface
     public void StartLevel()
     {
       CurrentLevel = new Level(++LinesGame.Player.PlayerLevel, LinesGame);
+
       startWindow = CurrentLevel.StartWindow;
       startWindow.BtnOkClick += startWindow_BtnOkClick;
       startWindow.Show();
 
       LinesGame.LevelScore = 0;
       LinesGame.GameState = Serv.GameState.GameStateBetweenLevel;
-      LinesGame.Timer = CurrentLevel.Time * 1000;
+      LinesGame.Timer = CurrentLevel.Time*1000;
       BlockGrid.Enabled = false;
       Show();
     }
@@ -206,10 +210,10 @@ namespace XnaTetris.Interface
 
     public void GameWin()
     {
-      gamewinWindow = new LevelWindow(LinesGame, rectEndDialog, CreateGameWinDialog());
+      gamewinWindow = new LevelWindow(LinesGame, rectWinDialog, CreateGameWinDialog());
       gamewinWindow.BtnOkClick += gamewinWindow_BtnOkClick;
-      BlockGrid.Enabled = false;
       Serv.SaveHiScoreIfNeeded(LinesGame.Score);
+      BlockGrid.Enabled = false;
       gamewinWindow.Show();
     }
 
@@ -226,7 +230,12 @@ namespace XnaTetris.Interface
     private void endWindow_BtnOkClick(object sender, EventArgs e)
     {
       endWindow.Hide();
-      StartLevel();
+      if (CurrentLevel.Number >= MAX_LEVEL)
+      {
+        GameWin();
+      }
+      else
+        StartLevel();
     }
 
     private void gameoverWindow_BtnOkClick(object sender, EventArgs e)
