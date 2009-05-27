@@ -247,7 +247,7 @@
     <dialog>
       <text left='200' scale ='2' color='Yellow' font='SmallFont'>Уровень 13</text>
       <text color='Yellow'>Дамарх сложен для понимания обычными существами.</text>
-      <text color='Yellow'>Лишь его любичики - энергоны, живущие на звездах,</text>
+      <text color='Yellow'>Лишь его любимчики - энергоны, живущие на звездах,</text>
       <text color='Yellow'>пользуются отголосками его силы.</text>
     </dialog>
     <YellowChance>1,8</YellowChance>
@@ -264,7 +264,7 @@
     <background>YellowBackground</background>
     <dialog>
       <text left='200' scale ='2' color='Yellow' font='SmallFont'>Уровень 14</text>
-      <text color='Yellow'>В цетре вслеленной всегда множество желтой энергии</text>
+      <text color='Yellow'>В центре вслеленной всегда множество желтой энергии</text>
       <text color='Yellow'>и практически нет хаоса.</text>
       <text color='Yellow'>Шанс выпадения серых блоков минимален.</text>
     </dialog>
@@ -295,7 +295,7 @@
   </level>
   <level number='16'>
     <time>40</time>
-    <score>3600</score>
+    <score>3500</score>
     <background>GrayBackground</background>
     <dialog>
       <text left='200' scale ='2' color='LightGray' font='SmallFont'>Уровень 16</text>
@@ -312,7 +312,7 @@
   </level>
   <level number='17'>
     <time>60</time>
-    <score>5500</score>
+    <score>5200</score>
     <background>GrayBackground</background>
     <dialog>
       <text left='200' scale ='2' color='LightGray' font='SmallFont'>Уровень 17</text>
@@ -368,7 +368,7 @@
     <background>WhiteBackground</background>
     <dialog>
       <text left='200' scale ='2' color='Black' font='SmallFont'>Уровень 20</text>
-      <text color='Black'>Это ваше последнее испытание</text>
+      <text color='Black'>Это ваше последнее испытание в царстве Арха</text>
       <text color='Black'>перед финальным экзаменом.</text>
     </dialog>
     <GrayChance>0,6</GrayChance>
