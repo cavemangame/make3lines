@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Game;
 using XnaTetris.Helpers;
+using XnaTetris.Particles;
 
 
 namespace XnaTetris.Interface
@@ -10,10 +11,18 @@ namespace XnaTetris.Interface
 	public class Menu : GameScene
 	{
 		#region Variables
+
 		private readonly Rectangle backgroundRect;
 		private Button btnNew, btnExit, btnContinue, btnHiScores, btnHelp;
 	  private TextBox textBox;
 	  private SpriteFont helloFont;
+    SmokeParticleManager smokePlume;
+
+    // keep a timer that will tell us when it's time to add more particles to the
+    // smoke plume.
+    const float TimeBetweenSmokePlumePuffs = .5f;
+    float timeTillPuff = 0.0f;
+
 		#endregion
 
     #region Properties
@@ -63,13 +72,19 @@ namespace XnaTetris.Interface
       textBox.EnterKeyPressed += textBox_EnterKeyPressed;
       Components.Add(textBox);
       textBox.Hide();
+
+      smokePlume = new SmokeParticleManager(LinesGame, 9);
+		  smokePlume.Initialize();
+      Components.Add(smokePlume);
     }
+
 		#endregion
 
 		#region Draw
 		public override void Draw(GameTime gameTime)
 		{
       ContentSpace.GetSprite("MenuBackground").Render(backgroundRect);
+
       if (LinesGame.CurrentPlayerName.Length > 0)
       {
         String hello = String.Format("Добро пожаловать, {0}", LinesGame.CurrentPlayerName);
@@ -79,10 +94,37 @@ namespace XnaTetris.Interface
           hello,
           400 - len/2, 100, Color.LightCoral);  
       }
-
 			base.Draw(gameTime);
 		}
 		#endregion
+
+    #region Update
+
+    public override void Update(GameTime gameTime)
+    {
+      float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+      if (smokePlume != null)
+        UpdateSmokePlume(dt);
+      base.Update(gameTime);
+    }
+
+    private void UpdateSmokePlume(float dt)
+    {
+      timeTillPuff -= dt;
+      if (timeTillPuff < 0)
+      {
+        Vector2 where = Vector2.Zero;
+        // add more particles at the bottom of the screen, halfway across.
+        where.X = LinesGame.GraphicsDevice.Viewport.Width / 2;
+        where.Y = LinesGame.GraphicsDevice.Viewport.Height;
+        smokePlume.AddParticles(where);
+
+        // and then reset the timer.
+        timeTillPuff = TimeBetweenSmokePlumePuffs;
+      }
+    }
+
+    #endregion
 
     #region Events
     private void btnNew_ButtonAction(object sender, EventArgs e)

@@ -31,6 +31,11 @@ namespace XnaTetris.Helpers
       return globalRandomGenerator.Next(max);
     } // GetRandomInt(max)
 
+    public static int GetRandomInt(int min, int max)
+    {
+      return globalRandomGenerator.Next(min, max);
+    } // GetRandomInt(max)
+
     public static float GetRandomFloat(float min, float max)
     {
       return (float)globalRandomGenerator.NextDouble() * (max - min) + min;
