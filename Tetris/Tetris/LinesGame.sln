@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinesGame", "LinesGame.csproj", "{AF530610-038E-4CAA-9182-179AC32162E5}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ApprenticeSetup", "..\ApprenticeSetup\ApprenticeSetup.vdproj", "{50EAF760-098E-4D21-9BED-91C717C1D473}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,6 +17,9 @@ Global
 		{AF530610-038E-4CAA-9182-179AC32162E5}.Release|x86.Build.0 = Release|x86
 		{21BE0643-CEBA-4C5D-8B8E-09918D3C7826}.Debug|x86.ActiveCfg = Debug|x86
 		{21BE0643-CEBA-4C5D-8B8E-09918D3C7826}.Release|x86.ActiveCfg = Release|x86
+		{50EAF760-098E-4D21-9BED-91C717C1D473}.Debug|x86.ActiveCfg = Debug
+		{50EAF760-098E-4D21-9BED-91C717C1D473}.Release|x86.ActiveCfg = Release
+		{50EAF760-098E-4D21-9BED-91C717C1D473}.Release|x86.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
