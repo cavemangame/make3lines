@@ -83,9 +83,9 @@ namespace XnaTetris.Interface
     public override void Draw(GameTime gameTime)
     {
       if (IsMouseOver)
-        bgHiSprite.Render(BoundingRect);
+        bgHiSprite.Render(spriteBatch, BoundingRect);
       else
-        bgSprite.Render(BoundingRect);
+        bgSprite.Render(spriteBatch, BoundingRect);
 
       TextHelper.DrawShadowedText(textFont, Text, BoundingRect.X + 2,
                                   BoundingRect.Y + 1, textColor, textScale);

@@ -38,7 +38,7 @@ namespace XnaTetris.Interface
 
     public override void Draw(GameTime gameTime)
     {
-      ContentSpace.GetSprite("HelpBackground").Render(backgroundRect);
+      ContentSpace.GetSprite("HelpBackground").Render(spriteBatch, backgroundRect);
 
       base.Draw(gameTime);
     }

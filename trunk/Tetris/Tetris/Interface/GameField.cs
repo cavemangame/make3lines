@@ -59,10 +59,10 @@ namespace XnaTetris.Interface
 
     public override void Draw(GameTime gameTime) 
     {
-      CurrentLevel.BackgroundSprite.Render(new Rectangle(0, 0, LinesGame.Width, LinesGame.Height));
+      CurrentLevel.BackgroundSprite.Render(spriteBatch, new Rectangle(0, 0, LinesGame.Width, LinesGame.Height));
       // Draw background boxes for all the components
-      ContentSpace.GetSprite("BackgroundBigBox").Render(new Rectangle(270, 10, 512, 512));
-      ContentSpace.GetSprite("BackgroundSmallBox").Render(new Rectangle(10, 10, 240, 512));
+      ContentSpace.GetSprite("BackgroundBigBox").Render(spriteBatch, new Rectangle(270, 10, 512, 512));
+      ContentSpace.GetSprite("BackgroundSmallBox").Render(spriteBatch, new Rectangle(10, 10, 240, 512));
 
       if (LinesGame.GameState == Serv.GameState.GameStateRunning)
       {

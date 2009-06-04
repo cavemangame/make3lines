@@ -41,7 +41,7 @@ namespace XnaTetris.Interface
     public override void Draw(GameTime gameTime)
     {
       // TODO: use own background
-      ContentSpace.GetSprite("LevelBackground").Render(backgroundRect);
+      ContentSpace.GetSprite("LevelBackground").Render(spriteBatch, backgroundRect);
 
       base.Draw(gameTime);
     }

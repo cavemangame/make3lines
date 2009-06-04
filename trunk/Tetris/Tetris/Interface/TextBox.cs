@@ -69,14 +69,14 @@ namespace XnaTetris.Interface
     #region Draw
     public override void Draw(GameTime gameTime)
     {
-      bgSprite.Render(BoundingRect);
+      bgSprite.Render(spriteBatch, BoundingRect);
 
       TextHelper.DrawShadowedText(textFont, text, BoundingRect.X + 2,
                                   BoundingRect.Y + 1, textColor, textScale);
 
       if (IsWriteState)
       {
-        ContentSpace.GetSprite("Caret").Render(
+        ContentSpace.GetSprite("Caret").Render(spriteBatch, 
           new Rectangle(BoundingRect.X + caretPosition, BoundingRect.Y + 1, 6, BoundingRect.Height - 2));
       }
 
