@@ -33,7 +33,8 @@ namespace XnaTetris
     private GameScene help;
 
     public Player Player { get; set;}
-    
+
+    public bool spriteBatchStarted;
     #endregion
 
     #region Properties
@@ -157,8 +158,10 @@ namespace XnaTetris
       ElapsedGameMs = gameTime.TotalRealTime.TotalMilliseconds;
 
       spriteBatch.Begin();
+      spriteBatchStarted = true;
       base.Draw(gameTime);
       spriteBatch.End();
+      spriteBatchStarted = false;
 
       font.WriteAll();
       textHelper.WriteAll();

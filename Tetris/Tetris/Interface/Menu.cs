@@ -122,8 +122,8 @@ namespace XnaTetris.Interface
       {
         Vector2 where = Vector2.Zero;
         // add more particles at the bottom of the screen, halfway across.
-        where.X = LinesGame.GraphicsDevice.Viewport.Width / 2;
-        where.Y = LinesGame.GraphicsDevice.Viewport.Height;
+        where.X = LinesGame.PREFERRED_RESOLUTION_WIDTH / 2;
+        where.Y = LinesGame.PREFERRED_RESOLUTION_HEIGHT;
         smokePlume.AddParticles(where);
 
         // and then reset the timer.

@@ -7,6 +7,7 @@ using XnaTetris.Game;
 using XnaTetris.Helpers;
 using XnaTetris.Algorithms;
 using XnaTetris.Interface;
+using XnaTetris.Particles;
 
 namespace XnaTetris
 {
@@ -60,6 +61,7 @@ namespace XnaTetris
     public int BlockHeight { get; private set; }
     public LinesGame LinesGame { get { return Game as LinesGame; }}
 
+
     /// <summary>
     /// how much blocks are moving now
     /// </summary>
@@ -76,6 +78,7 @@ namespace XnaTetris
       BlockHeight = this.GridRectangle.Height / GRID_HEIGHT;
       Grid = new Block[GRID_WIDTH, GRID_HEIGHT];
       blocksGridHelper = new BlocksGridHelper(this);
+
     }
     #endregion
 
@@ -331,6 +334,7 @@ namespace XnaTetris
 
       if (successfulMovement)
       {
+        AddExplosions();
         LinesGame.IsRemoveProcess = true;
       }
       else if (isSwap)
@@ -361,9 +365,23 @@ namespace XnaTetris
       isSwap = false;
     }
 
+    private void AddExplosions()
+    {
+      for (int x = 0; x < GRID_WIDTH; x++)
+      {
+        for (int y = 0; y < GRID_HEIGHT; y++)
+        {
+          if (Grid[x, y].IsDestroyed)
+            LinesGame.GameField.Explosion.AddParticles(new Vector2(Grid[x, y].BlockRectangle.Center.X, 
+              Grid[x, y].BlockRectangle.Center.Y));
+        }
+      }
+    }
+
     public void RemoveLines(GameTime gameTime)
     {
       blocksGridHelper.RemoveLines(gameTime);
+      //LinesGame.GameField.Explosion.ClearAll();
     }
 
     public void ReadyToRestart()

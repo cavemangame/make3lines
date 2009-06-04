@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 
 namespace XnaTetris.Helpers
 {
-
   public class SpriteHelper
   {
     public Texture2D texture;

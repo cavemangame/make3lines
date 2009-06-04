@@ -250,6 +250,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="explosion.png">
+      <Name>explosion</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="smoke.bmp">
       <Name>smoke</Name>
       <Importer>TextureImporter</Importer>
