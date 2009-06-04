@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Game;
 using XnaTetris.Helpers;
+using XnaTetris.Particles;
 
 namespace XnaTetris.Blocks
 {
@@ -51,7 +52,8 @@ namespace XnaTetris.Blocks
       X = x;
       Y = y;
       Multiplier = multiplier;
-      spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch)); 
+      spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
+
     }
 
     protected Block(Microsoft.Xna.Framework.Game setGame, Rectangle setBlockRect, SpriteHelper setBlock, 

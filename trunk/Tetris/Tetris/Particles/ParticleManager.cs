@@ -116,6 +116,14 @@ namespace XnaTetris.Particles
       }
     }
 
+    public void ClearAll()
+    {
+      foreach (Particle p in particles)
+      {
+        p.TimeSinceStart = p.LifeTime; //Active = false
+      }
+    }
+
     protected virtual void InitializeParticle(Particle p, Vector2 where)
     {
       // рандомим направление движения частицы
@@ -161,7 +169,9 @@ namespace XnaTetris.Particles
     {
       // тут могут быть разные моды
      // partSprite.Begin(spriteBlendMode);
-
+      // сука адский чит
+      partSprite.End();
+      partSprite.Begin(spriteBlendMode);
       foreach (Particle p in particles)
       {
         if (!p.Active)
@@ -182,8 +192,8 @@ namespace XnaTetris.Particles
             p.Rotation, origin, scale, SpriteEffects.None, 0.0f);
       }
 
-      //partSprite.End();
-
+      partSprite.End();
+      partSprite.Begin(SpriteBlendMode.AlphaBlend);
       base.Draw(gameTime);
     }
 

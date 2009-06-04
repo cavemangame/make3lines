@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Algorithms;
 using XnaTetris.Game;
 using XnaTetris.Helpers;
+using XnaTetris.Particles;
 
 
 namespace XnaTetris.Interface
@@ -32,6 +33,9 @@ namespace XnaTetris.Interface
     public LinesGame LinesGame { get { return Game as LinesGame; } }
     public BlocksGrid BlockGrid { get; private set; }
     public bool Paused { get; private set; }
+
+    public ExplosionParticleManager Explosion { get; set; }
+
     #endregion
 
     #region Constructor
@@ -51,6 +55,10 @@ namespace XnaTetris.Interface
       btnExit = new Button(LinesGame, rectExitButton, ContentSpace.GetSprite("ExitButton"), ContentSpace.GetSprite("ExitHiButton"));
       btnExit.ButtonAction += btnExit_ButtonAction;
       Components.Add(btnExit);
+
+      Explosion = new ExplosionParticleManager(LinesGame, 16);
+      Explosion.Initialize();
+      Components.Add(Explosion);
     }
 
     #endregion
