@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Helpers;
 using XnaTetris.Game;
 using XnaTetris.Algorithms;
@@ -21,6 +22,7 @@ namespace XnaTetris
 
     #region Variables
     private readonly GraphicsDeviceManager graphics;
+    private SpriteBatch spriteBatch;
     private readonly ContentManager content;
     private TextureFont font;
     private TextHelper textHelper;
@@ -68,6 +70,7 @@ namespace XnaTetris
                    };
       graphics.ApplyChanges();
       content = new ContentManager(Services) {RootDirectory = "Content"};
+
       Score = new Scores();
       CurrentPlayerName = Serv.PlayerName;
     }
@@ -85,6 +88,9 @@ namespace XnaTetris
 
     protected override void LoadContent()
     {
+      spriteBatch = new SpriteBatch(GraphicsDevice);
+      Services.AddService(typeof(SpriteBatch), spriteBatch);
+
       font = new TextureFont(graphics.GraphicsDevice, content);
       textHelper = new TextHelper(graphics.GraphicsDevice);
       ContentSpace.LoadAllContent(content);
@@ -106,7 +112,7 @@ namespace XnaTetris
     protected override void UnloadContent()
     {
       content.Unload();
-      SpriteHelper.Dispose();
+      spriteBatch.Dispose();
 
       base.UnloadContent();
     }
@@ -150,11 +156,12 @@ namespace XnaTetris
     {
       ElapsedGameMs = gameTime.TotalRealTime.TotalMilliseconds;
 
-      SpriteHelper.DrawSprites();
+     // spriteBatch.Begin();
+      base.Draw(gameTime);
+     // spriteBatch.End();
+
       font.WriteAll();
       textHelper.WriteAll();
-
-      base.Draw(gameTime);
     }
     #endregion
 

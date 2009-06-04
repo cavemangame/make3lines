@@ -49,12 +49,12 @@ namespace XnaTetris.Interface
 			{
 				case ButtonState.ButtonGeneral:
 					{
-						generalSprite.Render(BoundingRect);
+						generalSprite.Render(spriteBatch, BoundingRect);
 						break;
 					}
 				case ButtonState.ButtonHilight:
 					{
-            hilightSptite.Render(BoundingRect);
+            hilightSptite.Render(spriteBatch, BoundingRect);
 						break;
 					}
 				default:

@@ -18,6 +18,7 @@ namespace XnaTetris.Blocks
 
     private readonly SpriteHelper block;
     private readonly SpriteHelper hiblock;
+    private SpriteBatch spriteBatch;
     private BlockAnimator blockAnimator;
 
     private bool isMoving;
@@ -50,6 +51,7 @@ namespace XnaTetris.Blocks
       X = x;
       Y = y;
       Multiplier = multiplier;
+      spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch)); 
     }
 
     protected Block(Microsoft.Xna.Framework.Game setGame, Rectangle setBlockRect, SpriteHelper setBlock, 
@@ -92,14 +94,18 @@ namespace XnaTetris.Blocks
 
     #endregion
 
+    public override void Initialize()
+    {
+      base.Initialize();
+    }
+
     #region Draw
 
     public override void Draw(GameTime gameTime)
     {
-      if (PointInBlock(Input.MousePos) &&
-          LinesGame.IsBoardInStableState())
+      if (PointInBlock(Input.MousePos) && LinesGame.IsBoardInStableState())
       {
-        hiblock.Render(BlockRectangle);
+        hiblock.Render(spriteBatch, BlockRectangle);
       }
       else
       {
@@ -108,7 +114,7 @@ namespace XnaTetris.Blocks
 
       if (IsClicked)
       {
-        ContentSpace.GetSprite("SelectionBlock").Render(BlockRectangle);
+        ContentSpace.GetSprite("SelectionBlock").Render(spriteBatch, BlockRectangle);
       }
 
       if (Multiplier > 1 && !IsDestroyed)
@@ -125,7 +131,7 @@ namespace XnaTetris.Blocks
           lastBlinkTime = (long) LinesGame.ElapsedGameMs;
         }
         if (isHelpShow)
-          ContentSpace.GetSprite("HelpBlock").Render(BlockRectangle);
+          ContentSpace.GetSprite("HelpBlock").Render(spriteBatch, BlockRectangle);
       }
 
       base.Draw(gameTime);
@@ -196,17 +202,17 @@ namespace XnaTetris.Blocks
           BlockRectangle = new Rectangle(BlockRectangle.X + 1, BlockRectangle.Y + 1,
                                          BlockRectangle.Width - 2, BlockRectangle.Height - 2);
         }
-        block.Render(BlockRectangle);
+        block.Render(spriteBatch, BlockRectangle);
         return;
       }
 
-      float c = (float)block.GfxRect.Height / BlockRectangle.Height;
-      Rectangle gfxRect = new Rectangle(block.GfxRect.X, (int)((block.GfxRect.Y + minY - BlockRectangle.Y) * c),
-                                        block.GfxRect.Width, (int)((BlockRectangle.Height - minY + BlockRectangle.Y) * c));
+      float c = (float)block.sourceRect.Height / BlockRectangle.Height;
+      Rectangle gfxRect = new Rectangle(block.sourceRect.X, (int)((block.sourceRect.Y + minY - BlockRectangle.Y) * c),
+                 block.sourceRect.Width, (int)((BlockRectangle.Height - minY + BlockRectangle.Y) * c));
       Rectangle visibleRect = new Rectangle(BlockRectangle.X, minY,
                                       BlockRectangle.Width, BlockRectangle.Height - minY + BlockRectangle.Y);
 
-      block.Render(visibleRect, Color.White, gfxRect);
+      block.Render(spriteBatch, visibleRect, gfxRect);
     }
 
     public abstract int GetScore(int N);

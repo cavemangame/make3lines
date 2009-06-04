@@ -26,9 +26,9 @@ namespace XnaTetris.Game
       if (IsContentLoaded) return;
       try
       {
-        sprites.Add("SkyBackground", new SpriteHelper(content.Load<Texture2D>("skybackground"), null));
-        sprites.Add("BackgroundSmallBox", new SpriteHelper(content.Load<Texture2D>("BackgroundSmallBox"), null));
-        sprites.Add("BackgroundBigBox", new SpriteHelper(content.Load<Texture2D>("BackgroundBigBox"), null));
+        sprites.Add("SkyBackground", new SpriteHelper(content.Load<Texture2D>("skybackground")));
+        sprites.Add("BackgroundSmallBox", new SpriteHelper(content.Load<Texture2D>("BackgroundSmallBox")));
+        sprites.Add("BackgroundBigBox", new SpriteHelper(content.Load<Texture2D>("BackgroundBigBox")));
         sprites.Add("PauseButton", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 290, 137, charVert)));
         sprites.Add("PauseHiButton", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 320, 137, charVert)));
         sprites.Add("ExitButton", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 116, 147, charVert)));
@@ -45,8 +45,8 @@ namespace XnaTetris.Game
         sprites.Add("MenuButtonContinue", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 30, 287, charVert)));
         sprites.Add("MenuHiButtonContinue", new SpriteHelper(content.Load<Texture2D>("MenuButtons"), new Rectangle(0, 175, 287, charVert)));
           
-        sprites.Add("LevelBackground", new SpriteHelper(content.Load<Texture2D>("LevelBackground"), null));
-        sprites.Add("MenuBackground", new SpriteHelper(content.Load<Texture2D>("MenuBackground"), null));
+        sprites.Add("LevelBackground", new SpriteHelper(content.Load<Texture2D>("LevelBackground")));
+        sprites.Add("MenuBackground", new SpriteHelper(content.Load<Texture2D>("MenuBackground")));
         sprites.Add("OkButton", new SpriteHelper(content.Load<Texture2D>("OkButton"), srcLevelWindowGeneral));
         sprites.Add("HiOkButton", new SpriteHelper(content.Load<Texture2D>("OkButton"), srcLevelWindowHilight));
 
@@ -64,21 +64,21 @@ namespace XnaTetris.Game
         sprites.Add("RedHiBlock", new SpriteHelper(content.Load<Texture2D>("BlocksHilight"), new Rectangle(64 * 4, 0, 64, 64)));
         sprites.Add("GrayHiBlock", new SpriteHelper(content.Load<Texture2D>("BlocksHilight"), new Rectangle(64 * 5, 0, 64, 64)));
 
-        sprites.Add("SelectionBlock", new SpriteHelper(content.Load<Texture2D>("Selection"), null));
-        sprites.Add("HelpBlock", new SpriteHelper(content.Load<Texture2D>("HelpBlock"), null));
-        sprites.Add("InvulBlock", new SpriteHelper(content.Load<Texture2D>("InvulBlock"), null));
-        sprites.Add("NeutralBlock", new SpriteHelper(content.Load<Texture2D>("NeutralBlock"), null));
+        sprites.Add("SelectionBlock", new SpriteHelper(content.Load<Texture2D>("Selection")));
+        sprites.Add("HelpBlock", new SpriteHelper(content.Load<Texture2D>("HelpBlock")));
+        sprites.Add("InvulBlock", new SpriteHelper(content.Load<Texture2D>("InvulBlock")));
+        sprites.Add("NeutralBlock", new SpriteHelper(content.Load<Texture2D>("NeutralBlock")));
 
-        sprites.Add("BlueBackground", new SpriteHelper(content.Load<Texture2D>("BlueBackground"), null));
-        sprites.Add("RedBackground", new SpriteHelper(content.Load<Texture2D>("RedBackground"), null));
-        sprites.Add("GreenBackground", new SpriteHelper(content.Load<Texture2D>("GreenBackground"), null));
-        sprites.Add("YellowBackground", new SpriteHelper(content.Load<Texture2D>("YellowBackground"), null));
-        sprites.Add("WhiteBackground", new SpriteHelper(content.Load<Texture2D>("WhiteBackground"), null));
-        sprites.Add("GrayBackground", new SpriteHelper(content.Load<Texture2D>("GrayBackground"), null));
-        sprites.Add("HelpBackground", new SpriteHelper(content.Load<Texture2D>("HelpBackground"), null));
+        sprites.Add("BlueBackground", new SpriteHelper(content.Load<Texture2D>("BlueBackground")));
+        sprites.Add("RedBackground", new SpriteHelper(content.Load<Texture2D>("RedBackground")));
+        sprites.Add("GreenBackground", new SpriteHelper(content.Load<Texture2D>("GreenBackground")));
+        sprites.Add("YellowBackground", new SpriteHelper(content.Load<Texture2D>("YellowBackground")));
+        sprites.Add("WhiteBackground", new SpriteHelper(content.Load<Texture2D>("WhiteBackground")));
+        sprites.Add("GrayBackground", new SpriteHelper(content.Load<Texture2D>("GrayBackground")));
+        sprites.Add("HelpBackground", new SpriteHelper(content.Load<Texture2D>("HelpBackground")));
 
-        sprites.Add("Caret", new SpriteHelper(content.Load<Texture2D>("Caret"), null));
-        sprites.Add("TextBackground", new SpriteHelper(content.Load<Texture2D>("TextBackground"), null));
+        sprites.Add("Caret", new SpriteHelper(content.Load<Texture2D>("Caret")));
+        sprites.Add("TextBackground", new SpriteHelper(content.Load<Texture2D>("TextBackground")));
 
         // add fonts
         fonts.Add("NormalFont", content.Load<SpriteFont>("normalfont"));

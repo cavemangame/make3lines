@@ -110,7 +110,9 @@
     <Compile Include="Helpers\Input.cs" />
     <Compile Include="Helpers\Log.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />
-    <Compile Include="Helpers\SpriteHelper.cs" />
+    <Compile Include="Helpers\SpriteHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\TextHelper.cs" />
     <Compile Include="Helpers\TextureFont.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using XnaTetris.Game;
 using XnaTetris.Helpers;
 
@@ -11,6 +12,7 @@ namespace XnaTetris.Interface
 
     public Rectangle BoundingRect { get; set; }
     public LinesGame LinesGame { get { return Game as LinesGame; } }
+    protected SpriteBatch spriteBatch;
 
     #endregion
 
@@ -18,6 +20,7 @@ namespace XnaTetris.Interface
 
     public LinesControl(Microsoft.Xna.Framework.Game game) : base(game)
     {
+      spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch)); 
     }
 
     public LinesControl(Microsoft.Xna.Framework.Game game, Rectangle rect) :this (game)
@@ -35,6 +38,11 @@ namespace XnaTetris.Interface
     }
 
     #endregion
+
+    public override void Initialize()
+    {
+      base.Initialize();
+    }
 
     #region Update
 

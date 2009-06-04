@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 
 namespace XnaTetris.Game
@@ -9,14 +10,22 @@ namespace XnaTetris.Game
   /// </summary>
   public class GameScene : DrawableGameComponent
   {
+    protected SpriteBatch spriteBatch;
+
     // components can't have child components by default. Emulate it!
     public List<GameComponent> Components { get; private set; }
 
     public GameScene(Microsoft.Xna.Framework.Game game)
       : base(game)
     {
+      spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch)); 
       Components = new List<GameComponent>();
       Hide();
+    }
+
+    public override void Initialize()
+    {
+      base.Initialize();
     }
 
     public override void Update(GameTime gameTime)

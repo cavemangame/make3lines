@@ -34,11 +34,18 @@ namespace XnaTetris.Interface
 			: base(setGame)
 		{
 			backgroundRect = setRect;
-			InitButtons(setGame);
+      InitButtons(Game);
       helloFont = ContentSpace.GetFont("SmallFont");
       if (LinesGame.CurrentPlayerName.Length == 0)
         btnContinue.Enabled = false;
+
 		}
+
+    public override void Initialize()
+    {
+
+      base.Initialize();
+    }
 
 		private void InitButtons(Microsoft.Xna.Framework.Game setGame)
 		{
@@ -83,7 +90,7 @@ namespace XnaTetris.Interface
 		#region Draw
 		public override void Draw(GameTime gameTime)
 		{
-      ContentSpace.GetSprite("MenuBackground").Render(backgroundRect);
+		  ContentSpace.GetSprite("MenuBackground").Render(spriteBatch, backgroundRect);
 
       if (LinesGame.CurrentPlayerName.Length > 0)
       {
