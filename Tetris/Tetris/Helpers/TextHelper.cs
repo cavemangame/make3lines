@@ -6,6 +6,7 @@ namespace XnaTetris.Helpers
 {
   class TextHelper
   {
+    #region Text to render
     public class TextToRender
     {
       public SpriteFont Font { get; private set;}
@@ -25,6 +26,7 @@ namespace XnaTetris.Helpers
         Scale = scale;
       }
     }
+    #endregion
 
     #region Variables
 
@@ -35,10 +37,10 @@ namespace XnaTetris.Helpers
 
     #region Constructor
 
-    public TextHelper(GraphicsDevice device)
+    public TextHelper(Microsoft.Xna.Framework.Game game)
 		{
-			fontSprite = new SpriteBatch(device);
-		}
+      fontSprite = (SpriteBatch)game.Services.GetService(typeof(SpriteBatch));
+    }
 
     #endregion
 

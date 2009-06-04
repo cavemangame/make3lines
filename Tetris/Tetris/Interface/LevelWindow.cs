@@ -52,12 +52,12 @@ namespace XnaTetris.Interface
     #region Draw
     public override void Draw(GameTime gameTime)
     {
-      ContentSpace.GetSprite("LevelBackground").Render(backgroundRect);
+      ContentSpace.GetSprite("LevelBackground").Render(spriteBatch, backgroundRect);
       if (helper != null)
       {
         foreach (SpriteToRender stor in helper.Sprites)
         {
-          stor.Sprite.Render(stor.Rect);
+          stor.Sprite.Render(spriteBatch, stor.Rect);
         }
 
         foreach (TextToRender ttor in helper.Texts)
