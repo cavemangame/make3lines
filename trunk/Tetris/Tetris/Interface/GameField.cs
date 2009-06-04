@@ -125,9 +125,9 @@ namespace XnaTetris.Interface
         LinesGame.Score.GrayScore, Color.LightGray);
     }
 
-    private static void DrawScore(SpriteFont font, SpriteHelper block, Rectangle rect, long score, Color col)
+    private void DrawScore(SpriteFont font, SpriteHelper block, Rectangle rect, long score, Color col)
     {
-      block.Render(rect);
+      block.Render(spriteBatch, rect);
       // shadow
       TextHelper.DrawShadowedText(font, String.Format("= {0}", score),
         rect.Right + 8, rect.Top + 5, col);

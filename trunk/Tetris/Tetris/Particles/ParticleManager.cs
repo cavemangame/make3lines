@@ -63,7 +63,7 @@ namespace XnaTetris.Particles
     protected ParticleManager(LinesGame game, int howManyEffects)
       : base(game)
     {
-      partSprite = new SpriteBatch(game.GraphicsDevice);
+      partSprite = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
       this.howManyEffects = howManyEffects;
     }
 
@@ -160,7 +160,7 @@ namespace XnaTetris.Particles
     public override void Draw(GameTime gameTime)
     {
       // тут могут быть разные моды
-      partSprite.Begin(spriteBlendMode);
+     // partSprite.Begin(spriteBlendMode);
 
       foreach (Particle p in particles)
       {
@@ -182,7 +182,7 @@ namespace XnaTetris.Particles
             p.Rotation, origin, scale, SpriteEffects.None, 0.0f);
       }
 
-      partSprite.End();
+      //partSprite.End();
 
       base.Draw(gameTime);
     }

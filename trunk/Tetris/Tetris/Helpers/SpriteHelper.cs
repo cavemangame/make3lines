@@ -30,9 +30,9 @@ namespace XnaTetris.Helpers
     public void Render(SpriteBatch spriteBatch, Rectangle rect, SpriteBlendMode mode, float scale, 
       float rotation)
     {
-      spriteBatch.Begin(mode);
+      //spriteBatch.Begin(mode);
       spriteBatch.Draw(texture, rect, sourceRect, color, rotation, Vector2.Zero, SpriteEffects.None, .0f);
-      spriteBatch.End();
+      //spriteBatch.End();
     }
 
     
@@ -53,9 +53,9 @@ namespace XnaTetris.Helpers
 
     public void Render(SpriteBatch spriteBatch, Rectangle rect, Rectangle gfxRect)
     {
-      spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
+      //spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
       spriteBatch.Draw(texture, rect, gfxRect, color);
-      spriteBatch.End();
+      //spriteBatch.End();
     }
 
     public void Render(Rectangle rect)
@@ -64,8 +64,6 @@ namespace XnaTetris.Helpers
       spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
       spriteBatch.Draw(texture, rect, sourceRect, color);
       spriteBatch.End();
-
-      Render(spriteBatch, rect, SpriteBlendMode.AlphaBlend);
     }
   }
 }

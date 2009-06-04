@@ -92,7 +92,7 @@ namespace XnaTetris
       Services.AddService(typeof(SpriteBatch), spriteBatch);
 
       font = new TextureFont(graphics.GraphicsDevice, content);
-      textHelper = new TextHelper(graphics.GraphicsDevice);
+      textHelper = new TextHelper(this);
       ContentSpace.LoadAllContent(content);
 
       menu = new Menu(this, new Rectangle(0, 0, Width, Height));
@@ -156,9 +156,9 @@ namespace XnaTetris
     {
       ElapsedGameMs = gameTime.TotalRealTime.TotalMilliseconds;
 
-     // spriteBatch.Begin();
+      spriteBatch.Begin();
       base.Draw(gameTime);
-     // spriteBatch.End();
+      spriteBatch.End();
 
       font.WriteAll();
       textHelper.WriteAll();
